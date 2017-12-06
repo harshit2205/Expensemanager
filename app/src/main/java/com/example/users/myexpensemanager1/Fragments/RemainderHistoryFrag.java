@@ -43,6 +43,8 @@ public class RemainderHistoryFrag extends Fragment {
 
         remainderHistoryView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        //fndsk
+
         if(alarmItems.size() == 0){
             emptyView.setVisibility(View.VISIBLE);
             remainderHistoryView.setVisibility(View.GONE);
