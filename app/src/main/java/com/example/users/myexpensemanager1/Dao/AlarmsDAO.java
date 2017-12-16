@@ -68,17 +68,17 @@ public class AlarmsDAO {
         List<AlarmItem> alarmList =  new ArrayList<>();
         String query = "SELECT * FROM "+DAOFactory.ALARM_TABLE ;
         Cursor cursor = database.rawQuery(query, null);
-        cursor.moveToPosition(0);
-        if (cursor.moveToFirst()) {
+        if(cursor.moveToFirst()) {
             do {
                 // get the data into array, or class variable
                 AlarmItem item = new AlarmItem(cursor.getString(1)
-                        ,cursor.getString(2)
-                        ,Long.parseLong(cursor.getString(3))
-                        ,cursor.getString(4)
-                        ,Long.parseLong(cursor.getString(5)));
-                Log.d("EXPMdatacheck","itemname : "+cursor.getString(2));
+                        , cursor.getString(2)
+                        , Long.parseLong(cursor.getString(3))
+                        , cursor.getString(4)
+                        , Long.parseLong(cursor.getString(5)));
+                Log.d("EXPMdatacheck", "itemname : " + cursor.getString(2));
                 alarmList.add(item);
+                item.setId(cursor.getInt(0));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -86,8 +86,8 @@ public class AlarmsDAO {
         return alarmList;
     }
 
-    public void deleteAlarm(long uniquestamp) throws SQLException {
-        database.delete(daoFactory.ALARM_TABLE, " uniqueKey = '" +uniquestamp +"'", null);
+    public void deleteAlarm(int id) throws SQLException {
+        database.delete(daoFactory.ALARM_TABLE, " _id = '" +id +"'", null);
         Log.d("EXPM","alarm table item deleted");
     }
 

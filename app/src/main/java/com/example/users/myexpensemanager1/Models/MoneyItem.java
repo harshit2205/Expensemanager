@@ -4,17 +4,25 @@ package com.example.users.myexpensemanager1.Models;
  * Created by USER on 5/15/2017.
  */
 public class MoneyItem {
+    private int Id;
     private String userName;
     private long amount;
     private long timestamp;
     private String description;
 
-
-    public MoneyItem(String userName, long amount, long timestamp, String description) {
+    public MoneyItem( String userName, long amount, long timestamp, String description) {
         this.userName = userName;
         this.amount = amount;
         this.timestamp = timestamp;
         this.description = description;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
     }
 
     public String getUserName() {

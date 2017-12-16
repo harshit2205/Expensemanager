@@ -56,8 +56,8 @@ public class OptionsFrag extends BaseFragment{
                 break;
             case R.id.add_transaction:
                 Log.d("datahex","case 2 encountered");
-                AddTransaction addTransaction = new AddTransaction();
-                fragmentstarter(addTransaction);
+                AddTransactionFragment addTransactionFragment = new AddTransactionFragment();
+                fragmentstarter(addTransactionFragment);
                 break;
             case R.id.set_reminder:
                 Log.d("datahex","case 3 encountered");

@@ -3,16 +3,15 @@ package com.example.users.myexpensemanager1.Adapters;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.users.myexpensemanager1.Dao.AlarmsDAO;
-import com.example.users.myexpensemanager1.Models.AlarmItem;
+import com.example.users.myexpensemanager1.Dao.TransactionDAO;
+import com.example.users.myexpensemanager1.Models.TransactionItem;
 import com.example.users.myexpensemanager1.R;
-import com.example.users.myexpensemanager1.Views.MoneyHistoryViewHolder;
+import com.example.users.myexpensemanager1.Views.TransactionViewHolder;
 import com.tr4android.recyclerviewslideitem.SwipeAdapter;
 import com.tr4android.recyclerviewslideitem.SwipeConfiguration;
 
@@ -20,36 +19,35 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class RemainderHistoryAdapter extends SwipeAdapter{
+public class TransactionHistoryAdapter extends SwipeAdapter {
     Context context;
-    List<AlarmItem> items;
-    AlarmsDAO alarmsDAO;
+    List<TransactionItem> items;
+    TransactionDAO transactionDAO;
 
-    public RemainderHistoryAdapter(Context context, List<AlarmItem> items) {
+    public TransactionHistoryAdapter(Context context, List<TransactionItem> items) {
         this.context = context;
         this.items = items;
-        Log.d("EXPM","size of remainders table: "+items.size());
-        Log.d("EXPM","size of database remainders table: "+AlarmsDAO.initialiser(context).getAlarmsCount());
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateSwipeViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_history, viewGroup, true);
-        return new MoneyHistoryViewHolder(v);
+                .inflate(R.layout.transaction_history_row, viewGroup, true);
+        return new TransactionViewHolder(v);
     }
 
     @Override
     public void onBindSwipeViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
-        MoneyHistoryViewHolder viewHolder1 = (MoneyHistoryViewHolder)viewHolder;
-        viewHolder1.moneyAmount.setText(items.get(i).getItemName());
-        viewHolder1.date.setText(getDate(items.get(i).getTimestamp()));
-        viewHolder1.time.setText(getTime(items.get(i).getTimestamp()));
+        TransactionViewHolder holder = (TransactionViewHolder)viewHolder;
+        holder.itemName.setText(items.get(i).getItem_name());
+        holder.transactionCost.setText(Long.toString(items.get(i).getAmount()));
+        holder.transactionDate.setText(getDate(items.get(i).getTimestamp()));
+
     }
 
     @Override
     public int getItemCount() {
-        return 1;
+        return items.size();
     }
 
     @Override
@@ -73,8 +71,8 @@ public class RemainderHistoryAdapter extends SwipeAdapter{
     @Override
     public void onSwipe(int i, int i1) {
         if(i1 == SWIPE_LEFT){
-            alarmsDAO = AlarmsDAO.initialiser(context);
-            alarmsDAO.deleteAlarm(items.get(i).getId());
+            transactionDAO = TransactionDAO.initialiser(context);
+            transactionDAO.deleteTransaction(items.get(i).getId());
             Toast toast = Toast.makeText(context, "Deleted item at position " + i, Toast.LENGTH_SHORT);
             notifyDataSetChanged();
             toast.show();
@@ -86,12 +84,5 @@ public class RemainderHistoryAdapter extends SwipeAdapter{
         cal.setTimeInMillis(timestamp);
         String date = DateFormat.format("dd-MM-yyyy", cal).toString();
         return date;
-    }
-
-    private String getTime(long timestamp) {
-        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-        cal.setTimeInMillis(timestamp);
-        String time = DateFormat.format("HH:mm", cal).toString();
-        return time;
     }
 }

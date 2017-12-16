@@ -17,6 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.users.myexpensemanager1.Activities.MainActivity;
+import com.example.users.myexpensemanager1.Dao.TransactionDAO;
+import com.example.users.myexpensemanager1.Models.TransactionItem;
 import com.example.users.myexpensemanager1.R;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -30,7 +33,7 @@ import java.util.Date;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddTransaction extends BaseFragment{
+public class AddTransactionFragment extends BaseFragment{
     Button date;
     Button time;
     Button snapshot;
@@ -38,7 +41,7 @@ public class AddTransaction extends BaseFragment{
     Button addTransaction;
     EditText itemname, itemcost, description;
 
-    public AddTransaction() {
+    public AddTransactionFragment() {
         // Required empty public constructor
         CURRENT_YEAR = now.get(Calendar.YEAR);
         CURRENT_MONTH = now.get(Calendar.MONTH);
@@ -82,7 +85,9 @@ public class AddTransaction extends BaseFragment{
                 //takeScreenshot();
                 break;
             case R.id.add_transaction:
-                if(inputcheck()){} //addTransaction();
+                if(inputcheck()){
+                    addTransaction();
+                } //addTransaction();
                 else{
                     Snackbar.make(this.getView(),"unfilled columns",Snackbar.LENGTH_SHORT).show();
                 }
@@ -136,7 +141,7 @@ public class AddTransaction extends BaseFragment{
                 Uri.parse("file://" + Environment.getExternalStorageDirectory())));
         if(imagefile.exists())Log.d("hexbozome","file created");
         else {
-            Log.d("hexbozome","file not created");
+            Log.d("EXPM","file not created");
         }
     }
 
@@ -147,6 +152,23 @@ public class AddTransaction extends BaseFragment{
             return false;
         }
                 return true;
+    }
+
+    private void addTransaction(){
+        now.set(CURRENT_YEAR,CURRENT_MONTH,CURRENT_DATE,CURREN_HRS,CURRENT_MINS,CURRENT_SEC);
+        TransactionItem transactionItem = new TransactionItem(
+                MainActivity.userName,
+                itemname.getText().toString(),
+                Long.parseLong(itemcost.getText().toString()),
+                now.getTimeInMillis(),
+                description.getText().toString());
+
+        TransactionDAO transactionDAO = TransactionDAO.initialiser(getActivity().getApplicationContext());
+        transactionDAO.insertTransaction(transactionItem);
+
+        hideKeyboard();
+        Snackbar.make(this.getView(),"transaction added",Snackbar.LENGTH_SHORT).show();
+        getActivity().onBackPressed();
     }
 
 

@@ -49,6 +49,8 @@ public class SelectHistoryFrag extends BaseFragment {
                 fragmentstarter(moneyHistoryFrag);
                 break;
             case R.id.view_transaction_history:
+                TransactionHistoryFrag transactionHistoryFrag = new TransactionHistoryFrag();
+                fragmentstarter(transactionHistoryFrag);
                 break;
             case R.id.view_Remainders:
                 RemainderHistoryFrag remainderHistoryFrag = new RemainderHistoryFrag();

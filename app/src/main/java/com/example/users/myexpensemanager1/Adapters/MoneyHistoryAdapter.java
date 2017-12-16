@@ -75,7 +75,7 @@ public class MoneyHistoryAdapter extends SwipeAdapter {
     public void onSwipe(int i, int i1) {
          if(i1 == SWIPE_LEFT){
             moneyDAO = MoneyDAO.initialiser(context);
-            moneyDAO.deleteMoney(items.get(i).getTimestamp());
+            moneyDAO.deleteMoney(items.get(i).getId());
             Toast toast = Toast.makeText(context, "Deleted item at position " + i, Toast.LENGTH_SHORT);
             notifyDataSetChanged();
             toast.show();

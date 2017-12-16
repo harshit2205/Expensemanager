@@ -62,8 +62,8 @@ public class MoneyDAO {
         Log.d("EXPM", "Money Inserted");
     }
 
-    public void deleteMoney(long timestamp) throws SQLException {
-        database.delete(daoFactory.MONEY_TABLE, " currentstamp = '" +timestamp +"'", null);
+    public void deleteMoney(int id) throws SQLException {
+        database.delete(daoFactory.MONEY_TABLE, " _id = '" +id +"'", null);
         Log.d("EXPM","money table item deleted");
     }
 
@@ -72,17 +72,17 @@ public class MoneyDAO {
         List<MoneyItem> moneyList =  new ArrayList<>();
         String query = "SELECT * FROM "+DAOFactory.MONEY_TABLE ;
         Cursor cursor = database.rawQuery(query, null);
-        cursor.moveToFirst();
-        Log.d("temp_tags","cursor count is "+cursor.getCount());
-        if (cursor.moveToFirst()) {
+        if(cursor.moveToFirst()) {
+            Log.d("temp_tags", "cursor count is " + cursor.getCount());
             do {
                 // get the data into array, or class variable
-                Log.d("temp_tags","data = "+cursor.getString(2));
+                Log.d("temp_tags", "data = " + cursor.getString(2));
                 MoneyItem item = new MoneyItem(cursor.getString(1)
-                        ,Long.parseLong(cursor.getString(2))
-                        ,Long.parseLong(cursor.getString(4))
-                        ,cursor.getString(3));
+                        , Long.parseLong(cursor.getString(2))
+                        , Long.parseLong(cursor.getString(4))
+                        , cursor.getString(3));
                 moneyList.add(item);
+                item.setId(cursor.getInt(0));
             } while (cursor.moveToNext());
         }
         cursor.close();

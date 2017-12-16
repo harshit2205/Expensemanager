@@ -1,6 +1,7 @@
 package com.example.users.myexpensemanager1.Models;
 
 public class AlarmItem {
+    private int Id;
     private String userName;
     private String ItemName;
     private long timestamp;
@@ -13,6 +14,14 @@ public class AlarmItem {
         this.timestamp = timestamp;
         this.description = description;
         this.uniqueKey = uniqueKey;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
     }
 
     public String getUserName() {
