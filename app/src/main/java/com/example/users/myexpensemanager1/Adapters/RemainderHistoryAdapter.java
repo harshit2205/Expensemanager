@@ -49,7 +49,7 @@ public class RemainderHistoryAdapter extends SwipeAdapter{
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return 1;
     }
 
     @Override

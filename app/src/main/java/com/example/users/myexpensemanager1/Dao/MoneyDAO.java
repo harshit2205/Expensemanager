@@ -68,28 +68,37 @@ public class MoneyDAO {
     }
 
     public List<MoneyItem> showMoneyTuple() {
+        Log.d("EXPM_Logs","show money tuple function called at "+Long.toString(System.currentTimeMillis()));
         List<MoneyItem> moneyList =  new ArrayList<>();
         String query = "SELECT * FROM "+DAOFactory.MONEY_TABLE ;
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
-        while(cursor.moveToNext()){
-            MoneyItem item = new MoneyItem(cursor.getString(1)
-                    ,Long.parseLong(cursor.getString(2))
-                    ,Long.parseLong(cursor.getString(4))
-                    ,cursor.getString(3));
-            moneyList.add(item);
+        Log.d("temp_tags","cursor count is "+cursor.getCount());
+        if (cursor.moveToFirst()) {
+            do {
+                // get the data into array, or class variable
+                Log.d("temp_tags","data = "+cursor.getString(2));
+                MoneyItem item = new MoneyItem(cursor.getString(1)
+                        ,Long.parseLong(cursor.getString(2))
+                        ,Long.parseLong(cursor.getString(4))
+                        ,cursor.getString(3));
+                moneyList.add(item);
+            } while (cursor.moveToNext());
         }
         cursor.close();
+        Log.d("EXPM_Logs","show money tuple function stopped at "+Long.toString(System.currentTimeMillis()));
         Log.d("EXPM", "money list fetched");
         return moneyList;
     }
 
     // gives the count of the number of elements.......
     public int getMoneyCount() {
+        Log.d("EXPM_Logs","get money count function called at "+Long.toString(System.currentTimeMillis()));
         String countQuery = "SELECT  * FROM " + DAOFactory.MONEY_TABLE;
         Cursor cursor = database.rawQuery(countQuery, null);
         int cnt = cursor.getCount();
         cursor.close();
+        Log.d("EXPM_Logs","get money count function stopped at "+Long.toString(System.currentTimeMillis()));
         return cnt;
     }
 

@@ -29,8 +29,8 @@ public class MoneyHistoryAdapter extends SwipeAdapter {
     public MoneyHistoryAdapter(Context context, List<MoneyItem> items){
         this.context = context;
         this.items = items;
-        Log.d("EXPM","size of Money table: "+items.size());
-        Log.d("EXPM","size of database Money table: "+MoneyDAO.initialiser(context).getMoneyCount());
+        Log.d("EXPM_Logs","size of Money table: "+items.size()+ " at " +System.currentTimeMillis());
+        Log.d("EXPM_Logs","size of database Money table: "+MoneyDAO.initialiser(context).getMoneyCount()+" at "+System.currentTimeMillis());
     }
 
     @Override

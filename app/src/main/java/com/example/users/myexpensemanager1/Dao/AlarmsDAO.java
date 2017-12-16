@@ -51,6 +51,7 @@ public class AlarmsDAO {
     public void closeDatabase() throws SQLException {
         daoFactory.close();
     }
+
     //function to insert values in the alarm table.....
     public void insertAlarm(AlarmItem alarmItem){
         ContentValues values = new ContentValues();
@@ -68,14 +69,17 @@ public class AlarmsDAO {
         String query = "SELECT * FROM "+DAOFactory.ALARM_TABLE ;
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToPosition(0);
-        while(cursor.moveToNext()){
-            AlarmItem item = new AlarmItem(cursor.getString(1)
-                    ,cursor.getString(2)
-                    ,Long.parseLong(cursor.getString(3))
-                    ,cursor.getString(4)
-                    ,Long.parseLong(cursor.getString(5)));
-            Log.d("EXPMdatacheck","itemname : "+cursor.getString(2));
-            alarmList.add(item);
+        if (cursor.moveToFirst()) {
+            do {
+                // get the data into array, or class variable
+                AlarmItem item = new AlarmItem(cursor.getString(1)
+                        ,cursor.getString(2)
+                        ,Long.parseLong(cursor.getString(3))
+                        ,cursor.getString(4)
+                        ,Long.parseLong(cursor.getString(5)));
+                Log.d("EXPMdatacheck","itemname : "+cursor.getString(2));
+                alarmList.add(item);
+            } while (cursor.moveToNext());
         }
         cursor.close();
         Log.d("EXPM", "alarms list fetched");
@@ -88,10 +92,12 @@ public class AlarmsDAO {
     }
 
     public int getAlarmsCount() {
+        Log.d("EXPM_Logs","get alarm function started at "+Long.toString(System.currentTimeMillis()));
         String countQuery = "SELECT  * FROM " + DAOFactory.ALARM_TABLE;
         Cursor cursor = database.rawQuery(countQuery, null);
         int cnt = cursor.getCount();
         cursor.close();
+        Log.d("EXPM_Logs","get alarm function stopped at "+Long.toString(System.currentTimeMillis()));
         return cnt;
     }
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,8 @@ public class MoneyHistoryFrag extends BaseFragment {
         // Inflate the layout for this fragment and get moneyList.....
         View v = inflater.inflate(R.layout.fragment_history, container, false);
         List<MoneyItem> moneyList = MoneyDAO.initialiser(getActivity().getApplicationContext()).showMoneyTuple();
+        Log.d("EXPM_Logs","list of money items generated at "+Long.toString(System.currentTimeMillis())
+                + "with size " +moneyList.size());
         adapter = new MoneyHistoryAdapter(getActivity().getApplicationContext(), moneyList);
         historyView = (RecyclerView)v.findViewById(R.id.history_recyclerview);
         emptyView = (TextView)v.findViewById(R.id.empty_view);
