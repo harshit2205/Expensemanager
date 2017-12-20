@@ -41,7 +41,7 @@ public class MoneyHistoryFrag extends BaseFragment {
         List<MoneyItem> moneyList = MoneyDAO.initialiser(getActivity().getApplicationContext()).showMoneyTuple();
         Log.d("EXPM_Logs","list of money items generated at "+Long.toString(System.currentTimeMillis())
                 + "with size " +moneyList.size());
-        adapter = new MoneyHistoryAdapter(getActivity().getApplicationContext(), moneyList);
+        adapter = new MoneyHistoryAdapter(getActivity().getApplicationContext(), moneyList, getFragmentManager());
         historyView = (RecyclerView)v.findViewById(R.id.history_recyclerview);
         emptyView = (TextView)v.findViewById(R.id.empty_view);
 

@@ -39,7 +39,7 @@ public class TransactionHistoryFrag extends Fragment {
         List<TransactionItem> transactionlist = TransactionDAO.initialiser(getActivity().getApplicationContext()).showTransactionTuple();
         Log.d("EXPM_Logs","list of transaction items generated at "+Long.toString(System.currentTimeMillis())
                 + "with size " +transactionlist.size());
-        adapter = new TransactionHistoryAdapter(getActivity().getApplicationContext(), transactionlist);
+        adapter = new TransactionHistoryAdapter(getActivity().getApplicationContext(), transactionlist,getFragmentManager());
         historyView = (RecyclerView)view.findViewById(R.id.history_recyclerview);
         emptyView = (TextView)view.findViewById(R.id.empty_view);
 
@@ -55,5 +55,6 @@ public class TransactionHistoryFrag extends Fragment {
         historyView.setAdapter(adapter);
         return view;
     }
+
 
 }

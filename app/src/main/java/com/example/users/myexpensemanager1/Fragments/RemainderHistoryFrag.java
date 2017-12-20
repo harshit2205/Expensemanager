@@ -39,7 +39,7 @@ public class RemainderHistoryFrag extends Fragment {
         emptyView = (TextView)view.findViewById(R.id.empty_view);
         remainderHistoryView = (RecyclerView)view.findViewById(R.id.remainder_history_recyclerview);
         alarmItems = AlarmsDAO.initialiser(getActivity().getApplicationContext()).showAlarmsTuple();
-        adapter = new RemainderHistoryAdapter(getActivity().getApplicationContext(),alarmItems);
+        adapter = new RemainderHistoryAdapter(getActivity().getApplicationContext(),alarmItems, getFragmentManager());
 
         remainderHistoryView.setLayoutManager(new LinearLayoutManager(getActivity()));
 

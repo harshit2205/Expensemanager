@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.example.users.myexpensemanager1.Fragments.OptionsFrag;
 import com.example.users.myexpensemanager1.R;
 
-public class MainActivity extends BaseActivity  {
+public class MainActivity extends BaseActivity {
 
     public static String userName = "dummy_user";
 
@@ -22,4 +22,6 @@ public class MainActivity extends BaseActivity  {
         transaction.replace(R.id.container,optionsFrag,"options_frag");
         transaction.commit();
     }
+
+
 }
