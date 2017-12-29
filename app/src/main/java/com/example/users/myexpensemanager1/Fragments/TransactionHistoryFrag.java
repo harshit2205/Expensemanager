@@ -2,13 +2,14 @@ package com.example.users.myexpensemanager1.Fragments;
 
 
 import android.app.Fragment;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.users.myexpensemanager1.Adapters.TransactionHistoryAdapter;
@@ -24,7 +25,10 @@ import java.util.List;
 public class TransactionHistoryFrag extends Fragment {
     TransactionHistoryAdapter adapter ;
     RecyclerView historyView;
-    TextView emptyView;
+    public TextView emptyView;
+    ProgressBar progressBar;
+    public String message;
+    public List<TransactionItem> transactionlist;
 
     public TransactionHistoryFrag() {
         // Required empty public constructor
@@ -36,25 +40,46 @@ public class TransactionHistoryFrag extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_transaction_history, container, false);
-        List<TransactionItem> transactionlist = TransactionDAO.initialiser(getActivity().getApplicationContext()).showTransactionTuple();
-        Log.d("EXPM_Logs","list of transaction items generated at "+Long.toString(System.currentTimeMillis())
-                + "with size " +transactionlist.size());
-        adapter = new TransactionHistoryAdapter(getActivity().getApplicationContext(), transactionlist,getFragmentManager());
+
         historyView = (RecyclerView)view.findViewById(R.id.history_recyclerview);
         emptyView = (TextView)view.findViewById(R.id.empty_view);
-
-        historyView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        if (TransactionDAO.initialiser(getActivity().getApplicationContext()).getTransactionsCount() == 0){
-            historyView.setVisibility(View.GONE);
-            emptyView.setVisibility(View.VISIBLE);
-        }else {
-            historyView.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.GONE);
-        }
+        progressBar = (ProgressBar)view.findViewById(R.id.fetch_progressbar);
+        adapter = new TransactionHistoryAdapter(getActivity().getApplicationContext(), transactionlist,getFragmentManager());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        historyView.setLayoutManager(layoutManager);
         historyView.setAdapter(adapter);
+        setEmptyView(message);
+        FetchTransaction fetch = new FetchTransaction();
+        fetch.execute("get details");
+
         return view;
     }
+
+    public void setEmptyView(String emptyViewText){
+        emptyView.setText(emptyViewText);
+    }
+
+    class FetchTransaction extends AsyncTask< String, String, List<TransactionItem>>{
+
+        @Override
+        protected List<TransactionItem> doInBackground(String... params) {
+            transactionlist = TransactionDAO.initialiser(getActivity().getApplicationContext()).showTransactionTuple();
+            return transactionlist;
+        }
+
+        @Override
+        protected void onPostExecute(List<TransactionItem> items) {
+            progressBar.setVisibility(View.GONE);
+            if(transactionlist.size() == 0){
+                emptyView.setVisibility(View.VISIBLE);
+            }else{
+                adapter.items = transactionlist;
+                adapter.notifyDataSetChanged();
+                historyView.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
 
 
 }

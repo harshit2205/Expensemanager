@@ -56,8 +56,6 @@ public class SelectHistoryFrag extends BaseFragment {
                 RemainderHistoryFrag remainderHistoryFrag = new RemainderHistoryFrag();
                 fragmentstarter(remainderHistoryFrag);
                 break;
-            case R.id.view_history:
-                break;
         }
     }
 }

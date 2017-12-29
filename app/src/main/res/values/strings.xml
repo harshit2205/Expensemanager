@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MyExpenseManager1</string>
 
+    <string name="Rs">\u20B9</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="view_money_history">view money history</string>
     <string name="view_transaction_history">view transaction history</string>
@@ -34,4 +35,13 @@
     <string name="remainder_yet_to_add">Remainders are yet to be added.</string>
     <string name="transactions_yet_to_add">Transactions are yet to be added.</string>
     <string name="view_remainder_history">view all remainders</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="monthly_add">add this amount monthly?</string>
+    <string name="transaction_head">Choose the type of transaction</string>
+    <string name="set_transaction_type">set type of transaction</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.users.myexpensemanager1.Activities.MainActivity;
+import com.example.users.myexpensemanager1.Activities.Main2Activity;
 import com.example.users.myexpensemanager1.Dao.AlarmsDAO;
 import com.example.users.myexpensemanager1.Models.AlarmItem;
 import com.example.users.myexpensemanager1.R;
@@ -96,14 +96,14 @@ public class AddAlarm extends BaseFragment{
 
     public void addAlarm(){
         now.set(CURRENT_YEAR,CURRENT_MONTH,CURRENT_DATE,CURREN_HRS,CURRENT_MINS,CURRENT_SEC);
-        AlarmItem alarmItem = new AlarmItem(MainActivity.userName,
+        AlarmItem alarmItem = new AlarmItem(Main2Activity.userName,
                 itemname.getText().toString(),
                 now.getTimeInMillis(),
                 description.getText().toString(),
                 System.currentTimeMillis());
 
         //datapass check.....
-        Log.d("EXPM","data of alarm item username = " +MainActivity.userName+
+        Log.d("EXPM","data of alarm item username = " +Main2Activity.userName+
                 " item name = " + itemname.getText().toString()+
                 " timestamp = " + now.getTimeInMillis()+
                 " description = " + description.getText().toString()+

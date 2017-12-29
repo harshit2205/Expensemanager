@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:background="@android:color/transparent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="5dp"
+        android:elevation="5dp"
+        app:cardBackgroundColor="@color/colorPrimary">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/buttonPanel">
+                <Button
+                    android:id="@+id/update_transaction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="5dp"
+                    android:background="@android:color/white"
+                    android:text="update"
+                    android:textColor="@color/colorPrimary"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:background="@android:color/white"
+                    android:text="delete"
+                    android:textColor="@color/colorPrimary"/>
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/item_name"
+                android:layout_below="@+id/buttonPanel"
+                android:textSize="@dimen/mdtp_material_button_textsize"
+                android:layout_marginTop="10dp"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="10dp"
+                android:text="@string/item_name"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/item_cost"
+                android:layout_below="@id/item_name"
+                android:textSize="@dimen/mdtp_material_button_textsize"
+                android:textColor="@android:color/white"
+                android:text="@string/item_cost"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/date"
+                android:layout_below="@id/item_cost"
+                android:textSize="@dimen/mdtp_material_button_textsize"
+                android:textColor="@android:color/white"
+                android:text="@string/Date"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/item_description"
+                android:layout_below="@+id/date"
+                android:textSize="@dimen/mdtp_material_button_textsize"
+                android:textColor="@android:color/white"
+                android:maxLines="4"
+                android:text="@string/description"/>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_description"
+                android:layout_above="@+id/done_button">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/reciept_image"/>
+            </ScrollView>
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mdtp_ok"
+                android:id="@+id/done_button"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/dialog_fragment_button_background"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>

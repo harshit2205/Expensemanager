@@ -2,34 +2,34 @@
 
 
  import android.app.Fragment;
-import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
+ import android.os.Bundle;
+ import android.support.design.widget.Snackbar;
+ import android.view.LayoutInflater;
+ import android.view.View;
+ import android.view.ViewGroup;
+ import android.widget.Button;
+ import android.widget.EditText;
 
-import com.example.users.myexpensemanager1.Activities.MainActivity;
+ import com.example.users.myexpensemanager1.Activities.Main2Activity;
  import com.example.users.myexpensemanager1.Dao.MoneyDAO;
  import com.example.users.myexpensemanager1.Models.MoneyItem;
-import com.example.users.myexpensemanager1.R;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+ import com.example.users.myexpensemanager1.R;
+ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
-import java.util.Calendar;
+ import java.util.Calendar;
 
 
  /**
   * A simple {@link Fragment} subclass.
   */
- public class AddMoneyManual extends BaseFragment{
+ public class AddEarningFrag extends BaseFragment{
      Button date;
      Button time;
      EditText amount,description;
      Button addMoney;
 
-     public AddMoneyManual() {
+     public AddEarningFrag() {
          // Required empty public constructor
          CURRENT_YEAR = now.get(Calendar.YEAR);
          CURRENT_MONTH = now.get(Calendar.MONTH);
@@ -44,7 +44,9 @@ import java.util.Calendar;
      public View onCreateView(LayoutInflater inflater, ViewGroup container,
                               Bundle savedInstanceState) {
          // Inflate the layout for this fragment
-         View v =inflater.inflate(R.layout.fragment_add_money_manual, container, false);
+         View v =inflater.inflate(R.layout.fragment_add_earning, container, false);
+
+         Main2Activity.menuitem.setVisible(false);
          date = (Button) v.findViewById(R.id.date_input);
          date.setOnClickListener(this);
          time = (Button)v.findViewById(R.id.time_input);
@@ -96,7 +98,7 @@ import java.util.Calendar;
      public void addMoney(){
          now.set(CURRENT_YEAR,CURRENT_MONTH,CURRENT_DATE,CURREN_HRS,CURRENT_MINS,CURRENT_SEC);
          MoneyItem moneyItem = new MoneyItem(
-                 MainActivity.userName,
+                 Main2Activity.userName,
                  Long.parseLong(amount.getText().toString()),
                  now.getTimeInMillis(),
                  description.getText().toString());
@@ -116,4 +118,9 @@ import java.util.Calendar;
          return true;
      }
 
+     @Override
+     public void onDestroy() {
+         super.onDestroy();
+         Main2Activity.menuitem.setVisible(true);
+     }
  }

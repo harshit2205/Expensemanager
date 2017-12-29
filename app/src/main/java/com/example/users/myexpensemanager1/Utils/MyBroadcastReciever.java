@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
-import com.example.users.myexpensemanager1.Activities.MainActivity;
+import com.example.users.myexpensemanager1.Activities.Main2Activity;
 import com.example.users.myexpensemanager1.R;
 
 
@@ -33,7 +33,7 @@ public class MyBroadcastReciever extends BroadcastReceiver {
     //broadcast reciever in order to create .....
     public void notificationBuilder(Context context){
 
-        Intent i= new Intent(context, MainActivity.class);
+        Intent i= new Intent(context, Main2Activity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,1,i,PendingIntent.FLAG_ONE_SHOT);
         android.support.v7.app.NotificationCompat.Builder builder= (android.support.v7.app.NotificationCompat.Builder)

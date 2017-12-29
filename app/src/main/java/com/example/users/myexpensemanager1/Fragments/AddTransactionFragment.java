@@ -2,44 +2,44 @@ package com.example.users.myexpensemanager1.Fragments;
 
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.example.users.myexpensemanager1.Activities.MainActivity;
+import com.example.users.myexpensemanager1.Activities.Main2Activity;
 import com.example.users.myexpensemanager1.Dao.TransactionDAO;
 import com.example.users.myexpensemanager1.Models.TransactionItem;
 import com.example.users.myexpensemanager1.R;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+import com.weiwangcn.betterspinner.library.BetterSpinner;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.util.Calendar;
-import java.util.Date;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddTransactionFragment extends BaseFragment{
+public class AddTransactionFragment extends BaseFragment implements AdapterView.OnItemSelectedListener{
     Button date;
     Button time;
-    Button snapshot;
-    ImageView demoImage;
-    Button addTransaction;
+    Button addTransaction,takeSnap;
     EditText itemname, itemcost, description;
+    BetterSpinner spinner;
+    File imageFile;
 
     public AddTransactionFragment() {
         // Required empty public constructor
@@ -57,19 +57,33 @@ public class AddTransactionFragment extends BaseFragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_add_transaction, container, false);
+
+        Main2Activity.menuitem.setVisible(false);
         date = (Button) v.findViewById(R.id.date_input);
         date.setOnClickListener(this);
         time = (Button)v.findViewById(R.id.time_input);
         time.setOnClickListener(this);
-        snapshot = (Button)v.findViewById(R.id.snapshot);
-        snapshot.setOnClickListener(this);
         itemname = (EditText)v.findViewById(R.id.item_name);
         itemcost = (EditText)v.findViewById(R.id.item_cost);
         description = (EditText)v.findViewById(R.id.item_description);
         addTransaction = (Button)v.findViewById(R.id.add_transaction);
         addTransaction.setOnClickListener(this);
+        takeSnap = (Button)v.findViewById(R.id.take_snapshot);
+        takeSnap.setOnClickListener(this);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),
+                R.layout.dropdown_item_spinner, COUNTRIES);
+        BetterSpinner textView = (BetterSpinner)
+                v.findViewById(R.id.type_chooser);
+        textView.setAdapter(adapter);
+
         return v;
     }
+
+    private String[] COUNTRIES = new String[] {
+            "Food Expenses", "Movies Expenses", "Household Expenses", "Tax Expenses", "Other Expenses"
+    };
+
 
     @Override
     public void onClick(View v) {
@@ -78,20 +92,18 @@ public class AddTransactionFragment extends BaseFragment{
                 datePicker();
                 break;
             case R.id.time_input:
-                timePicker();;
-                break;
-            case R.id.snapshot:
-                Log.d("datahex","screenshot button pressed");
-                //takeScreenshot();
+                timePicker();
                 break;
             case R.id.add_transaction:
                 if(inputcheck()){
                     addTransaction();
-                } //addTransaction();
+                }
                 else{
                     Snackbar.make(this.getView(),"unfilled columns",Snackbar.LENGTH_SHORT).show();
                 }
                 break;
+            case R.id.take_snapshot:
+                takeSnapshot();
         }
     }
 
@@ -111,42 +123,6 @@ public class AddTransactionFragment extends BaseFragment{
         CURRENT_SEC = second;
     }
 
-    private void takeScreenshot() {
-        Date now = new Date();
-        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
-            // image naming and path  to include sd card  appending name you choose for file
-        File mydir = getActivity().getDir("users", Context.MODE_PRIVATE); //Creating an internal dir;
-        if (!mydir.exists()) {
-            mydir.mkdirs();
-            Log.d("hexbozome","file created");
-        }Log.d("hexbozome","path "+mydir.getPath());
-            // create bitmap screen capture
-            View v1 = getActivity().getWindow().getDecorView().getRootView();
-            v1.setDrawingCacheEnabled(true);
-            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
-            v1.setDrawingCacheEnabled(false);
-        String fname = "Image-"+ now +".jpg";
-        File imagefile = new File (mydir, fname);
-        try {
-            FileOutputStream outputStream = new FileOutputStream(imagefile);
-            int quality = 90;
-            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
-            outputStream.flush();
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        getActivity().sendBroadcast(new Intent(
-                Intent.ACTION_MEDIA_MOUNTED,
-                Uri.parse("file://" + Environment.getExternalStorageDirectory())));
-        if(imagefile.exists())Log.d("hexbozome","file created");
-        else {
-            Log.d("EXPM","file not created");
-        }
-    }
-
-
-
     public boolean inputcheck(){
         if(itemname.getText().toString().equals("") || itemcost.getText().toString().equals("")){
             return false;
@@ -154,22 +130,52 @@ public class AddTransactionFragment extends BaseFragment{
                 return true;
     }
 
+    private void takeSnapshot(){
+        imageFile = new File(Environment.getExternalStorageDirectory()+ "/app.myexpensemanager1", "file"+ System.currentTimeMillis() +".jpg");
+        Intent i = new Intent();
+        i.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+        i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile));
+        startActivityForResult(i,0);
+    }
+
     private void addTransaction(){
         now.set(CURRENT_YEAR,CURRENT_MONTH,CURRENT_DATE,CURREN_HRS,CURRENT_MINS,CURRENT_SEC);
-        TransactionItem transactionItem = new TransactionItem(
-                MainActivity.userName,
-                itemname.getText().toString(),
-                Long.parseLong(itemcost.getText().toString()),
-                now.getTimeInMillis(),
-                description.getText().toString());
+            TransactionItem transactionItem = new TransactionItem(
+                    Main2Activity.userName,
+                    itemname.getText().toString(),
+                    Long.parseLong(itemcost.getText().toString()),
+                    now.getTimeInMillis(),
+                    description.getText().toString());
 
-        TransactionDAO transactionDAO = TransactionDAO.initialiser(getActivity().getApplicationContext());
-        transactionDAO.insertTransaction(transactionItem);
-
+            TransactionDAO transactionDAO = TransactionDAO.initialiser(getActivity().getApplicationContext());
+            transactionDAO.insertTransaction(transactionItem);
         hideKeyboard();
         Snackbar.make(this.getView(),"transaction added",Snackbar.LENGTH_SHORT).show();
         getActivity().onBackPressed();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Main2Activity.menuitem.setVisible(true);
+    }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String item = (String)parent.getItemAtPosition(position);
+        Toast.makeText(parent.getContext(),"item is "+item,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(requestCode == 0 && imageFile.exists()){
+            Log.d("EXPM_Snapshot","snap taken "+ imageFile.getAbsolutePath());
+        }
+    }
 }

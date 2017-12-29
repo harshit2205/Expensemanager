@@ -2,10 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/mdtp_white"
     tools:context="com.example.users.myexpensemanager1.Fragments.TransactionHistoryFrag">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/history_recyclerview"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -16,5 +19,13 @@
         android:gravity="center"
         android:visibility="gone"
         android:text="@string/transactions_yet_to_add" />
+
+    <ProgressBar
+        android:id="@+id/fetch_progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        />
 
 </FrameLayout>

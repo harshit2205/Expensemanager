@@ -17,12 +17,14 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.util.Calendar;
 
-public class BaseFragment extends Fragment implements TimePickerDialog.OnTimeSetListener,DatePickerDialog.OnDateSetListener,View.OnClickListener{
+public class BaseFragment extends Fragment implements TimePickerDialog.OnTimeSetListener,
+        DatePickerDialog.OnDateSetListener,
+        View.OnClickListener{
     Calendar now = Calendar.getInstance();
     int CURRENT_YEAR,CURRENT_DATE,CURRENT_MONTH,CURREN_HRS,CURRENT_MINS,CURRENT_SEC;
 
     public BaseFragment() {
-        // Required empty public constructor
+        // Required empty public constructor...
     }
 
 
@@ -52,7 +54,7 @@ public class BaseFragment extends Fragment implements TimePickerDialog.OnTimeSet
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.addToBackStack("options_frag");
-        transaction.replace(R.id.container,frag);
+        transaction.replace(R.id.container_main,frag);
         transaction.commit();
     }
 
@@ -60,6 +62,7 @@ public class BaseFragment extends Fragment implements TimePickerDialog.OnTimeSet
         if (getActivity() == null) {
             return;
         }
+
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         if (getView() != null) {
             imm.hideSoftInputFromWindow(getView().getApplicationWindowToken(), 0);
@@ -86,7 +89,4 @@ public class BaseFragment extends Fragment implements TimePickerDialog.OnTimeSet
         );
         tpd.show(getFragmentManager(), "time_picker_dialog");
     }
-
-
-
 }

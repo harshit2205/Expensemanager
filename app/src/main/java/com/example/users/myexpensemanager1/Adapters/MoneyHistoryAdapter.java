@@ -8,19 +8,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.users.myexpensemanager1.Dao.MoneyDAO;
 import com.example.users.myexpensemanager1.Models.MoneyItem;
 import com.example.users.myexpensemanager1.R;
 import com.example.users.myexpensemanager1.Utils.ConfirmationDailogFrag;
-import com.example.users.myexpensemanager1.Views.MoneyHistoryViewHolder;
 
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
 
-public class MoneyHistoryAdapter extends RecyclerView.Adapter<MoneyHistoryViewHolder> {
+public class MoneyHistoryAdapter extends RecyclerView.Adapter<MoneyHistoryAdapter.MoneyHistoryViewHolder> {
     Context context;
     List<MoneyItem> items;
     FragmentManager manager;
@@ -38,12 +38,13 @@ public class MoneyHistoryAdapter extends RecyclerView.Adapter<MoneyHistoryViewHo
     public MoneyHistoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_history, parent, false);
-        return new MoneyHistoryViewHolder(v, ConfirmationDailogFrag.MONEY_DELETION, manager);
+        return new MoneyHistoryViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(MoneyHistoryViewHolder holder, int position) {
-        holder.moneyAmount.setText(Long.toString(items.get(position).getAmount()));
+        holder.moneyAmount.setText(context.getResources().getString(R.string.Rs)+" "
+                +Long.toString(items.get(position).getAmount()));
         holder.date.setText(getDate(items.get(position).getTimestamp()));
         holder.time.setText(getTime(items.get(position).getTimestamp()));
         holder.id = items.get(position).getId();
@@ -69,6 +70,34 @@ public class MoneyHistoryAdapter extends RecyclerView.Adapter<MoneyHistoryViewHo
         return time;
     }
 
+    public void itemSetChanged(){
+        items = MoneyDAO.initialiser(context).showMoneyTuple();
+        notifyDataSetChanged();
+    }
 
+    public class MoneyHistoryViewHolder extends RecyclerView.ViewHolder {
+        public TextView moneyAmount;
+        public TextView date;
+        public TextView time;
+        public int id;
 
+        public MoneyHistoryViewHolder(View itemView) {
+            super(itemView);
+            moneyAmount = (TextView)itemView.findViewById(R.id.money_amount);
+            date = (TextView)itemView.findViewById(R.id.money_add_date);
+            time = (TextView)itemView.findViewById(R.id.money_add_time);
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    ConfirmationDailogFrag frag = ConfirmationDailogFrag.getConfirmationFrag(id,
+                            ConfirmationDailogFrag.MONEY_DELETION,
+                            MoneyHistoryAdapter.this);
+                    frag.show(manager,"deletion");
+                    notifyDataSetChanged();
+                    return true;
+                }
+            });
+        }
+    }
 }

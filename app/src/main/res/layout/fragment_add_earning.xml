@@ -1,18 +1,14 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
-    tools:context=".Fragments.AddMoneyManual">
+    tools:context=".Fragments.AddEarningFrag">
 
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:padding="5dp"
-        android:background="#ff7022"
-        android:orientation="vertical"
         android:id="@+id/linearLayout"
         android:weightSum="1">
         <EditText
@@ -20,12 +16,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/amount"
-            android:textColorHint="@color/mdtp_white"
-            android:textColor="@color/mdtp_white"
+            android:textSize="14sp"
             android:inputType="number"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/money_amount"
+            android:id="@+id/date_time_layout"
             android:padding="5dp"
             android:orientation="horizontal">
             <Button
@@ -35,9 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/shape"
-                android:hint="@string/Date"
-                android:textColorHint="@color/mdtp_white"
-                android:textColor="@color/mdtp_white"/>
+                android:hint="@string/Date"/>
             <Button
                 android:layout_margin="5dp"
                 android:id="@+id/time_input"
@@ -45,34 +40,35 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/shape"
-                android:hint="@string/time"
-                android:textColorHint="@color/mdtp_white"
-                android:textColor="@color/mdtp_white"/>
+                android:hint="@string/time"/>
         </LinearLayout>
-
-
-
         <EditText
             android:id="@+id/money_description"
             android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/date_time_layout"
+            android:gravity="bottom"
+            android:textSize="14sp"
+            android:maxLines="3"
+            android:hint="@string/description"/>
+        <RadioButton
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:hint="@string/description"
-            android:textColorHint="@color/mdtp_white"
-            android:textColor="@color/mdtp_white"/>
-    </LinearLayout>
-
-
+            android:layout_margin="16dp"
+            android:layout_below="@id/money_description"
+            android:id="@+id/monthlyadd_checkbox"
+            android:text="@string/monthly_add"
+            android:textColor="@color/colorPrimaryDark"/>
 
         <Button
             android:id="@+id/add_money"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="#ff7022"
-            android:text="@string/add_money"
-            android:textColorHint="@color/mdtp_white"
-            android:textColor="@color/mdtp_white"/>
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:layout_below="@id/monthlyadd_checkbox"
+            android:text="@string/add_money"/>
+    </RelativeLayout>
 
-
-</RelativeLayout>
+</ScrollView>
