@@ -19,8 +19,7 @@ import com.example.users.myexpensemanager1.R;
  */
 public class TransactionHistoryPager extends Fragment {
 
-
-
+    public FragmentPagerItemAdapter adapter;
 
     public TransactionHistoryPager() {
         // Required empty public constructor
@@ -35,8 +34,7 @@ public class TransactionHistoryPager extends Fragment {
 
         Log.d("EXPM_Fragmentadapter","oncreate view called");
 
-        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getChildFragmentManager());
-
+        adapter = new FragmentPagerItemAdapter(getChildFragmentManager());
 
         TabLayout viewPagerTab = (TabLayout) v.findViewById(R.id.viewpagertab);
 

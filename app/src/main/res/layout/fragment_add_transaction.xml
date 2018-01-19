@@ -27,14 +27,19 @@
                         android:id="@+id/item_name"
                         android:hint="@string/item_name"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:textSize="14sp"
+                        android:layout_height="wrap_content"
+                        android:maxLength="13"
+                        android:maxLines="1"/>
                     <EditText
                         android:id="@+id/item_cost"
                         android:hint="@string/item_cost"
                         android:inputType="number"
+                        android:textSize="14sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/item_name"/>
+                        android:layout_below="@+id/item_name"
+                        android:maxLines="1"/>
                     <LinearLayout
                         android:id="@+id/date_time_layout"
                         android:layout_width="match_parent"
@@ -63,12 +68,14 @@
                         android:id="@+id/item_description"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
+                        android:textSize="14sp"
                         android:layout_below="@+id/date_time_layout"
                         android:hint="@string/description"/>
                     <com.weiwangcn.betterspinner.library.BetterSpinner
                         android:id="@+id/type_chooser"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textSize="14sp"
                         android:layout_below="@id/item_description"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:hint="@string/set_transaction_type"

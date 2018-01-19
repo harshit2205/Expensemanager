@@ -46,7 +46,6 @@
          // Inflate the layout for this fragment
          View v =inflater.inflate(R.layout.fragment_add_earning, container, false);
 
-         Main2Activity.menuitem.setVisible(false);
          date = (Button) v.findViewById(R.id.date_input);
          date.setOnClickListener(this);
          time = (Button)v.findViewById(R.id.time_input);
@@ -62,7 +61,7 @@
 
      @Override
      public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-         date.setText(dayOfMonth+"/"+monthOfYear+"/"+year);
+         date.setText(dayOfMonth+"/"+(monthOfYear+1)+"/"+year);
          CURRENT_DATE = dayOfMonth;
          CURRENT_MONTH = monthOfYear;
          CURRENT_YEAR = year;
@@ -84,7 +83,7 @@
                  datePicker();
                  break;
              case R.id.time_input:
-                 timePicker();;
+                 timePicker();
                  break;
              case R.id.add_money:
                  if(inputcheck()) addMoney();
@@ -116,11 +115,5 @@
              return false;
          }
          return true;
-     }
-
-     @Override
-     public void onDestroy() {
-         super.onDestroy();
-         Main2Activity.menuitem.setVisible(true);
      }
  }

@@ -1,0 +1,119 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#fff"
+    tools:context=".Fragments.AddLendAndBorrowFrag">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/colorPrimary"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="10dp"
+            android:id="@+id/cardview">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+                <EditText
+                    android:id="@+id/lender_borrower_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:textSize="14sp"
+                    android:hint="lender or borrower's name"/>
+                <com.weiwangcn.betterspinner.library.BetterSpinner
+                    android:id="@+id/type_chooser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_below="@+id/lender_borrower_name"
+                    android:hint="Set type"
+                    android:textColorHint="#9F9F9F"/>
+                <EditText
+                    android:id="@+id/money_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:textSize="14sp"
+                    android:hint="amount"
+                    android:layout_below="@id/type_chooser"/>
+                <EditText
+                    android:id="@+id/item_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_below="@id/money_amount"
+                    android:gravity="center_vertical"
+                    android:textSize="14sp"
+                    android:maxLines="3"
+                    android:layout_marginBottom="10dp"
+                    android:hint="@string/description"/>
+
+                <CheckBox android:checked="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7dp"
+                    android:layout_below="@id/item_description"
+                    android:id="@+id/set_endate_checkbox"
+                    android:text="set last date to settle?"
+                    android:textColor="@color/colorPrimaryDark"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/date_time_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_below="@id/set_endate_checkbox"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/date_input"
+                        android:layout_margin="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/Date"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape"/>
+                    <Button
+                        android:id="@+id/time_input"
+                        android:layout_margin="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/time"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape"/>
+                </LinearLayout>
+
+                <CheckBox android:checked="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7dp"
+                    android:visibility="gone"
+                    android:layout_below="@id/date_time_layout"
+                    android:id="@+id/set_remainder_checkbox"
+                    android:text="set remainder for end date?"
+                    android:textColor="@color/colorPrimaryDark"
+                    />
+
+                <Button
+                    android:id="@+id/add_lendorborrow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="add lend or borrow"
+                    android:layout_below="@+id/set_remainder_checkbox"
+                    android:textColor="#fff"
+                    android:background="@drawable/button_background"/>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+    </ScrollView>
+</RelativeLayout>

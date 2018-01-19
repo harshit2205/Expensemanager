@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,9 +36,10 @@ public class AddTransactionFragment extends BaseFragment implements AdapterView.
     Button date;
     Button time;
     Button addTransaction,takeSnap;
-    EditText itemname, itemcost, description;
-    BetterSpinner spinner;
+    EditText purpose, itemcost, description;
     File imageFile;
+    String filePath = "";
+    BetterSpinner transactionType;
 
     public AddTransactionFragment() {
         // Required empty public constructor
@@ -58,12 +58,11 @@ public class AddTransactionFragment extends BaseFragment implements AdapterView.
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_add_transaction, container, false);
 
-        Main2Activity.menuitem.setVisible(false);
         date = (Button) v.findViewById(R.id.date_input);
         date.setOnClickListener(this);
         time = (Button)v.findViewById(R.id.time_input);
         time.setOnClickListener(this);
-        itemname = (EditText)v.findViewById(R.id.item_name);
+        purpose = (EditText)v.findViewById(R.id.item_name);
         itemcost = (EditText)v.findViewById(R.id.item_cost);
         description = (EditText)v.findViewById(R.id.item_description);
         addTransaction = (Button)v.findViewById(R.id.add_transaction);
@@ -72,15 +71,14 @@ public class AddTransactionFragment extends BaseFragment implements AdapterView.
         takeSnap.setOnClickListener(this);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),
-                R.layout.dropdown_item_spinner, COUNTRIES);
-        BetterSpinner textView = (BetterSpinner)
+                R.layout.dropdown_item_spinner, TRANSACTION_TYPE);
+        transactionType = (BetterSpinner)
                 v.findViewById(R.id.type_chooser);
-        textView.setAdapter(adapter);
-
+        transactionType.setAdapter(adapter);
         return v;
     }
 
-    private String[] COUNTRIES = new String[] {
+    private String[] TRANSACTION_TYPE = new String[] {
             "Food Expenses", "Movies Expenses", "Household Expenses", "Tax Expenses", "Other Expenses"
     };
 
@@ -99,7 +97,15 @@ public class AddTransactionFragment extends BaseFragment implements AdapterView.
                     addTransaction();
                 }
                 else{
-                    Snackbar.make(this.getView(),"unfilled columns",Snackbar.LENGTH_SHORT).show();
+                    String message = "";
+                    if(purpose.getText().toString().equals("")){
+                        message = "Purpose not set";
+                    }else if( itemcost.getText().toString().equals("")){
+                        message = "Amount paid not set";
+                    }else{
+                        message = "Type of transaction not set";
+                    }
+                    Snackbar.make(this.getView(),message,Snackbar.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.take_snapshot:
@@ -107,9 +113,17 @@ public class AddTransactionFragment extends BaseFragment implements AdapterView.
         }
     }
 
+    public boolean inputcheck(){
+        if(purpose.getText().toString().equals("") || itemcost.getText().toString().equals("")
+                || transactionType.getText().toString().equals("")){
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        date.setText(dayOfMonth+"/"+monthOfYear+"/"+year);
+        date.setText(dayOfMonth+"/"+(monthOfYear+1)+"/"+year);
         CURRENT_DATE = dayOfMonth;
         CURRENT_MONTH = monthOfYear;
         CURRENT_YEAR = year;
@@ -121,13 +135,6 @@ public class AddTransactionFragment extends BaseFragment implements AdapterView.
         CURREN_HRS = hourOfDay;
         CURRENT_MINS = minute;
         CURRENT_SEC = second;
-    }
-
-    public boolean inputcheck(){
-        if(itemname.getText().toString().equals("") || itemcost.getText().toString().equals("")){
-            return false;
-        }
-                return true;
     }
 
     private void takeSnapshot(){
@@ -142,10 +149,12 @@ public class AddTransactionFragment extends BaseFragment implements AdapterView.
         now.set(CURRENT_YEAR,CURRENT_MONTH,CURRENT_DATE,CURREN_HRS,CURRENT_MINS,CURRENT_SEC);
             TransactionItem transactionItem = new TransactionItem(
                     Main2Activity.userName,
-                    itemname.getText().toString(),
+                    purpose.getText().toString(),
                     Long.parseLong(itemcost.getText().toString()),
                     now.getTimeInMillis(),
-                    description.getText().toString());
+                    description.getText().toString(),
+                    filePath,
+                    transactionType.getText().toString());
 
             TransactionDAO transactionDAO = TransactionDAO.initialiser(getActivity().getApplicationContext());
             transactionDAO.insertTransaction(transactionItem);
@@ -157,7 +166,6 @@ public class AddTransactionFragment extends BaseFragment implements AdapterView.
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Main2Activity.menuitem.setVisible(true);
     }
 
     @Override
@@ -175,7 +183,7 @@ public class AddTransactionFragment extends BaseFragment implements AdapterView.
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if(requestCode == 0 && imageFile.exists()){
-            Log.d("EXPM_Snapshot","snap taken "+ imageFile.getAbsolutePath());
+            filePath = imageFile.getAbsolutePath();
         }
     }
 }

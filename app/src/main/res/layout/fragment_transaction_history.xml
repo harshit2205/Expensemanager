@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/mdtp_white"
+    android:background="@color/background"
     tools:context="com.example.users.myexpensemanager1.Fragments.TransactionHistoryFrag">
 
     <android.support.v7.widget.RecyclerView

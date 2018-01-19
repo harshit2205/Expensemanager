@@ -24,6 +24,8 @@ public class DAOFactory extends SQLiteOpenHelper {
     public static final String COLUMN_AMOUNT = "amount";
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_UNIQUE_STAMP = "uniqueKey";
+    public static final String COLUMN_FILEPATH = "filePath";
+    public static final String COLUMN_TYPE = "type";
 
     //queries for Table creation.....
     //create add Money Table.....
@@ -41,7 +43,9 @@ public class DAOFactory extends SQLiteOpenHelper {
             COLUMN_ITEM+ " TEXT , " +
             COLUMN_AMOUNT+ " BIGINT(10) , " +
             COLUMN_DESCRIPTION+ " TEXT , " +
-            COLUMN_TIMSTAMP+" BIGINT(15) );";
+            COLUMN_TIMSTAMP+ " BIGINT(15), " +
+            COLUMN_FILEPATH+ " TEXT ," +
+            COLUMN_TYPE+ " TEXT );";
 
     String createAlarmTable = "CREATE TABLE "+ ALARM_TABLE +"( " +
             COLUMN_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT , " +

@@ -1,12 +1,41 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.users.myexpensemanager1.Fragments.LiveStatsFrag">
 
-    <it.sephiroth.android.library.imagezoom.ImageViewTouch
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/temp_ImageView"/>
+        android:layout_height="match_parent">
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="16dp"
+            android:id="@+id/chart1_cardView"
+            app:cardCornerRadius="15dp"
+            android:elevation="3dp">
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/chart1"
+                android:layout_width="match_parent"
+                android:layout_margin="5dp"
+                android:layout_height="match_parent" />
+        </android.support.v7.widget.CardView>
 
-</FrameLayout>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="16dp"
+            android:layout_below="@+id/chart1_cardView"
+            app:cardCornerRadius="15dp"
+            android:elevation="3dp">
+            <com.github.mikephil.charting.charts.CombinedChart
+                android:id="@+id/chart2"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="match_parent" />
+        </android.support.v7.widget.CardView>
+
+</RelativeLayout>
+</ScrollView>

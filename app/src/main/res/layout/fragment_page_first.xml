@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFE0B2">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/informer_header"
+        android:paddingTop="32dp"
+        android:paddingBottom="32dp"
+        android:layout_gravity="center">
+        <ImageView
+            android:layout_width="256dp"
+            android:layout_height="256dp"
+            android:id="@+id/graph_fall"
+            android:src="@drawable/graph_fall"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+        <ImageView
+            android:layout_width="156dp"
+            android:layout_height="156dp"
+            android:id="@+id/sad_girl_back"
+            android:layout_marginLeft="32dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/back_girl_sad"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/informer_header"
+        android:layout_above="@+id/informer_textview"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:text="Fed up of uncontrolled\n budget?"
+        android:textSize="24sp"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/informer_textview"
+        android:layout_above="@+id/skip_view"
+        android:text="frustrated from lots of uncontrolled budgets\n and money wastage? "
+        android:textSize="16sp"
+        android:layout_marginBottom="32dp"
+        android:gravity="center"/>
+
+    <View
+        android:id="@+id/skip_view"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"/>
+
+
+</RelativeLayout>

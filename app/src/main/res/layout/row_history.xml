@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
     android:layout_marginTop="2dp"
+    app:cardCornerRadius="5dp"
     android:background="?android:attr/windowBackground">
 
     <RelativeLayout
         android:id="@+id/contentView"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="100dp"
         android:background="?attr/selectableItemBackground"
         android:orientation="horizontal">
 
@@ -35,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/repeat_add"
-            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@+id/delete_earning"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:text="Monthly Add"
@@ -46,10 +50,11 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/avatarView"
             android:layout_below="@+id/money_amount"
-            android:layout_alignParentBottom="true"
             android:gravity="center_vertical"
             android:layout_weight="2"
             android:maxLines="2"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
             android:text="@string/Date"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="14sp" />
@@ -59,10 +64,46 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/money_amount"
             android:layout_marginRight="10dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/delete_earning"
             android:gravity="center_vertical"
             android:layout_weight="1"
             android:text="@string/time"/>
+        <TextView
+            android:id="@+id/item_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:layout_below="@+id/money_add_date"
+            android:layout_toRightOf="@+id/avatarView"
+            android:maxLines="1"
+            />
+        <ImageView
+            android:id="@+id/delete_earning"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_delete_black_24dp"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"/>
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background"
+            android:layout_toLeftOf="@+id/delete_earning"
+            android:layout_toRightOf="@id/avatarView"
+            android:layout_below="@+id/item_description"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EDIT"
+            android:layout_toLeftOf="@id/delete_earning"
+            android:layout_toRightOf="@+id/avatarView"
+            android:gravity="center"
+            android:textColor="@android:color/holo_blue_light"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/line"/>
+
+
     </RelativeLayout>
-</FrameLayout>
+</android.support.v7.widget.CardView>

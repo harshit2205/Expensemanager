@@ -31,7 +31,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.RecieptImageActivity"></activity>
+        <activity
+            android:name=".Activities.RecieptImageActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity android:name=".Activities.OneFragmentActivity" />
+        <activity android:name=".Activities.WelcomeScreenActivity">
+
+        </activity>
     </application>
 
 </manifest>

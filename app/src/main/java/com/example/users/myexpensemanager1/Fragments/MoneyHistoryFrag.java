@@ -2,6 +2,7 @@
 package com.example.users.myexpensemanager1.Fragments;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.users.myexpensemanager1.Adapters.MoneyHistoryAdapter;
@@ -26,6 +28,9 @@ public class MoneyHistoryFrag extends BaseFragment {
     RecyclerView historyView;
     MoneyHistoryAdapter adapter;
     TextView emptyView;
+    List<MoneyItem> earningList;
+    ProgressBar progressBar;
+    public String emptyMessage;
 
 
     public MoneyHistoryFrag() {
@@ -42,21 +47,36 @@ public class MoneyHistoryFrag extends BaseFragment {
         Log.d("EXPM_Logs","list of money items generated at "+Long.toString(System.currentTimeMillis())
                 + "with size " +moneyList.size());
         adapter = new MoneyHistoryAdapter(getActivity().getApplicationContext(), moneyList, getFragmentManager());
+        progressBar = (ProgressBar)v.findViewById(R.id.earnings_progressbar);
         historyView = (RecyclerView)v.findViewById(R.id.history_recyclerview);
         emptyView = (TextView)v.findViewById(R.id.empty_view);
 
         historyView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        if (MoneyDAO.initialiser(getActivity().getApplicationContext()).getMoneyCount() == 0){
-            historyView.setVisibility(View.GONE);
-            emptyView.setVisibility(View.VISIBLE);
-        }else {
-            historyView.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.GONE);
-        }
         historyView.setAdapter(adapter);
+        emptyView.setText(emptyMessage);
+        FetchEarning fetchEarning = new FetchEarning();
+        fetchEarning.execute();
         return v;
     }
 
+    class FetchEarning extends AsyncTask< String, String, List<MoneyItem>> {
 
+        @Override
+        protected List<MoneyItem> doInBackground(String... params) {
+            earningList = MoneyDAO.initialiser(getActivity().getApplicationContext()).showMoneyTuple();
+            return earningList;
+        }
+
+        @Override
+        protected void onPostExecute(List<MoneyItem> items) {
+            progressBar.setVisibility(View.GONE);
+            if(earningList.size() == 0){
+                emptyView.setVisibility(View.VISIBLE);
+            }else{
+                adapter.items = earningList;
+                adapter.notifyDataSetChanged();
+                historyView.setVisibility(View.VISIBLE);
+            }
+        }
+    }
 }

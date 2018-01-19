@@ -5,4 +5,6 @@
     <color name="colorAccent">#088</color>
     <color name="mdtp_accent_color">#0cc</color>
     <color name="mdtp_accent_color_dark">#088</color>
+    <color name="background">#eee</color>
+    <color name="all_grey">#777</color>
 </resources>

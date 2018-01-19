@@ -12,10 +12,10 @@ import com.example.users.myexpensemanager1.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LendingHistoryFrag extends Fragment {
+public class BillSplitFrag extends Fragment {
 
 
-    public LendingHistoryFrag() {
+    public BillSplitFrag() {
         // Required empty public constructor
     }
 
@@ -24,7 +24,8 @@ public class LendingHistoryFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lending_history, container, false);
+        return inflater.inflate(R.layout.fragment_bill_split, container, false);
+
     }
 
 }

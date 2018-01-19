@@ -2,17 +2,19 @@ package com.example.users.myexpensemanager1.Fragments;
 
 
 import android.app.Fragment;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.users.myexpensemanager1.Adapters.RemainderHistoryAdapter;
-import com.example.users.myexpensemanager1.Dao.AlarmsDAO;
-import com.example.users.myexpensemanager1.Models.AlarmItem;
+import com.example.users.myexpensemanager1.Dao.RemaindersDAO;
+import com.example.users.myexpensemanager1.Models.RemainderItem;
 import com.example.users.myexpensemanager1.R;
 
 import java.util.List;
@@ -24,7 +26,8 @@ public class RemainderHistoryFrag extends Fragment {
     RecyclerView remainderHistoryView;
     RemainderHistoryAdapter adapter;
     TextView emptyView;
-    List<AlarmItem> alarmItems;
+    List<RemainderItem> remainderItems;
+    ProgressBar progressBar;
 
     public RemainderHistoryFrag() {
         // Required empty public constructor
@@ -38,23 +41,35 @@ public class RemainderHistoryFrag extends Fragment {
         View view = inflater.inflate(R.layout.fragment_remainder_history, container, false);;
         emptyView = (TextView)view.findViewById(R.id.empty_view);
         remainderHistoryView = (RecyclerView)view.findViewById(R.id.remainder_history_recyclerview);
-        alarmItems = AlarmsDAO.initialiser(getActivity().getApplicationContext()).showAlarmsTuple();
-        adapter = new RemainderHistoryAdapter(getActivity().getApplicationContext(),alarmItems, getFragmentManager());
-
+        progressBar = (ProgressBar)view.findViewById(R.id.remainder_progressBar);
+        remainderItems = RemaindersDAO.initialiser(getActivity().getApplicationContext()).showRemainderTuple();
+        adapter = new RemainderHistoryAdapter(getActivity().getApplicationContext(), remainderItems, getFragmentManager());
         remainderHistoryView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        remainderHistoryView.setAdapter(adapter);
+        FetchRemainders fetchRemainders = new FetchRemainders();
+        fetchRemainders.execute();
+        return view;
+    }
 
-        if(alarmItems.size() == 0){
-            emptyView.setVisibility(View.VISIBLE);
-            remainderHistoryView.setVisibility(View.GONE);
-        }else{
-            emptyView.setVisibility(View.GONE);
-            remainderHistoryView.setVisibility(View.VISIBLE);
+    class FetchRemainders extends AsyncTask< String, String, List<RemainderItem>> {
+
+        @Override
+        protected List<RemainderItem> doInBackground(String... params) {
+            remainderItems = RemaindersDAO.initialiser(getActivity().getApplicationContext()).showRemainderTuple();
+            return remainderItems;
         }
 
-        //knvfdknn fd
-
-        remainderHistoryView.setAdapter(adapter);
-        return view;
+        @Override
+        protected void onPostExecute(List<RemainderItem> items) {
+            progressBar.setVisibility(View.GONE);
+            if(remainderItems.size() == 0){
+                emptyView.setVisibility(View.VISIBLE);
+            }else{
+                adapter.items = remainderItems;
+                adapter.notifyDataSetChanged();
+                remainderHistoryView.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
 }

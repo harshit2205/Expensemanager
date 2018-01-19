@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.users.myexpensemanager1.Dao.MoneyDAO;
@@ -22,7 +23,7 @@ import java.util.Locale;
 
 public class MoneyHistoryAdapter extends RecyclerView.Adapter<MoneyHistoryAdapter.MoneyHistoryViewHolder> {
     Context context;
-    List<MoneyItem> items;
+    public List<MoneyItem> items;
     FragmentManager manager;
 
     public MoneyHistoryAdapter(Context context, List<MoneyItem> items, FragmentManager manager){
@@ -79,6 +80,7 @@ public class MoneyHistoryAdapter extends RecyclerView.Adapter<MoneyHistoryAdapte
         public TextView moneyAmount;
         public TextView date;
         public TextView time;
+        ImageView deleteEarning;
         public int id;
 
         public MoneyHistoryViewHolder(View itemView) {
@@ -86,16 +88,16 @@ public class MoneyHistoryAdapter extends RecyclerView.Adapter<MoneyHistoryAdapte
             moneyAmount = (TextView)itemView.findViewById(R.id.money_amount);
             date = (TextView)itemView.findViewById(R.id.money_add_date);
             time = (TextView)itemView.findViewById(R.id.money_add_time);
+            deleteEarning = (ImageView)itemView.findViewById(R.id.delete_earning);
 
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            deleteEarning.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onLongClick(View v) {
+                public void onClick(View v) {
                     ConfirmationDailogFrag frag = ConfirmationDailogFrag.getConfirmationFrag(id,
                             ConfirmationDailogFrag.MONEY_DELETION,
                             MoneyHistoryAdapter.this);
                     frag.show(manager,"deletion");
                     notifyDataSetChanged();
-                    return true;
                 }
             });
         }

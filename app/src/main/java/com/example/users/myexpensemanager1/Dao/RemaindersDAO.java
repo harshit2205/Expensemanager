@@ -7,12 +7,12 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.users.myexpensemanager1.Models.AlarmItem;
+import com.example.users.myexpensemanager1.Models.RemainderItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlarmsDAO {
+public class RemaindersDAO {
 
     public String ADD_ALARM_DAO = "addAlarmDao";
 
@@ -21,18 +21,18 @@ public class AlarmsDAO {
     DAOFactory daoFactory;
     Context context;
 
-    private static AlarmsDAO alarmsDAO;
+    private static RemaindersDAO remaindersDAO;
 
     //singleton class static initialiser function.....
-    public static AlarmsDAO initialiser(Context context){
-        if(alarmsDAO == null){
-            alarmsDAO = new AlarmsDAO(context);
+    public static RemaindersDAO initialiser(Context context){
+        if(remaindersDAO == null){
+            remaindersDAO = new RemaindersDAO(context);
         }
-        return alarmsDAO;
+        return remaindersDAO;
     }
 
     //fetching the database helper object.....
-    private AlarmsDAO(Context context){
+    private RemaindersDAO(Context context){
         this.context = context;
         daoFactory = new DAOFactory(context, null);
 
@@ -53,25 +53,25 @@ public class AlarmsDAO {
     }
 
     //function to insert values in the alarm table.....
-    public void insertAlarm(AlarmItem alarmItem){
+    public void insertRemainder(RemainderItem remainderItem){
         ContentValues values = new ContentValues();
-        values.put(DAOFactory.COLUMN_USERNAME,alarmItem.getUserName());
-        values.put(DAOFactory.COLUMN_ITEM,alarmItem.getItemName());
-        values.put(DAOFactory.COLUMN_TIMSTAMP,alarmItem.getTimestamp());
-        values.put(DAOFactory.COLUMN_DESCRIPTION,alarmItem.getDescription());
-        values.put(DAOFactory.COLUMN_UNIQUE_STAMP,alarmItem.getUniqueKey());
+        values.put(DAOFactory.COLUMN_USERNAME, remainderItem.getUserName());
+        values.put(DAOFactory.COLUMN_ITEM, remainderItem.getItemName());
+        values.put(DAOFactory.COLUMN_TIMSTAMP, remainderItem.getTimestamp());
+        values.put(DAOFactory.COLUMN_DESCRIPTION, remainderItem.getDescription());
+        values.put(DAOFactory.COLUMN_UNIQUE_STAMP, remainderItem.getUniqueKey());
         database.insert(DAOFactory.ALARM_TABLE,null,values);
         Log.d("EXPM", "alarm Inserted");
     }
 
-    public List<AlarmItem> showAlarmsTuple() {
-        List<AlarmItem> alarmList =  new ArrayList<>();
+    public List<RemainderItem> showRemainderTuple() {
+        List<RemainderItem> alarmList =  new ArrayList<>();
         String query = "SELECT * FROM "+DAOFactory.ALARM_TABLE ;
         Cursor cursor = database.rawQuery(query, null);
         if(cursor.moveToFirst()) {
             do {
                 // get the data into array, or class variable
-                AlarmItem item = new AlarmItem(cursor.getString(1)
+                RemainderItem item = new RemainderItem(cursor.getString(1)
                         , cursor.getString(2)
                         , Long.parseLong(cursor.getString(3))
                         , cursor.getString(4)
@@ -86,12 +86,12 @@ public class AlarmsDAO {
         return alarmList;
     }
 
-    public void deleteAlarm(int id) throws SQLException {
+    public void deleteRemainder(int id) throws SQLException {
         database.delete(daoFactory.ALARM_TABLE, " _id = '" +id +"'", null);
         Log.d("EXPM","alarm table item deleted");
     }
 
-    public int getAlarmsCount() {
+    public int getRemaindersCount() {
         Log.d("EXPM_Logs","get alarm function started at "+Long.toString(System.currentTimeMillis()));
         String countQuery = "SELECT  * FROM " + DAOFactory.ALARM_TABLE;
         Cursor cursor = database.rawQuery(countQuery, null);

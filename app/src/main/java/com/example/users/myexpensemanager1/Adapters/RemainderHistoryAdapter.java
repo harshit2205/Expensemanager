@@ -8,10 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.users.myexpensemanager1.Dao.AlarmsDAO;
-import com.example.users.myexpensemanager1.Models.AlarmItem;
+import com.example.users.myexpensemanager1.Dao.RemaindersDAO;
+import com.example.users.myexpensemanager1.Models.RemainderItem;
 import com.example.users.myexpensemanager1.R;
 import com.example.users.myexpensemanager1.Utils.ConfirmationDailogFrag;
 
@@ -21,27 +22,27 @@ import java.util.Locale;
 
 public class RemainderHistoryAdapter extends RecyclerView.Adapter<RemainderHistoryAdapter.RemainderHistoryViewHolder>{
     Context context;
-    List<AlarmItem> items;
+    public List<RemainderItem> items;
     FragmentManager manager;
 
-    public RemainderHistoryAdapter(Context context, List<AlarmItem> items, FragmentManager manager) {
+    public RemainderHistoryAdapter(Context context, List<RemainderItem> items, FragmentManager manager) {
         this.context = context;
         this.items = items;
         this.manager = manager;
         Log.d("EXPM","size of remainders table: "+items.size());
-        Log.d("EXPM","size of database remainders table: "+AlarmsDAO.initialiser(context).getAlarmsCount());
+        Log.d("EXPM","size of database remainders table: "+ RemaindersDAO.initialiser(context).getRemaindersCount());
     }
 
     @Override
     public RemainderHistoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_history, parent, false);
-        return new RemainderHistoryViewHolder(view, ConfirmationDailogFrag.ALARM_DELETION, manager);
+                .inflate(R.layout.remainder_history_row, parent, false);
+        return new RemainderHistoryViewHolder(view, ConfirmationDailogFrag.REMAINDER_DELETION, manager);
     }
 
     @Override
     public void onBindViewHolder(RemainderHistoryViewHolder holder, int position) {
-        holder.moneyAmount.setText(items.get(position).getItemName());
+        holder.purpose.setText(items.get(position).getItemName());
         holder.date.setText(getDate(items.get(position).getTimestamp()));
         holder.time.setText(getTime(items.get(position).getTimestamp()));
         holder.id = items.get(position).getId();
@@ -69,30 +70,33 @@ public class RemainderHistoryAdapter extends RecyclerView.Adapter<RemainderHisto
     }
 
     public void itemSetChanged(){
-        items = AlarmsDAO.initialiser(context).showAlarmsTuple();
+        items = RemaindersDAO.initialiser(context).showRemainderTuple();
         notifyDataSetChanged();
     }
 
     public class RemainderHistoryViewHolder extends RecyclerView.ViewHolder {
-        public TextView moneyAmount;
+        public TextView purpose;
         public TextView date;
         public TextView time;
+        public TextView description;
+        ImageView deleteRemainder;
         public int id;
 
         public RemainderHistoryViewHolder(View itemView, final int INTENT, final FragmentManager manager) {
             super(itemView);
-            moneyAmount = (TextView)itemView.findViewById(R.id.money_amount);
-            date = (TextView)itemView.findViewById(R.id.money_add_date);
-            time = (TextView)itemView.findViewById(R.id.money_add_time);
+            purpose = (TextView)itemView.findViewById(R.id.purpose);
+            date = (TextView)itemView.findViewById(R.id.remainder_date);
+            time = (TextView)itemView.findViewById(R.id.remainder_time);
+            deleteRemainder = (ImageView)itemView.findViewById(R.id.delete_remainder);
 
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            deleteRemainder.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onLongClick(View v) {
-                    ConfirmationDailogFrag frag = ConfirmationDailogFrag.getConfirmationFrag(id, INTENT,
+                public void onClick(View v) {
+                    ConfirmationDailogFrag frag = ConfirmationDailogFrag.getConfirmationFrag(id,
+                            ConfirmationDailogFrag.REMAINDER_DELETION,
                             RemainderHistoryAdapter.this);
                     frag.show(manager,"deletion");
 
-                    return true;
                 }
             });
         }

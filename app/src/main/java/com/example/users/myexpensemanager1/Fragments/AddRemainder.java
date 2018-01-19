@@ -12,8 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.users.myexpensemanager1.Activities.Main2Activity;
-import com.example.users.myexpensemanager1.Dao.AlarmsDAO;
-import com.example.users.myexpensemanager1.Models.AlarmItem;
+import com.example.users.myexpensemanager1.Dao.RemaindersDAO;
+import com.example.users.myexpensemanager1.Models.RemainderItem;
 import com.example.users.myexpensemanager1.R;
 import com.example.users.myexpensemanager1.Utils.AlarmHandler;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -25,13 +25,13 @@ import java.util.Calendar;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddAlarm extends BaseFragment{
+public class AddRemainder extends BaseFragment{
     Button date;
     Button time;
     Button setReminder;
     EditText itemname, description;
 
-    public AddAlarm() {
+    public AddRemainder() {
         // Required empty public constructor
         CURRENT_YEAR = now.get(Calendar.YEAR);
         CURRENT_MONTH = now.get(Calendar.MONTH);
@@ -47,6 +47,7 @@ public class AddAlarm extends BaseFragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_add_reminder, container, false);
+
         date = (Button) v.findViewById(R.id.date_input);
         date.setOnClickListener(this);
         time = (Button)v.findViewById(R.id.time_input);
@@ -80,7 +81,7 @@ public class AddAlarm extends BaseFragment{
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        date.setText(dayOfMonth+"/"+monthOfYear+"/"+year);
+        date.setText(dayOfMonth+"/"+(monthOfYear+1)+"/"+year);
         CURRENT_YEAR = year;
         CURRENT_MONTH = monthOfYear;
         CURRENT_DATE = dayOfMonth;
@@ -96,7 +97,7 @@ public class AddAlarm extends BaseFragment{
 
     public void addAlarm(){
         now.set(CURRENT_YEAR,CURRENT_MONTH,CURRENT_DATE,CURREN_HRS,CURRENT_MINS,CURRENT_SEC);
-        AlarmItem alarmItem = new AlarmItem(Main2Activity.userName,
+        RemainderItem remainderItem = new RemainderItem(Main2Activity.userName,
                 itemname.getText().toString(),
                 now.getTimeInMillis(),
                 description.getText().toString(),
@@ -111,9 +112,9 @@ public class AddAlarm extends BaseFragment{
         );
 
         //adding alarm to the alarm database.....
-        AlarmsDAO.initialiser(getActivity().getApplicationContext()).insertAlarm(alarmItem);
+        RemaindersDAO.initialiser(getActivity().getApplicationContext()).insertRemainder(remainderItem);
         //calling remainder notification adder function.......
-        AlarmHandler.initialiser().addAlarm(alarmItem,getActivity().getApplicationContext());
+        AlarmHandler.initialiser().addAlarm(remainderItem,getActivity().getApplicationContext());
         hideKeyboard();
         Snackbar.make(this.getView(),"Transaction Remainder added",Snackbar.LENGTH_SHORT).show();
         getActivity().onBackPressed();
@@ -127,6 +128,4 @@ public class AddAlarm extends BaseFragment{
         }
         return true;
     }
-
-
 }

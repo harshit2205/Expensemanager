@@ -10,14 +10,24 @@ public class TransactionItem {
     private long amount;
     private long timestamp;
     private String description;
+    private String filePath;
+    private String transactionType;
 
-    public TransactionItem(String userName, String item_name, long amount, long timestamp, String description) {
+    public TransactionItem(String userName,
+                           String item_name,
+                           long amount,
+                           long timestamp,
+                           String description,
+                           String filePath,
+                           String transactionType) {
         this.userName = userName;
         this.item_name = item_name;
         this.amount = amount;
         this.timestamp = timestamp;
         this.description = description;
-    }
+        this.filePath = filePath;
+        this.transactionType = transactionType;
+     }
 
     public int getId() {
         return Id;
@@ -65,5 +75,21 @@ public class TransactionItem {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public String getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
     }
 }

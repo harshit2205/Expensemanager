@@ -1,6 +1,6 @@
 package com.example.users.myexpensemanager1.Models;
 
-public class AlarmItem {
+public class RemainderItem {
     private int Id;
     private String userName;
     private String ItemName;
@@ -8,7 +8,7 @@ public class AlarmItem {
     private String description;
     private long uniqueKey;
 
-    public AlarmItem(String userName, String itemName, long timestamp, String description, long uniqueKey) {
+    public RemainderItem(String userName, String itemName, long timestamp, String description, long uniqueKey) {
         this.userName = userName;
         ItemName = itemName;
         this.timestamp = timestamp;
