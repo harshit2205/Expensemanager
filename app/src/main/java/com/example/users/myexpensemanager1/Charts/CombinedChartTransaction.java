@@ -21,9 +21,11 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class CombinedChartTransaction {
 
@@ -31,10 +33,12 @@ public class CombinedChartTransaction {
     CombinedChart mChart;
     public static Typeface mTfLight;
     private final int itemcount = 5;
+    private List<Long> datalist;
 
     public CombinedChartTransaction(Context mcontext, CombinedChart mChart) {
         this.context = mcontext;
         this.mChart = mChart;
+        datalist = new ArrayList<>();
         mTfLight = Typeface.createFromAsset(mcontext.getAssets(), "OpenSans-Light.ttf");
 
         mChart.getDescription().setEnabled(false);
@@ -80,8 +84,8 @@ public class CombinedChartTransaction {
 
         CombinedData data = new CombinedData();
 
-        data.setData(generateLineData());
         data.setData(generateBarData());
+        data.setData(generateLineData());
         data.setValueTypeface(mTfLight);
 
 //        xAxis.setAxisMaximum(data.getXMax() + 0.25f);
@@ -96,69 +100,55 @@ public class CombinedChartTransaction {
         float start = 1f;
         long value = 0;
 
-        for (int index = (int)start; index < itemcount + start; index++) {
-
+        for (int index = (int) start; index < itemcount + start; index++) {
             Calendar c = Calendar.getInstance();
-            Log.d("EXPM_Calender","calander values to be passed month = "+ c.get(Calendar.MONTH)+" year "+c.get(Calendar.YEAR));
-            c.add(Calendar.MONTH, index - 4);
+            c.add(Calendar.MONTH, index - 5);
             c.add(Calendar.DATE, 0);
-            Log.d("EXPM_Calender","calander value passed = "+c.get(Calendar.MONTH)+" year "+c.get(Calendar.YEAR));
-
             value = TransactionDAO.initialiser(context).gettransactionamountByMonth(c);
-
+            datalist.add(value);
             entries1.add(new BarEntry(index, value));
-            Log.d("EXPM_Chart_combined","value index = "+index+", value = "+value );
+            Log.d("EXPM_Chart_combined", "value index = " + index + ", value = " + value);
         }
-
         BarDataSet set1 = new BarDataSet(entries1, "Bar 1");
         set1.setColor(Color.rgb(60, 220, 78));
-        set1.setValueTextColor(Color.rgb(60, 220, 78));
+        set1.setValueTextColor(ColorTemplate.rgb("#009999"));
         set1.setValueTextSize(10f);
+        set1.setColor(ColorTemplate.rgb("#008888"));
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-
-//        BarDataSet set2 = new BarDataSet(entries2, "");
-//        set2.setStackLabels(new String[]{"Stack 1", "Stack 2"});
-//        set2.setColors(new int[]{Color.rgb(61, 165, 255), Color.rgb(23, 197, 255)});
-//        set2.setValueTextColor(Color.rgb(61, 165, 255));
-//        set2.setValueTextSize(10f);
-//        set2.setAxisDependency(YAxis.AxisDependency.LEFT);
-
-//        float groupSpace = 0.1f;
-//        float barSpace = 0.0f; // x2 dataset
-        float barWidth = .9f; // x2 dataset
-        // (0.45 + 0.02) * 2 + 0.06 = 1.00 -> interval per "group"
-
+        set1.setHighlightEnabled(false);
+        float barWidth = .9f;
         ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
         dataSets.add(set1);
-
         BarData d = new BarData(dataSets);
         d.setBarWidth(barWidth);
-
-        // make this BarData object grouped
-//        d.groupBars(0, groupSpace, barSpace); // start at x = 0
-
         return d;
     }
 
     private LineData generateLineData() {
 
         LineData d = new LineData();
-
         ArrayList<Entry> entries = new ArrayList<Entry>();
 
-        for (int index = 1; index <= itemcount; index++)
-            entries.add(new Entry(index , 1));
+        for (int index = 1; index <= itemcount; index++) {
+            long sum = 0;
+            for (int i = 0; i < index; i++) {
+                sum = sum + datalist.get(i);
+            }
+            float val = (float) sum / index;
+            entries.add(new Entry(index, val));
+        }
+
 
         LineDataSet set = new LineDataSet(entries, "Line DataSet");
-        set.setColor(Color.rgb(0,136,136));
+        set.setColor(Color.rgb(220, 128, 0));
         set.setLineWidth(2.5f);
-        set.setCircleColor(Color.rgb(0,136,136));
+        set.setCircleColor(Color.rgb(220, 128, 0));
         set.setCircleRadius(3f);
-        set.setFillColor(Color.rgb(0,136,136));
+        set.setFillColor(Color.rgb(220, 128, 0));
         set.setMode(LineDataSet.Mode.LINEAR);
         set.setDrawValues(true);
         set.setValueTextSize(10f);
-        set.setValueTextColor(Color.rgb(240, 238, 70));
+        set.setValueTextColor(Color.rgb(255, 128, 0));
 
         set.setAxisDependency(YAxis.AxisDependency.LEFT);
         d.addDataSet(set);
@@ -166,7 +156,4 @@ public class CombinedChartTransaction {
         return d;
     }
 
-    protected float getRandom(float range, int startsfrom) {
-        return (int) (Math.random() * range) + startsfrom;
-    }
 }

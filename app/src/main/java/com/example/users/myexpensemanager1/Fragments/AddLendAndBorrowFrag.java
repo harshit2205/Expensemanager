@@ -118,10 +118,7 @@ public class AddLendAndBorrowFrag extends BaseFragment implements CompoundButton
     }
 
     public boolean inputcheck(){
-        if(name.getText().toString().equals("") || lendBorrowType.getText().toString().equals("")){
-            return false;
-        }
-        return true;
+        return !(name.getText().toString().equals("") || lendBorrowType.getText().toString().equals(""));
     }
 
     private void addLendOrBorrow(){

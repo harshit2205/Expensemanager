@@ -114,11 +114,8 @@ public class AddTransactionFragment extends BaseFragment implements AdapterView.
     }
 
     public boolean inputcheck(){
-        if(purpose.getText().toString().equals("") || itemcost.getText().toString().equals("")
-                || transactionType.getText().toString().equals("")){
-            return false;
-        }
-        return true;
+        return !(purpose.getText().toString().equals("") || itemcost.getText().toString().equals("")
+                || transactionType.getText().toString().equals(""));
     }
 
     @Override

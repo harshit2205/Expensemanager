@@ -12,8 +12,7 @@ import com.example.users.myexpensemanager1.Models.MoneyItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MoneyDAO {
-
+public class RepetativeMoneyDAO {
     public String ADD_MONEY_DAO = "addMoneyDAO";
 
     //initialising variables.....
@@ -21,18 +20,18 @@ public class MoneyDAO {
     DAOFactory daoFactory;
     Context context;
 
-    private static MoneyDAO moneyDAO;
+    private static RepetativeMoneyDAO repetativeMoneyDAO;
 
     //singleton class static initialiser function.....
-    public static MoneyDAO initialiser(Context context){
-        if(moneyDAO == null){
-            moneyDAO = new MoneyDAO(context);
+    public static RepetativeMoneyDAO initialiser(Context context){
+        if(repetativeMoneyDAO == null){
+            repetativeMoneyDAO = new RepetativeMoneyDAO(context);
         }
-        return moneyDAO;
+        return repetativeMoneyDAO;
     }
 
     //fetching the database helper object.....
-    private MoneyDAO(Context context) {
+    private RepetativeMoneyDAO(Context context) {
         this.context = context;
         daoFactory = new DAOFactory(context, null);
 
@@ -58,19 +57,24 @@ public class MoneyDAO {
         values.put(DAOFactory.COLUMN_AMOUNT,moneyItem.getAmount());
         values.put(DAOFactory.COLUMN_DESCRIPTION,moneyItem.getDescription());
         values.put(DAOFactory.COLUMN_TIMSTAMP,moneyItem.getTimestamp());
-        database.insert(DAOFactory.MONEY_TABLE,null,values);
+        database.insert(DAOFactory.REPETATIVE_MONEY_TABLE,null,values);
         Log.d("EXPM", "Money Inserted");
     }
 
     public void deleteMoney(int id) throws SQLException {
-        database.delete(DAOFactory.MONEY_TABLE, " _id = '" +id +"'", null);
+        database.delete(DAOFactory.REPETATIVE_MONEY_TABLE, " _id = '" +id +"'", null);
         Log.d("EXPM","money table item deleted");
+    }
+
+    public void deleteMoneyByTimeStamp( long timeStamp)throws SQLException {
+        database.delete(DAOFactory.REPETATIVE_MONEY_TABLE, DAOFactory.COLUMN_TIMSTAMP+" = "+timeStamp, null);
+        Log.d("EXPM_AutoAdder","money table item is deleted");
     }
 
     public List<MoneyItem> showMoneyTuple() {
         Log.d("EXPM_Logs","show money tuple function called at "+Long.toString(System.currentTimeMillis()));
         List<MoneyItem> moneyList =  new ArrayList<>();
-        String query = "SELECT * FROM "+DAOFactory.MONEY_TABLE ;
+        String query = "SELECT * FROM "+DAOFactory.REPETATIVE_MONEY_TABLE ;
         Cursor cursor = database.rawQuery(query, null);
         if(cursor.moveToFirst()) {
             Log.d("temp_tags", "cursor count is " + cursor.getCount());
@@ -94,7 +98,7 @@ public class MoneyDAO {
     // gives the count of the number of elements.......
     public int getMoneyCount() {
         Log.d("EXPM_Logs","get money count function called at "+Long.toString(System.currentTimeMillis()));
-        String countQuery = "SELECT  * FROM " + DAOFactory.MONEY_TABLE;
+        String countQuery = "SELECT  * FROM " + DAOFactory.REPETATIVE_MONEY_TABLE;
         Cursor cursor = database.rawQuery(countQuery, null);
         int cnt = cursor.getCount();
         cursor.close();
@@ -102,4 +106,24 @@ public class MoneyDAO {
         return cnt;
     }
 
+    public boolean ifTuppleExists(Long timeStamp){
+        String query = "SELECT  * FROM " + DAOFactory.REPETATIVE_MONEY_TABLE +
+                " WHERE " + DAOFactory.COLUMN_TIMSTAMP + " = "+ timeStamp + ";";
+        Log.d("EXPM_AutoAdder","query "+query);
+        Cursor cursor = database.rawQuery(query, null);
+        Log.d("EXPM_AutoAdder","cursor count "+cursor.getCount());
+        if(cursor.getCount() > 0 )return true;
+        return false;
+    }
+
+    public MoneyItem getRecentEarning(){
+        String query = "SELECT * FROM " + DAOFactory.REPETATIVE_MONEY_TABLE + " ORDER BY " + DAOFactory.COLUMN_TIMSTAMP + ";";
+        Cursor cursor = database.rawQuery(query, null);
+        cursor.moveToFirst();
+        MoneyItem item = new MoneyItem(cursor.getString(1)
+                , Long.parseLong(cursor.getString(2))
+                , Long.parseLong(cursor.getString(4))
+                , cursor.getString(3));
+        return  item;
+    }
 }

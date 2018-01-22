@@ -1,29 +1,106 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
     tools:context=".Fragments.MoneyHistoryFrag">
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/history_recyclerview"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"/>
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/history_cardView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:visibility="gone">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="3dp">
+
+                    <TextView
+                        android:id="@+id/nonrep_earnings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="ONE TIME EARNS"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="17sp" />
+
+                    <View
+                        android:id="@+id/devider1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/nonrep_earnings"
+                        android:background="@color/background" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/history_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/devider1" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/history_cardView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/history_cardView1"
+                android:layout_margin="10dp"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="3dp">
+
+                    <TextView
+                        android:id="@+id/rep_earnings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="MONTHLY EARNS"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="17sp" />
+
+                    <View
+                        android:id="@+id/devider2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/rep_earnings"
+                        android:background="@color/background" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rep_history_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/devider2" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+    </ScrollView>
 
     <TextView
         android:id="@+id/empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:visibility="gone"
-        android:text="@string/money_yet_to_add" />
+        android:text="@string/money_yet_to_add"
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/earnings_progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_centerInParent="true"
+        android:visibility="visible"/>
 
-</FrameLayout>
+
+
+</RelativeLayout>

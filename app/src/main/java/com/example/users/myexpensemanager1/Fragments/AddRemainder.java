@@ -123,9 +123,6 @@ public class AddRemainder extends BaseFragment{
 
 
     public boolean inputcheck(){
-        if(itemname.getText().toString().equals("") || description.getText().toString().equals("")){
-            return false;
-        }
-        return true;
+        return !(itemname.getText().toString().equals("") || description.getText().toString().equals(""));
     }
 }

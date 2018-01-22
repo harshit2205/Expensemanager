@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_above="@+id/total_lends"
+        android:layout_above="@+id/bottom_buttons"
         android:id="@+id/view_layout"
         android:orientation="vertical">
         <android.support.v7.widget.RecyclerView
@@ -38,6 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
+        android:id="@+id/bottom_buttons"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary">

@@ -4,16 +4,20 @@
  import android.app.Fragment;
  import android.os.Bundle;
  import android.support.design.widget.Snackbar;
+ import android.util.Log;
  import android.view.LayoutInflater;
  import android.view.View;
  import android.view.ViewGroup;
  import android.widget.Button;
+ import android.widget.CheckBox;
  import android.widget.EditText;
 
  import com.example.users.myexpensemanager1.Activities.Main2Activity;
  import com.example.users.myexpensemanager1.Dao.MoneyDAO;
+ import com.example.users.myexpensemanager1.Dao.RepetativeMoneyDAO;
  import com.example.users.myexpensemanager1.Models.MoneyItem;
  import com.example.users.myexpensemanager1.R;
+ import com.example.users.myexpensemanager1.Utils.AlarmHandler;
  import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
  import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -28,6 +32,7 @@
      Button time;
      EditText amount,description;
      Button addMoney;
+     CheckBox monthlyAddCheckBox;
 
      public AddEarningFrag() {
          // Required empty public constructor
@@ -54,6 +59,8 @@
          addMoney.setOnClickListener(this);
          amount = (EditText)v.findViewById(R.id.money_amount);
          description = (EditText)v.findViewById(R.id.money_description);
+         monthlyAddCheckBox = (CheckBox)v.findViewById(R.id.monthlyadd_checkbox);
+         monthlyAddCheckBox.setChecked(false);
          return v;
      }
 
@@ -101,9 +108,21 @@
                  Long.parseLong(amount.getText().toString()),
                  now.getTimeInMillis(),
                  description.getText().toString());
+         if(monthlyAddCheckBox.isChecked()){
+             Log.d("EXPM_CheckBox","monthly add money check box checked");
+             RepetativeMoneyDAO moneyDAO = RepetativeMoneyDAO.initialiser(getActivity().getApplicationContext());
+             if(moneyDAO.getMoneyCount() == 0){
+                 Log.d("EXPM_AutoAdder","moneyCount is equal to 0");
+                 AlarmHandler.addMoney(moneyItem, getActivity().getApplicationContext());
+             }
+             moneyDAO.insertMoney(moneyItem);
+         }else{
+             Log.d("EXPM_CheckBox","monthly add money check box unchecked");
+             MoneyDAO moneyDAO = MoneyDAO.initialiser(getActivity().getApplicationContext());
+             moneyDAO.insertMoney(moneyItem);
+         }
 
-         MoneyDAO moneyDAO = MoneyDAO.initialiser(getActivity().getApplicationContext());
-         moneyDAO.insertMoney(moneyItem);
+
 
          hideKeyboard();
          Snackbar.make(this.getView(),"Money added",Snackbar.LENGTH_SHORT).show();
@@ -111,9 +130,6 @@
      }
 
      public boolean inputcheck(){
-         if(amount.getText().toString().equals("")){
-             return false;
-         }
-         return true;
+         return !amount.getText().toString().equals("");
      }
  }

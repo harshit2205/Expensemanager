@@ -87,7 +87,7 @@ public class RemaindersDAO {
     }
 
     public void deleteRemainder(int id) throws SQLException {
-        database.delete(daoFactory.ALARM_TABLE, " _id = '" +id +"'", null);
+        database.delete(DAOFactory.ALARM_TABLE, " _id = '" +id +"'", null);
         Log.d("EXPM","alarm table item deleted");
     }
 

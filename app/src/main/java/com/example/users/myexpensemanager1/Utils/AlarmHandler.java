@@ -8,7 +8,11 @@ import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 
+import com.example.users.myexpensemanager1.Models.MoneyItem;
 import com.example.users.myexpensemanager1.Models.RemainderItem;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class AlarmHandler {
 
@@ -36,6 +40,21 @@ public class AlarmHandler {
             am.set(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);
         } else {
             am.setExact(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);}
+    }
+
+
+    public static void addMoney(MoneyItem moneyItem, Context context){
+        MonthlyAddBroadcastReciever.setMoneyItem(moneyItem);
+        Intent intent = new Intent(context, MonthlyAddBroadcastReciever.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Activity.ALARM_SERVICE);
+        Log.d("EXPM_AutoAdder","alarm service is set for money item amount = "+ moneyItem.getTimestamp());
+
+        long alarmTime = moneyItem.getTimestamp();
+        if (Build.VERSION.SDK_INT < 19) {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);
+        } else {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);}
     }
 
 }

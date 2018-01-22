@@ -64,7 +64,7 @@ public class TransactionDAO {
     }
 
     public void deleteTransaction(int id) throws SQLException {
-        database.delete(daoFactory.TRANSACTION_TABLE, " _id = '" +id +"'", null);
+        database.delete(DAOFactory.TRANSACTION_TABLE, " _id = '" +id +"'", null);
 
         Log.d("EXPM","transaction table item deleted");
     }
@@ -78,7 +78,7 @@ public class TransactionDAO {
         if(cursor.moveToFirst()) {
             do {
                 // get the data into array, or class variable
-                Log.d("EXPM(tag)_temp_tags", "data = " + cursor.getLong(5));
+                Log.d("EXPM_tag_temp_tags", "data = " + cursor.getLong(5));
                 TransactionItem item = new TransactionItem(cursor.getString(1)
                         , cursor.getString(2)
                         , Long.parseLong(cursor.getString(3))
@@ -108,19 +108,18 @@ public class TransactionDAO {
     }
 
     public long gettransactionamountByMonth(Calendar calendar){
-        Log.d("EXPM(tag)_Calender","time stamp = "+calendar.getTimeInMillis());
+        Log.d("EXPM_tag_Calender","time stamp = "+calendar.getTimeInMillis());
         long timestamp2 = calendar.getTimeInMillis();
         calendar.add(Calendar.MONTH, -1);
-        Log.d("EXPM(tag)_Calender","time stamp = "+calendar.getTimeInMillis());
+        Log.d("EXPM_tag_Calender","time stamp = "+calendar.getTimeInMillis());
         long timestamp1 = calendar.getTimeInMillis();
-        String query = "SELECT SUM("+DAOFactory.COLUMN_TIMSTAMP+") FROM "+DAOFactory.TRANSACTION_TABLE+
-                " WHERE '"+DAOFactory.COLUMN_TIMSTAMP+"' >= "+timestamp1+
-                " AND '" +DAOFactory.COLUMN_TIMSTAMP+"' <= "+timestamp2;
-//        Log.d("EXPM_Query"," getTransactionAmount by month = "+query);
+        String query = "SELECT SUM("+DAOFactory.COLUMN_AMOUNT+") FROM "+DAOFactory.TRANSACTION_TABLE+
+                " WHERE "+DAOFactory.COLUMN_TIMSTAMP+" >= "+timestamp1+
+                " AND "+DAOFactory.COLUMN_TIMSTAMP+" <= "+timestamp2 +";";
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
-        Log.d("EXPM(tag)_Query","total amount got = "+cursor.getLong(0));
-        return cursor.getLong(0);
+        long amount = cursor.getLong(0);
+        return amount;
     }
 
 }
