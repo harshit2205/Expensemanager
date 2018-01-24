@@ -2,6 +2,7 @@ package com.example.users.myexpensemanager1.Fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.example.users.myexpensemanager1.Dao.LendBorrowDAO;
+import com.example.users.myexpensemanager1.Models.LendBorrowItem;
 import com.example.users.myexpensemanager1.R;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -22,22 +25,17 @@ import java.util.Calendar;
 public class AddLendAndBorrowFrag extends BaseFragment implements CompoundButton.OnCheckedChangeListener{
 
     Button date;
-    Button time;
+    Button time,addLendBorrow;
     CheckBox setEndDate, setRemainder;
     LinearLayout layout;
     BetterSpinner lendBorrowType;
-    EditText name;
+    EditText name,moneyAmount,description;
+    private String[] LENDBORROWTYPE = new String[]{
+            "Lending to","Borrowing from"};
+
 
     public AddLendAndBorrowFrag() {
-        // Required empty public constructor
-        CURRENT_YEAR = now.get(Calendar.YEAR);
-        CURRENT_MONTH = now.get(Calendar.MONTH);
-        CURRENT_DATE = now.get(Calendar.DATE);
-        CURREN_HRS = now.get(Calendar.HOUR_OF_DAY);
-        CURRENT_MINS = now.get(Calendar.MINUTE);
-        CURRENT_SEC = now.get(Calendar.SECOND);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +47,10 @@ public class AddLendAndBorrowFrag extends BaseFragment implements CompoundButton
         time = (Button)view.findViewById(R.id.time_input);
         time.setOnClickListener(this);
         name = (EditText)view.findViewById(R.id.lender_borrower_name);
+        moneyAmount = (EditText) view.findViewById(R.id.money_amount);
+        description = (EditText)view.findViewById(R.id.item_description);
+        addLendBorrow = (Button)view.findViewById(R.id.add_lendorborrow);
+        addLendBorrow.setOnClickListener(this);
         setEndDate = (CheckBox)view.findViewById(R.id.set_endate_checkbox);
         setEndDate.setOnCheckedChangeListener(this);
         layout = (LinearLayout)view.findViewById(R.id.date_time_layout);
@@ -61,10 +63,6 @@ public class AddLendAndBorrowFrag extends BaseFragment implements CompoundButton
         lendBorrowType.setAdapter(adapter);
         return view;
     }
-
-    private String[] LENDBORROWTYPE = new String[]{
-            "Lending to","Borrowing from"};
-
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -91,6 +89,7 @@ public class AddLendAndBorrowFrag extends BaseFragment implements CompoundButton
                 timePicker();
                 break;
             case R.id.add_lendorborrow:
+                Log.d("EXPM_LendBorrow","lend/borrow add button clicked");
                 if(inputcheck()){
                     addLendOrBorrow();
                 }
@@ -118,10 +117,44 @@ public class AddLendAndBorrowFrag extends BaseFragment implements CompoundButton
     }
 
     public boolean inputcheck(){
-        return !(name.getText().toString().equals("") || lendBorrowType.getText().toString().equals(""));
+        if(setEndDate.isChecked() &&
+                (date.getText().toString().equals("") ||
+                time.getText().toString().equals("") )) return false;
+        else{
+        return !(name.getText().toString().equals("") ||
+                lendBorrowType.getText().toString().equals("") ||
+                moneyAmount.getText().toString().equals("") );}
     }
 
     private void addLendOrBorrow(){
-
+        now.set(CURRENT_YEAR,CURRENT_MONTH,CURRENT_DATE,CURREN_HRS,CURRENT_MINS,CURRENT_SEC);
+        long amount =Long.parseLong(moneyAmount.getText().toString());
+        int remainderSet = LendBorrowDAO.REMINDER_NOT_SET;
+        long timeStamp = 0;
+        Log.d("EXPM_LendBorrow","type = "+lendBorrowType.getText().toString());
+        if(lendBorrowType.getText().toString().equals("Borrowing from")){
+            amount = 0 - Long.parseLong(moneyAmount.getText().toString());
+        Log.d("EXPM_LendBorrow","amount = "+ amount);}
+        if(setEndDate.isChecked()){
+            remainderSet = LendBorrowDAO.REMINDER_SET;
+            timeStamp = now.getTimeInMillis();
+            Log.d("EXPM_LendBorrow","timestamp of added money is "+now.getTimeInMillis());
+        }
+        LendBorrowItem lendBorrowItem = new LendBorrowItem(
+                name.getText().toString(),
+                amount,
+                description.getText().toString(),
+                remainderSet,
+                timeStamp
+        );
+        LendBorrowDAO lendBorrowDAO = LendBorrowDAO.initialiser(getActivity().getApplicationContext());
+        if(lendBorrowDAO.searchOldItem(name.getText().toString())){
+            lendBorrowDAO.updateitem(lendBorrowItem);
+        }else {
+            lendBorrowDAO.insertLendBorrowItem(lendBorrowItem);
+        }
+        hideKeyboard();
+        Snackbar.make(this.getView(),"transaction added",Snackbar.LENGTH_SHORT).show();
+        getActivity().onBackPressed();
     }
 }

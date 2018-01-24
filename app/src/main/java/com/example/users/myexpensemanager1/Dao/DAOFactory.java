@@ -8,15 +8,12 @@ import android.util.Log;
 public class DAOFactory extends SQLiteOpenHelper {
 
 
-    //database names.....
-    private static final String DATABASE = "expense_Manager_db.db";
-
     //table names.....
     public static final String TRANSACTION_TABLE = "transactiontable";
     public static final String MONEY_TABLE = "MoneyTable";
     public static final String ALARM_TABLE = "AlarmTable";
     public static final String REPETATIVE_MONEY_TABLE = "RepetativeMoneyTable";
-
+    public static final String LEND_BORROW_TABLE = "LendBorrowTable";
     //column names.....
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_ITEM = "itemname";
@@ -27,7 +24,10 @@ public class DAOFactory extends SQLiteOpenHelper {
     public static final String COLUMN_UNIQUE_STAMP = "uniqueKey";
     public static final String COLUMN_FILEPATH = "filePath";
     public static final String COLUMN_TYPE = "type";
-
+    public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_REMAINDER_SET = "remainderSet";
+    //database names.....
+    private static final String DATABASE = "expense_Manager_db.db";
     //queries for Table creation.....
     //create add Money Table.....
     String createMoneyTable =  "CREATE TABLE "+MONEY_TABLE+"( "+
@@ -63,7 +63,18 @@ public class DAOFactory extends SQLiteOpenHelper {
             COLUMN_DESCRIPTION+ " TEXT , "+
             COLUMN_UNIQUE_STAMP + " BIGINT(15) );";
 
+    String createLendBorrowTable = " CREATE TABLE "+LEND_BORROW_TABLE + "( " +
+            COLUMN_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT , " +
+            COLUMN_NAME + " TEXT , " +
+            COLUMN_AMOUNT+ " BIGINT(10) , " +
+            COLUMN_DESCRIPTION+ " TEXT , "+
+            COLUMN_REMAINDER_SET+ " BOOL , "+
+            COLUMN_TIMSTAMP+ " BIGINT(15) ); ";
 
+
+    public DAOFactory(Context context, SQLiteDatabase.CursorFactory factory) {
+        super(context, DATABASE, factory, 1);
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -71,6 +82,7 @@ public class DAOFactory extends SQLiteOpenHelper {
         db.execSQL(createTransactionTable);
         db.execSQL(createAlarmTable);
         db.execSQL(createRepMoneyTable);
+        db.execSQL(createLendBorrowTable);
         Log.d("EXPM", "all tables created");
     }
 
@@ -80,13 +92,10 @@ public class DAOFactory extends SQLiteOpenHelper {
         db.execSQL("DROP IF TABLE EXISTS " + TRANSACTION_TABLE);
         db.execSQL("DROP IF TABLE EXISTS " + ALARM_TABLE);
         db.execSQL("DROP IF TABLE EXISTS " + REPETATIVE_MONEY_TABLE);
+        db.execSQL("DROP IF TABLE EXISTS " + LEND_BORROW_TABLE);
 
         //database recreated.....
         onCreate(db);
         Log.d("EXPM", "database upgraded");
-    }
-
-    public DAOFactory(Context context, SQLiteDatabase.CursorFactory factory) {
-        super(context, DATABASE, factory, 1);
     }
 }

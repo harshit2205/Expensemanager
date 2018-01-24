@@ -2,16 +2,23 @@ package com.example.users.myexpensemanager1.Fragments;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.users.myexpensemanager1.Activities.Main2Activity;
+import com.example.users.myexpensemanager1.Activities.OneFragmentActivity;
 import com.example.users.myexpensemanager1.Adapters.TransactionHistoryAdapter;
 import com.example.users.myexpensemanager1.Dao.TransactionDAO;
 import com.example.users.myexpensemanager1.Models.TransactionItem;
@@ -23,12 +30,14 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class TransactionHistoryFrag extends Fragment {
-    TransactionHistoryAdapter adapter ;
-    RecyclerView historyView;
     public TextView emptyView;
-    ProgressBar progressBar;
     public String message;
     public List<TransactionItem> transactionlist;
+    TransactionHistoryAdapter adapter ;
+    RecyclerView historyView;
+    ProgressBar progressBar;
+    RelativeLayout emptyLayout;
+    Button addButton;
 
     public TransactionHistoryFrag() {
         // Required empty public constructor
@@ -44,6 +53,18 @@ public class TransactionHistoryFrag extends Fragment {
         historyView = (RecyclerView)view.findViewById(R.id.history_recyclerview);
         emptyView = (TextView)view.findViewById(R.id.empty_view);
         progressBar = (ProgressBar)view.findViewById(R.id.fetch_progressbar);
+        addButton = (Button)view.findViewById(R.id.add);
+        emptyLayout = (RelativeLayout) view.findViewById(R.id.empty_layout);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Expm", "transaction add button pressed");
+                Intent i = new Intent(getActivity().getApplicationContext(), OneFragmentActivity.class);
+                i.putExtra("addition_type",OneFragmentActivity.ADD_TRANSACTION);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
+            }
+        });
         adapter = new TransactionHistoryAdapter(getActivity().getApplicationContext(), transactionlist,getFragmentManager());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         historyView.setLayoutManager(layoutManager);
@@ -71,7 +92,7 @@ public class TransactionHistoryFrag extends Fragment {
         protected void onPostExecute(List<TransactionItem> items) {
             progressBar.setVisibility(View.GONE);
             if(transactionlist.size() == 0){
-                emptyView.setVisibility(View.VISIBLE);
+                emptyLayout.setVisibility(View.VISIBLE);
             }else{
                 adapter.items = transactionlist;
                 adapter.notifyDataSetChanged();

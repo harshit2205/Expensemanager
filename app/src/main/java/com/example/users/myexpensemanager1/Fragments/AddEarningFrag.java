@@ -111,11 +111,8 @@
          if(monthlyAddCheckBox.isChecked()){
              Log.d("EXPM_CheckBox","monthly add money check box checked");
              RepetativeMoneyDAO moneyDAO = RepetativeMoneyDAO.initialiser(getActivity().getApplicationContext());
-             if(moneyDAO.getMoneyCount() == 0){
-                 Log.d("EXPM_AutoAdder","moneyCount is equal to 0");
-                 AlarmHandler.addMoney(moneyItem, getActivity().getApplicationContext());
-             }
              moneyDAO.insertMoney(moneyItem);
+             AlarmHandler.addMoney(moneyItem, getActivity().getApplicationContext());
          }else{
              Log.d("EXPM_CheckBox","monthly add money check box unchecked");
              MoneyDAO moneyDAO = MoneyDAO.initialiser(getActivity().getApplicationContext());

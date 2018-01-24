@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionHistoryAdapter.TransactionViewHolder> {
-    Context context;
     public List<TransactionItem> items;
+    Context context;
     FragmentManager manager;
     View view;
 
@@ -36,11 +36,6 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
 
     @Override
     public TransactionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(items.size()==0){
-
-        }else{
-
-        }
          view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.transaction_history_row, parent, false);
         return new TransactionViewHolder(view);

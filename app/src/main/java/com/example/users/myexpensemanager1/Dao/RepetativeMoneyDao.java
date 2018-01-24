@@ -13,22 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepetativeMoneyDAO {
+    private static RepetativeMoneyDAO repetativeMoneyDAO;
     public String ADD_MONEY_DAO = "addMoneyDAO";
-
     //initialising variables.....
     SQLiteDatabase database;
     DAOFactory daoFactory;
     Context context;
-
-    private static RepetativeMoneyDAO repetativeMoneyDAO;
-
-    //singleton class static initialiser function.....
-    public static RepetativeMoneyDAO initialiser(Context context){
-        if(repetativeMoneyDAO == null){
-            repetativeMoneyDAO = new RepetativeMoneyDAO(context);
-        }
-        return repetativeMoneyDAO;
-    }
 
     //fetching the database helper object.....
     private RepetativeMoneyDAO(Context context) {
@@ -40,6 +30,14 @@ public class RepetativeMoneyDAO {
         }catch(SQLException e){
             e.printStackTrace();
         }
+    }
+
+    //singleton class static initialiser function.....
+    public static RepetativeMoneyDAO initialiser(Context context){
+        if(repetativeMoneyDAO == null){
+            repetativeMoneyDAO = new RepetativeMoneyDAO(context);
+        }
+        return repetativeMoneyDAO;
     }
 
     private void openDatabase() throws SQLException {
@@ -68,7 +66,7 @@ public class RepetativeMoneyDAO {
 
     public void deleteMoneyByTimeStamp( long timeStamp)throws SQLException {
         database.delete(DAOFactory.REPETATIVE_MONEY_TABLE, DAOFactory.COLUMN_TIMSTAMP+" = "+timeStamp, null);
-        Log.d("EXPM_AutoAdder","money table item is deleted");
+        Log.d("EXPM_AutoAdder","repetative money table item is deleted");
     }
 
     public List<MoneyItem> showMoneyTuple() {
@@ -112,18 +110,21 @@ public class RepetativeMoneyDAO {
         Log.d("EXPM_AutoAdder","query "+query);
         Cursor cursor = database.rawQuery(query, null);
         Log.d("EXPM_AutoAdder","cursor count "+cursor.getCount());
-        if(cursor.getCount() > 0 )return true;
-        return false;
+        return cursor.getCount() > 0;
     }
 
-    public MoneyItem getRecentEarning(){
-        String query = "SELECT * FROM " + DAOFactory.REPETATIVE_MONEY_TABLE + " ORDER BY " + DAOFactory.COLUMN_TIMSTAMP + ";";
+    public MoneyItem getEarningByTimestamp(long timestamp){
+        String query = "SELECT * FROM " + DAOFactory.REPETATIVE_MONEY_TABLE + " WHERE " + DAOFactory.COLUMN_TIMSTAMP +
+                " = " + timestamp + ";";
         Cursor cursor = database.rawQuery(query, null);
+        if(cursor == null){
+            Log.d("EXPM_AutoAdder","cursor is null without any data");
+        }
         cursor.moveToFirst();
-        MoneyItem item = new MoneyItem(cursor.getString(1)
+        MoneyItem moneyItem = new MoneyItem(cursor.getString(1)
                 , Long.parseLong(cursor.getString(2))
                 , Long.parseLong(cursor.getString(4))
                 , cursor.getString(3));
-        return  item;
+        return  moneyItem;
     }
 }

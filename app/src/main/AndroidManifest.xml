@@ -30,18 +30,18 @@
         <activity
             android:name=".Activities.Main2Activity"
             android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".Activities.RecieptImageActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity android:name=".Activities.OneFragmentActivity" />
-        <activity android:name=".Activities.WelcomeScreenActivity">
+        <activity android:name=".Activities.WelcomeScreenActivity" />
+        <activity android:name=".Activities.SplashScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
