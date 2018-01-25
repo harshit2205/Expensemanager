@@ -97,32 +97,23 @@ public class Main2Activity extends BaseActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_add) {
-            if (id_drawer_list == R.id.nav_live_stats) {
-            } else if (id_drawer_list == R.id.nav_transactions) {
-                Log.d("Expm", "transaction add button pressed");
-                Intent i = new Intent(Main2Activity.this, OneFragmentActivity.class);
-                i.putExtra("addition_type",OneFragmentActivity.ADD_TRANSACTION);
-                startActivity(i);
-
+            Intent intent = new Intent();
+            int INTENT = 0;
+            if (id_drawer_list == R.id.nav_transactions) {
+                intent.setClass(Main2Activity.this, OneFragmentActivity.class);
+                INTENT = OneFragmentActivity.ADD_TRANSACTION;
             } else if (id_drawer_list == R.id.nav_earnings) {
-                Log.d("Expm", "money add button pressed");
-                Intent i = new Intent(Main2Activity.this, OneFragmentActivity.class);
-                i.putExtra("addition_type",OneFragmentActivity.ADD_EARNING);
-                startActivity(i);
+                intent.setClass(Main2Activity.this, OneFragmentActivity.class);
+                INTENT = OneFragmentActivity.ADD_EARNING;
             } else if (id_drawer_list == R.id.nav_remainders) {
-                Log.d("Expm", "remainder add button pressed");
-                Intent i = new Intent(Main2Activity.this, OneFragmentActivity.class);
-                i.putExtra("addition_type",OneFragmentActivity.ADD_REMAINDER);
-                startActivity(i);
+                intent.setClass(Main2Activity.this, OneFragmentActivity.class);
+                INTENT = OneFragmentActivity.ADD_REMAINDER;
             } else if (id_drawer_list == R.id.nav_lend_and_borrow) {
-                Log.d("Expm", "lendings add button pressed");
-                Intent i = new Intent(Main2Activity.this, OneFragmentActivity.class);
-                i.putExtra("addition_type",OneFragmentActivity.ADD_LEND_BORROW);
-                startActivity(i);
-            } else if (id_drawer_list == R.id.nav_about_us) {
-                Log.d("Expm", "about us add button pressed");
-
+                intent.setClass(Main2Activity.this, OneFragmentActivity.class);
+                INTENT = OneFragmentActivity.ADD_LEND_BORROW;
             }
+            intent.putExtra("addition_type", INTENT);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -134,41 +125,35 @@ public class Main2Activity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         id_drawer_list = item.getItemId();
-
+        String title = "";
        switch (id_drawer_list){
         case R.id.nav_live_stats:
-            getSupportActionBar().setTitle("Live Stats");
-            LiveStatsFrag liveStatsFrag = new LiveStatsFrag();
-            fragmentstarter(liveStatsFrag);
+            title = "Live Stats";
+            fragmentstarter(new LiveStatsFrag());
             break;
         case R.id.nav_transactions:
-            getSupportActionBar().setTitle("Transactions");
-            TransactionHistoryPager transactionHistoryPager = new TransactionHistoryPager();
-            fragmentstarter(transactionHistoryPager);
+            title = "Transactions";
+            fragmentstarter(new TransactionHistoryPager());
             break;
         case R.id.nav_earnings:
-            getSupportActionBar().setTitle("Earnings");
-            MoneyHistoryPager moneyHistoryPager = new MoneyHistoryPager();
-            fragmentstarter(moneyHistoryPager);
+            title = "Earnings";
+            fragmentstarter(new MoneyHistoryPager());
             break;
         case R.id.nav_remainders:
-            getSupportActionBar().setTitle("Remainders");
-            RemainderHistoryFrag remainderHistoryFrag = new RemainderHistoryFrag();
-            fragmentstarter(remainderHistoryFrag);
+            title = "Remainders";
+            fragmentstarter(new RemainderHistoryFrag());
             break;
         case R.id.nav_lend_and_borrow:
-            getSupportActionBar().setTitle("Lend and Borrows");
-            LendAndBorrowHistoryFrag lendAndBorrowHistoryFrag = new LendAndBorrowHistoryFrag();
-            fragmentstarter(lendAndBorrowHistoryFrag);
+            title = "Lend and Borrows";
+            fragmentstarter(new LendAndBorrowHistoryFrag());
             break;
         case R.id.nav_about_us:
-            getSupportActionBar().setTitle("About Us");
-            AboutUsFrag aboutUsFrag = new AboutUsFrag();
-            fragmentstarter(aboutUsFrag);
+            title = "About Us";
+            fragmentstarter(new AboutUsFrag());
             break;
         default:Log.d("EXPM_Nav_drawer","no item identified");
-
     }
+        getSupportActionBar().setTitle(title);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -179,28 +164,22 @@ public class Main2Activity extends BaseActivity
         super.onResume();
         switch (id_drawer_list) {
             case R.id.nav_live_stats:
-                LiveStatsFrag liveStatsFrag = new LiveStatsFrag();
-                fragmentstarter(liveStatsFrag);
+                fragmentstarter(new LiveStatsFrag());
                 break;
             case R.id.nav_transactions:
-                TransactionHistoryPager transactionHistoryPager = new TransactionHistoryPager();
-                fragmentstarter(transactionHistoryPager);
+                fragmentstarter(new TransactionHistoryPager());
                 break;
             case R.id.nav_earnings:
-                MoneyHistoryPager moneyHistoryPager = new MoneyHistoryPager();
-                fragmentstarter(moneyHistoryPager);
+                fragmentstarter(new MoneyHistoryPager());
                 break;
             case R.id.nav_remainders:
-                RemainderHistoryFrag remainderHistoryFrag = new RemainderHistoryFrag();
-                fragmentstarter(remainderHistoryFrag);
+                fragmentstarter(new RemainderHistoryFrag());
                 break;
             case R.id.nav_lend_and_borrow:
-                LendAndBorrowHistoryFrag lendAndBorrowHistoryFrag = new LendAndBorrowHistoryFrag();
-                fragmentstarter(lendAndBorrowHistoryFrag);
+                fragmentstarter(new LendAndBorrowHistoryFrag());
                 break;
             case R.id.nav_about_us:
-                AboutUsFrag aboutUsFrag = new AboutUsFrag();
-                fragmentstarter(aboutUsFrag);
+                fragmentstarter(new AboutUsFrag());
             default:
 
         }

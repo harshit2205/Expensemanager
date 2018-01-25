@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ToxicBakery.viewpager.transforms.CubeOutTransformer;
 import com.example.users.myexpensemanager1.R;
 import com.example.users.myexpensemanager1.Utils.WaveHelper;
 import com.gelitenight.waveview.library.WaveView;
@@ -33,7 +32,6 @@ public class LiveStatsFrag extends BaseFragment  implements OnChartValueSelected
     WaveView waveView ;
     WaveHelper waveHelper;
     private int mBorderColor = Color.parseColor("#008888");
-    private int mBorderWidth = 0;
 
 
     public LiveStatsFrag() {
@@ -51,7 +49,7 @@ public class LiveStatsFrag extends BaseFragment  implements OnChartValueSelected
         viewPager.setAdapter(adapter);
         viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         waveView = (WaveView)view.findViewById(R.id.waveView);
-        waveView.setBorder(mBorderWidth, mBorderColor);
+        waveView.setBorder(0, mBorderColor);
         waveView.setShapeType(WaveView.ShapeType.CIRCLE);
         waveHelper = new WaveHelper(waveView);
         waveView.setWaveColor(
@@ -95,7 +93,7 @@ public class LiveStatsFrag extends BaseFragment  implements OnChartValueSelected
     }
 
     class FragmentPagerItemAdapter extends FragmentPagerAdapter {
-        public FragmentPagerItemAdapter(FragmentManager fm) {
+        private FragmentPagerItemAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -103,11 +101,9 @@ public class LiveStatsFrag extends BaseFragment  implements OnChartValueSelected
         public android.app.Fragment getItem(int position) {
             switch(position){
                 case 0:
-                    TransactionBarChartFrag frag1 = new TransactionBarChartFrag();
-                    return frag1;
+                    return new TransactionBarChartFrag();
                 case 1:
-                    MoneyBarChartFrag frag2 = new MoneyBarChartFrag();
-                    return frag2;
+                    return new MoneyBarChartFrag();
             }
             return null;
         }

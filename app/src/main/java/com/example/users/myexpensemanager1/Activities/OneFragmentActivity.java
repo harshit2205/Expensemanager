@@ -14,12 +14,12 @@ import com.example.users.myexpensemanager1.R;
 
 public class OneFragmentActivity extends BaseActivity {
 
-    // activity to contain all back pressing activities.....
-    ActionBar actionBar;
     public static int ADD_TRANSACTION = 1;
     public static int ADD_EARNING = 2;
     public static int ADD_REMAINDER = 3;
     public static int ADD_LEND_BORROW = 4;
+    // activity to contain all back pressing activities.....
+    ActionBar actionBar;
     int INTENT;
 
 
@@ -38,20 +38,16 @@ public class OneFragmentActivity extends BaseActivity {
 
         if(INTENT == ADD_TRANSACTION){
             getSupportActionBar().setTitle("Add Transaction");
-            AddTransactionFragment fragment = new AddTransactionFragment();
-            fragmentstarter(fragment, "transaction_frag");
+            fragmentstarter(new AddTransactionFragment(), "transaction_frag");
         }else if(INTENT == ADD_EARNING){
             getSupportActionBar().setTitle("Add Earning");
-            AddEarningFrag frag = new AddEarningFrag();
-            fragmentstarter(frag, "earning_frag");
+            fragmentstarter(new AddEarningFrag(), "earning_frag");
         }else if(INTENT == ADD_REMAINDER){
             getSupportActionBar().setTitle("Add Remainder");
-            AddRemainder frag = new AddRemainder();
-            fragmentstarter(frag,"remainder_frag");
+            fragmentstarter(new AddRemainder(), "remainder_frag");
         }else if(INTENT == ADD_LEND_BORROW){
             getSupportActionBar().setTitle("Add Lend/Borrow");
-            AddLendAndBorrowFrag frag = new AddLendAndBorrowFrag();
-            fragmentstarter(frag, "lend_Borrow_Frag");
+            fragmentstarter(new AddLendAndBorrowFrag(), "lend_Borrow_Frag");
         }
 
     }

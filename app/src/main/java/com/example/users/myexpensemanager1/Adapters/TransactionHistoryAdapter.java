@@ -24,9 +24,9 @@ import java.util.Locale;
 
 public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionHistoryAdapter.TransactionViewHolder> {
     public List<TransactionItem> items;
-    Context context;
-    FragmentManager manager;
-    View view;
+    private Context context;
+    private FragmentManager manager;
+    private View view;
 
     public TransactionHistoryAdapter(Context context, List<TransactionItem> items, FragmentManager manager) {
         this.context = context;
@@ -43,14 +43,14 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
 
     @Override
     public void onBindViewHolder(TransactionViewHolder holder, int position) {
+        String transactionCost = view.getContext().getResources().getString(R.string.Rs) +
+                " " + Long.toString(items.get(position).getAmount());
+        holder.transactionCost.setText(transactionCost);
         holder.itemName.setText(items.get(position).getItem_name());
-        holder.transactionCost.setText(view.getContext().getResources().getString(R.string.Rs) + " "
-                +Long.toString(items.get(position).getAmount()));
         holder.transactionDate.setText(getDate(items.get(position).getTimestamp()));
         holder.transactionType.setText(items.get(position).getTransactionType());
         holder.description.setText(items.get(position).getDescription());
         holder.id = items.get(position).getId();
-        holder.position = position;
     }
 
     @Override
@@ -63,8 +63,7 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
     private String getDate(long timestamp) {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(timestamp);
-        String date = DateFormat.format("dd-MM-yyyy", cal).toString();
-        return date;
+        return DateFormat.format("dd-MM-yyyy", cal).toString();
     }
 
     public void itemSetChanged(){
@@ -73,14 +72,14 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
     }
 
     public class TransactionViewHolder extends RecyclerView.ViewHolder {
-        public TextView itemName;
-        public TextView transactionCost;
-        public TextView transactionDate;
-        public TextView updateData;
-        public TextView transactionType;
-        public TextView description;
-        public int id, position;
         ImageView recieptImage,deleteTransaction;
+        private TextView itemName;
+        private TextView transactionCost;
+        private TextView transactionDate;
+        private TextView updateData;
+        private TextView transactionType;
+        private TextView description;
+        private int id, position = getAdapterPosition();
 
         public TransactionViewHolder(View itemView) {
             super(itemView);

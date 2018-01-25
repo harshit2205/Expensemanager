@@ -21,14 +21,14 @@ public class LendBorrowDAO {
     public static int REMINDER_NOT_SET = 2;
     private static LendBorrowDAO lendBorrowDAO;
     //initialising variables.....
-    SQLiteDatabase database;
-    DAOFactory daoFactory;
-    Context context;
+    private SQLiteDatabase database;
+    private DAOFactory daoFactory;
+    private Context context;
     private String LEND_BORROW_DAO = "lendBorrowDAO";
     private long lends, borrows;
     private long oldAmount = 0;
-    private LendBorrowDAO(Context context){
-        this.context = context;
+
+    private LendBorrowDAO() {
         daoFactory = new DAOFactory(context, null);
 
         try{
@@ -40,9 +40,14 @@ public class LendBorrowDAO {
 
     public static LendBorrowDAO initialiser(Context context){
         if(lendBorrowDAO == null){
-            lendBorrowDAO = new LendBorrowDAO(context);
+            lendBorrowDAO = new LendBorrowDAO();
+            lendBorrowDAO.setContext(context);
         }
         return lendBorrowDAO;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     public long getLends() {
@@ -126,10 +131,14 @@ public class LendBorrowDAO {
         Cursor cursor = database.rawQuery(query, null);
         int cnt = cursor.getCount();
         cursor.moveToFirst();
-        oldAmount = cursor.getLong(2);
-        cursor.close();
-        if(cnt == 0)return false;
-        return true;
+        if (cnt != 0) {
+            oldAmount = cursor.getLong(2);
+            cursor.close();
+            return true;
+        } else {
+            cursor.close();
+            return false;
+        }
     }
 
     public void updateitem(LendBorrowItem lendBorrowItem){
