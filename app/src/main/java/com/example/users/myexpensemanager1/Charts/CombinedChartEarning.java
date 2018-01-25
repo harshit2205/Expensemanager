@@ -5,11 +5,13 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Log;
 
+import com.example.users.myexpensemanager1.Dao.MoneyDAO;
 import com.example.users.myexpensemanager1.Dao.TransactionDAO;
 import com.example.users.myexpensemanager1.Utils.DayAxisValueFormatter;
 import com.example.users.myexpensemanager1.Utils.MyAxisValueFormatter;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -27,15 +29,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class CombinedChartTransaction {
+/**
+ * Created by USER on 1/25/2018.
+ */
 
+public class CombinedChartEarning {
     public static Typeface mTfLight;
     private final int itemcount = 5;
     Context context;
     CombinedChart mChart;
     private List<Long> datalist;
 
-    public CombinedChartTransaction(Context mcontext, CombinedChart mChart) {
+    public CombinedChartEarning(Context mcontext, CombinedChart mChart) {
         this.context = mcontext;
         this.mChart = mChart;
         datalist = new ArrayList<>();
@@ -57,8 +62,9 @@ public class CombinedChartTransaction {
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
         l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        l.setTextColor(ColorTemplate.rgb("#ffffff"));
         l.setDrawInside(false);
+        l.setTextColor(ColorTemplate.rgb("#ffffff"));
+
 
 
         YAxis rightAxis = mChart.getAxisRight();
@@ -112,7 +118,7 @@ public class CombinedChartTransaction {
             Calendar c = Calendar.getInstance();
             c.add(Calendar.MONTH, index - 5);
             c.add(Calendar.DATE, 0);
-            value = TransactionDAO.initialiser(context).gettransactionamountByMonth(c);
+            value = MoneyDAO.initialiser(context).getEarningByMonth(c);
             datalist.add(value);
             entries1.add(new BarEntry(index, value));
             Log.d("EXPM_Chart_combined", "value index = " + index + ", value = " + value);
@@ -163,5 +169,4 @@ public class CombinedChartTransaction {
 
         return d;
     }
-
 }

@@ -1,0 +1,53 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/develpers_profile_back"
+    android:orientation="vertical"
+    tools:context="com.example.users.myexpensemanager1.Fragments.AboutUsFrag">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:text="About Developers"
+        android:textColor="@color/mdtp_white"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:src="@drawable/developer_profile"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:gravity="center"
+        android:text="@string/developers_name"
+        android:textColor="@color/mdtp_white"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/about_developer"
+        android:textAlignment="inherit"
+        android:textColor="@color/mdtp_white"
+        android:textSize="14sp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/word_from_developer"
+        android:textColor="@color/mdtp_white"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+</LinearLayout>

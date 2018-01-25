@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.users.myexpensemanager1.Fragments.AboutUsFrag;
 import com.example.users.myexpensemanager1.Fragments.LendAndBorrowHistoryFrag;
 import com.example.users.myexpensemanager1.Fragments.LiveStatsFrag;
 import com.example.users.myexpensemanager1.Fragments.MoneyHistoryPager;
@@ -26,10 +27,9 @@ public class Main2Activity extends BaseActivity
 
 
     public static String userName = "dummy_user";
-
+    public static MenuItem menuitem;
     Toolbar toolbar;
     int id_drawer_list;
-    public static MenuItem menuitem;
     DrawerLayout drawer;
     NavigationView navigationView;
 
@@ -119,8 +119,9 @@ public class Main2Activity extends BaseActivity
                 Intent i = new Intent(Main2Activity.this, OneFragmentActivity.class);
                 i.putExtra("addition_type",OneFragmentActivity.ADD_LEND_BORROW);
                 startActivity(i);
-            } else if (id_drawer_list == R.id.nav_bill_split) {
-                Log.d("Expm", "borrowing add button pressed");
+            } else if (id_drawer_list == R.id.nav_about_us) {
+                Log.d("Expm", "about us add button pressed");
+
             }
         }
 
@@ -160,8 +161,10 @@ public class Main2Activity extends BaseActivity
             LendAndBorrowHistoryFrag lendAndBorrowHistoryFrag = new LendAndBorrowHistoryFrag();
             fragmentstarter(lendAndBorrowHistoryFrag);
             break;
-        case R.id.nav_bill_split:
-            getSupportActionBar().setTitle("Bill Splits");
+        case R.id.nav_about_us:
+            getSupportActionBar().setTitle("About Us");
+            AboutUsFrag aboutUsFrag = new AboutUsFrag();
+            fragmentstarter(aboutUsFrag);
             break;
         default:Log.d("EXPM_Nav_drawer","no item identified");
 
@@ -195,7 +198,9 @@ public class Main2Activity extends BaseActivity
                 LendAndBorrowHistoryFrag lendAndBorrowHistoryFrag = new LendAndBorrowHistoryFrag();
                 fragmentstarter(lendAndBorrowHistoryFrag);
                 break;
-            case R.id.nav_bill_split:
+            case R.id.nav_about_us:
+                AboutUsFrag aboutUsFrag = new AboutUsFrag();
+                fragmentstarter(aboutUsFrag);
             default:
 
         }

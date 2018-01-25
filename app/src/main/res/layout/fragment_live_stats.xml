@@ -1,41 +1,128 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.users.myexpensemanager1.Fragments.LiveStatsFrag">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="340dp" />
+
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_margin="16dp"
-            android:id="@+id/chart1_cardView"
-            app:cardCornerRadius="15dp"
-            android:elevation="3dp">
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/chart1"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_margin="5dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Analysed Facts"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Transaction facts"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="trend analysis"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    android:textStyle="italic" />
+
+            </LinearLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_margin="16dp"
-            android:layout_below="@+id/chart1_cardView"
-            app:cardCornerRadius="15dp"
-            android:elevation="3dp">
-            <com.github.mikephil.charting.charts.CombinedChart
-                android:id="@+id/chart2"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_margin="10dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Analysed Facts"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Earning facts"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="trend analysis"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    android:textStyle="italic" />
+            </LinearLayout>
         </android.support.v7.widget.CardView>
 
-</RelativeLayout>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="savings Tab"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/savingstab_data"
+                    android:textSize="14sp"/>
+                <com.gelitenight.waveview.library.WaveView
+                    android:id="@+id/waveView"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="savings this month"
+                    android:textStyle="italic|bold"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
 </ScrollView>

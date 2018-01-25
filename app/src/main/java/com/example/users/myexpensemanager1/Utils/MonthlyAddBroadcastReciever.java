@@ -26,9 +26,8 @@ public class MonthlyAddBroadcastReciever extends BroadcastReceiver{
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        timestamp = intent.getLongExtra("autoadd_TS", 0);
         this.context = context;
-        SharedPreferences pref = context.getSharedPreferences("MyPref", 0); // 0 - for private mode
-        timestamp = pref.getLong("autoadd_TS", 0);
         Log.d("EXPM_AutoAdder","the reached out timestamp = "+timestamp);
         Toast.makeText(context, "on recieve function called ", Toast.LENGTH_SHORT).show();
         updateTupple(timestamp);
@@ -39,9 +38,10 @@ public class MonthlyAddBroadcastReciever extends BroadcastReceiver{
             MoneyItem moneyItem = RepetativeMoneyDAO.initialiser(context).getEarningByTimestamp(timestamp);
             RepetativeMoneyDAO.initialiser(context).deleteMoneyByTimeStamp(timestamp);
             MoneyDAO.initialiser(context).insertMoney(moneyItem);
-            Log.d("EXPM_AutoAdder","money is deleted safely");
+            Log.d("EXPM_AutoAdder","money is deleted safely and moneyAmount = "+moneyItem.getAmount());
             moneyItem.setTimestamp(alterItem(moneyItem.getTimestamp()));
             RepetativeMoneyDAO.initialiser(context).insertMoney(moneyItem);
+            Log.d("EXPM_AutoAdder","money is deleted safely and moneyAmount = "+moneyItem.getAmount());
             AlarmHandler.addMoney(moneyItem, context);
         }else{
             Toast.makeText(context, " alarm already deleted", Toast.LENGTH_SHORT).show();

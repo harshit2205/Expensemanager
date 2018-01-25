@@ -38,7 +38,7 @@ public class RemainderHistoryFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_remainder_history, container, false);
+        View view = inflater.inflate(R.layout.fragment_reminder_history, container, false);
         emptyView = (TextView)view.findViewById(R.id.empty_view);
         remainderHistoryView = (RecyclerView)view.findViewById(R.id.remainder_history_recyclerview);
         progressBar = (ProgressBar)view.findViewById(R.id.remainder_progressBar);

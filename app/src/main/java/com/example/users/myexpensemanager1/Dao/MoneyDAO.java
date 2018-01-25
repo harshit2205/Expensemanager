@@ -10,26 +10,17 @@ import android.util.Log;
 import com.example.users.myexpensemanager1.Models.MoneyItem;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MoneyDAO {
 
+    private static MoneyDAO moneyDAO;
     public String ADD_MONEY_DAO = "addMoneyDAO";
-
     //initialising variables.....
     SQLiteDatabase database;
     DAOFactory daoFactory;
     Context context;
-
-    private static MoneyDAO moneyDAO;
-
-    //singleton class static initialiser function.....
-    public static MoneyDAO initialiser(Context context){
-        if(moneyDAO == null){
-            moneyDAO = new MoneyDAO(context);
-        }
-        return moneyDAO;
-    }
 
     //fetching the database helper object.....
     private MoneyDAO(Context context) {
@@ -41,6 +32,14 @@ public class MoneyDAO {
         }catch(SQLException e){
             e.printStackTrace();
         }
+    }
+
+    //singleton class static initialiser function.....
+    public static MoneyDAO initialiser(Context context){
+        if(moneyDAO == null){
+            moneyDAO = new MoneyDAO(context);
+        }
+        return moneyDAO;
     }
 
     private void openDatabase() throws SQLException {
@@ -102,4 +101,18 @@ public class MoneyDAO {
         return cnt;
     }
 
+    public long getEarningByMonth(Calendar calendar){Log.d("EXPM_tag_Calender","time stamp = "+calendar.getTimeInMillis());
+        long timestamp2 = calendar.getTimeInMillis();
+        calendar.add(Calendar.MONTH, -1);
+        Log.d("EXPM_tag_Calender","time stamp = "+calendar.getTimeInMillis());
+        long timestamp1 = calendar.getTimeInMillis();
+        String query = "SELECT SUM("+DAOFactory.COLUMN_AMOUNT+") FROM "+DAOFactory.MONEY_TABLE+
+                " WHERE "+DAOFactory.COLUMN_TIMSTAMP+" >= "+timestamp1+
+                " AND "+DAOFactory.COLUMN_TIMSTAMP+" <= "+timestamp2 +";";
+        Cursor cursor = database.rawQuery(query, null);
+        cursor.moveToFirst();
+        long amount = cursor.getLong(0);
+        return amount;
+
+    }
 }

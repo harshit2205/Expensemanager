@@ -129,7 +129,7 @@ public class LendBorrowDAO {
         oldAmount = cursor.getLong(2);
         cursor.close();
         if(cnt == 0)return false;
-        else return true;
+        return true;
     }
 
     public void updateitem(LendBorrowItem lendBorrowItem){

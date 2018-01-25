@@ -72,6 +72,7 @@ public class DAOFactory extends SQLiteOpenHelper {
             COLUMN_TIMSTAMP+ " BIGINT(15) ); ";
 
 
+
     public DAOFactory(Context context, SQLiteDatabase.CursorFactory factory) {
         super(context, DATABASE, factory, 1);
     }

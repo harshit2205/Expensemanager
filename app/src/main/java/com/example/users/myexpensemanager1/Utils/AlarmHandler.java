@@ -32,10 +32,12 @@ public class AlarmHandler {
     }
 
     public static void addMoney(MoneyItem moneyItem, Context context){
-        SharedPreferences.Editor editor = context.getSharedPreferences("MyPref", MODE_PRIVATE).edit(); // 0 - for private mode
-        editor.putLong("autoadd_TS",moneyItem.getTimestamp());
-        editor.apply();
+
+        if(context == null){
+            Log.d("EXPM_AutoAdder","context recieved");
+        }
         Intent intent = new Intent(context, MonthlyAddBroadcastReciever.class);
+        intent.putExtra("autoadd_TS",moneyItem.getTimestamp());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Activity.ALARM_SERVICE);
         Log.d("EXPM_AutoAdder","alarm service is set for timestamp = "+ moneyItem.getTimestamp());
@@ -53,7 +55,6 @@ public class AlarmHandler {
         Intent intent = new Intent(context, MyBroadcastReciever.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(Activity.ALARM_SERVICE);
-
 
         long alarmTime = remainderItem.getTimestamp();
         if (Build.VERSION.SDK_INT < 19) {

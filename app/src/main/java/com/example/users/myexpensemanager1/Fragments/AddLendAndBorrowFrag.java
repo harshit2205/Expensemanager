@@ -135,18 +135,22 @@ public class AddLendAndBorrowFrag extends BaseFragment implements CompoundButton
         if(lendBorrowType.getText().toString().equals("Borrowing from")){
             amount = 0 - Long.parseLong(moneyAmount.getText().toString());
         Log.d("EXPM_LendBorrow","amount = "+ amount);}
+
         if(setEndDate.isChecked()){
             remainderSet = LendBorrowDAO.REMINDER_SET;
             timeStamp = now.getTimeInMillis();
             Log.d("EXPM_LendBorrow","timestamp of added money is "+now.getTimeInMillis());
         }
+
+        String namealtered = name.getText().toString();
         LendBorrowItem lendBorrowItem = new LendBorrowItem(
-                name.getText().toString(),
+                namealtered.replaceFirst("\\s++$",""),
                 amount,
                 description.getText().toString(),
                 remainderSet,
                 timeStamp
         );
+
         LendBorrowDAO lendBorrowDAO = LendBorrowDAO.initialiser(getActivity().getApplicationContext());
         if(lendBorrowDAO.searchOldItem(name.getText().toString())){
             lendBorrowDAO.updateitem(lendBorrowItem);
