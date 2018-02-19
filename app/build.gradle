@@ -48,4 +48,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.8.1'
     compile 'com.github.oxoooo:touch-image-view:1.0.1'
     compile 'com.gelitenight.waveview:waveview:1.0.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

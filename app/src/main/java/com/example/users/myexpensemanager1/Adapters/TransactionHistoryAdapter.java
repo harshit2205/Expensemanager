@@ -48,8 +48,26 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
         holder.transactionCost.setText(transactionCost);
         holder.itemName.setText(items.get(position).getItem_name());
         holder.transactionDate.setText(getDate(items.get(position).getTimestamp()));
-        holder.transactionType.setText(items.get(position).getTransactionType());
         holder.description.setText(items.get(position).getDescription());
+
+        switch (items.get(position).getTransactionType()) {
+            case "Food Expenses":
+                holder.avatarView.setImageDrawable(context.getResources().getDrawable(R.drawable.food_expenses));
+                break;
+            case "Movies Expenses":
+                holder.avatarView.setImageDrawable(context.getResources().getDrawable(R.drawable.movie_expenses));
+                break;
+            case "Household Expenses":
+                holder.avatarView.setImageDrawable(context.getResources().getDrawable(R.drawable.household_expenses));
+                break;
+            case "Tax Expenses":
+                holder.avatarView.setImageDrawable(context.getResources().getDrawable(R.drawable.tax_expenses));
+                break;
+            default:
+                holder.avatarView.setImageDrawable(context.getResources().getDrawable(R.drawable.other_expenses));
+
+        }
+
         holder.id = items.get(position).getId();
     }
 
@@ -77,6 +95,7 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
         private TextView transactionCost;
         private TextView transactionDate;
         private TextView updateData;
+        private ImageView avatarView;
         private TextView transactionType;
         private TextView description;
         private int id, position = getAdapterPosition();
@@ -84,6 +103,7 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
         public TransactionViewHolder(View itemView) {
             super(itemView);
             itemName = (TextView) itemView.findViewById(R.id.item_name);
+            avatarView = (ImageView) itemView.findViewById(R.id.avatarView);
             transactionCost = (TextView)itemView.findViewById(R.id.transaction_cost);
             transactionDate = (TextView)itemView.findViewById(R.id.transaction_date);
             recieptImage = (ImageView)itemView.findViewById(R.id.reciept_attachment);
