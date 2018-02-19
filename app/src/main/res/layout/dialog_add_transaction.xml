@@ -1,0 +1,82 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <EditText
+        android:id="@+id/item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="@string/item_name"
+        android:maxLines="1"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/item_cost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_name"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="@string/item_cost"
+        android:inputType="number"
+        android:maxLines="1"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:id="@+id/date_time_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_cost"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <Button
+            android:id="@+id/date_input"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="@string/Date"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/button_text_size" />
+
+        <Button
+            android:id="@+id/time_input"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="@string/time"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/button_text_size" />
+
+        <ImageView
+            android:id="@+id/take_snapshot"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:padding="10dp"
+            android:src="@drawable/ic_attachment_white_24dp" />
+    </LinearLayout>
+
+    <com.weiwangcn.betterspinner.library.BetterSpinner
+        android:id="@+id/type_chooser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date_time_layout"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="@string/set_transaction_type"
+        android:textColorHint="#9F9F9F"
+        android:textSize="14sp" />
+
+
+</RelativeLayout>

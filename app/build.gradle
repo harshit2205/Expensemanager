@@ -49,4 +49,5 @@ dependencies {
     compile 'com.github.oxoooo:touch-image-view:1.0.1'
     compile 'com.gelitenight.waveview:waveview:1.0.0'
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.orhanobut:dialogplus:1.11@aar'
 }

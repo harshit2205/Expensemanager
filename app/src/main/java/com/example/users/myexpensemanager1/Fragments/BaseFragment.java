@@ -50,14 +50,6 @@ public class BaseFragment extends Fragment implements TimePickerDialog.OnTimeSet
 
     }
 
-    public void fragmentstarter(android.app.Fragment frag){
-        FragmentManager manager = getFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.addToBackStack("options_frag");
-        transaction.replace(R.id.container_main,frag);
-        transaction.commit();
-    }
-
     protected void hideKeyboard() {
         if (getActivity() == null) {
             return;

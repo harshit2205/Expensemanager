@@ -19,6 +19,7 @@ import com.example.users.myexpensemanager1.Fragments.MoneyHistoryPager;
 import com.example.users.myexpensemanager1.Fragments.RemainderHistoryFrag;
 import com.example.users.myexpensemanager1.Fragments.TransactionHistoryPager;
 import com.example.users.myexpensemanager1.R;
+import com.example.users.myexpensemanager1.Dialogs.AddTransactionDialog;
 
 import java.io.File;
 
@@ -88,6 +89,7 @@ public class Main2Activity extends BaseActivity
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -100,8 +102,9 @@ public class Main2Activity extends BaseActivity
             Intent intent = new Intent();
             int INTENT = 0;
             if (id_drawer_list == R.id.nav_transactions) {
-                intent.setClass(Main2Activity.this, OneFragmentActivity.class);
-                INTENT = OneFragmentActivity.ADD_TRANSACTION;
+                new AddTransactionDialog(this, getFragmentManager());
+//                intent.setClass(Main2Activity.this, OneFragmentActivity.class);
+//                INTENT = OneFragmentActivity.ADD_TRANSACTION;
             } else if (id_drawer_list == R.id.nav_earnings) {
                 intent.setClass(Main2Activity.this, OneFragmentActivity.class);
                 INTENT = OneFragmentActivity.ADD_EARNING;
@@ -113,7 +116,7 @@ public class Main2Activity extends BaseActivity
                 INTENT = OneFragmentActivity.ADD_LEND_BORROW;
             }
             intent.putExtra("addition_type", INTENT);
-            startActivity(intent);
+            //startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -184,4 +187,6 @@ public class Main2Activity extends BaseActivity
 
         }
     }
+
+
 }
