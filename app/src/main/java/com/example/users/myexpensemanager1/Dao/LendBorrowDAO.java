@@ -28,7 +28,8 @@ public class LendBorrowDAO {
     private long lends, borrows;
     private long oldAmount = 0;
 
-    private LendBorrowDAO() {
+    private LendBorrowDAO(Context context) {
+        this.context = context;
         daoFactory = new DAOFactory(context, null);
 
         try{
@@ -40,14 +41,9 @@ public class LendBorrowDAO {
 
     public static LendBorrowDAO initialiser(Context context){
         if(lendBorrowDAO == null){
-            lendBorrowDAO = new LendBorrowDAO();
-            lendBorrowDAO.setContext(context);
+            lendBorrowDAO = new LendBorrowDAO(context);
         }
         return lendBorrowDAO;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
     }
 
     public long getLends() {

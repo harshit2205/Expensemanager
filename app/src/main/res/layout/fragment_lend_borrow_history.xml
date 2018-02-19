@@ -5,37 +5,32 @@
     android:background="@color/background"
     tools:context=".Fragments.LendAndBorrowHistoryFrag">
 
-    <LinearLayout
-        android:id="@+id/view_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/bottom_buttons"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/lend_borrow_history_recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bottom_panel"
+            android:layout_alignParentTop="true"
+            android:visibility="gone" />
 
-        <TextView
+
+    <TextView
             android:id="@+id/empty_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
             android:text="@string/remainder_yet_to_add"
             android:visibility="gone" />
 
-        <ProgressBar
-            android:id="@+id/lend_borrow_progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone"/>
-    </LinearLayout>
-
+    <ProgressBar
+        android:id="@+id/lend_borrow_progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center" />
 
     <LinearLayout
-        android:id="@+id/bottom_buttons"
+        android:id="@+id/bottom_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
