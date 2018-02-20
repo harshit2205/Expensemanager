@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 import com.example.users.myexpensemanager1.Activities.Main2Activity;
 import com.example.users.myexpensemanager1.Dao.TransactionDAO;
 import com.example.users.myexpensemanager1.Fragments.BaseFragment;
+import com.example.users.myexpensemanager1.Models.MessageEvent;
 import com.example.users.myexpensemanager1.Models.TransactionItem;
 import com.example.users.myexpensemanager1.R;
 import com.orhanobut.dialogplus.DialogPlus;
@@ -40,8 +42,11 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.weiwangcn.betterspinner.library.BetterSpinner;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by USER on 2/19/2018.
@@ -52,15 +57,18 @@ public class AddTransactionDialog extends BaseDialog {
 
     EditText purpose, itemcost;
     BetterSpinner transactionType;
+    int itemId;
     private Context context;
     private Button date, time;
     private File imageFile;
     private String filePath;
     private FragmentManager manager;
     private DialogPlus dialog;
+    private boolean isEditing;
     private String[] TRANSACTION_TYPE = new String[]{
             "Food Expenses", "Movies Expenses", "Household Expenses", "Tax Expenses", "Other Expenses"
     };
+
 
     public AddTransactionDialog(final Context context, final FragmentManager manager) {
         this.context = context;
@@ -71,8 +79,8 @@ public class AddTransactionDialog extends BaseDialog {
         CURREN_HRS = now.get(Calendar.HOUR_OF_DAY);
         CURRENT_MINS = now.get(Calendar.MINUTE);
         CURRENT_SEC = now.get(Calendar.SECOND);
-        boolean isGrid = false;
         Holder holder = new ViewHolder(R.layout.dialog_add_transaction);
+
 
 
         OnItemClickListener itemClickListener = new OnItemClickListener() {
@@ -172,11 +180,11 @@ public class AddTransactionDialog extends BaseDialog {
                 //                .setOutMostMargin(0, 100, 0, 0)
                 .create();
 
-        connector(dialog);
+        viewElementInitialiser(dialog);
         dialog.show();
     }
 
-    private void connector(DialogPlus dialog) {
+    private void viewElementInitialiser(DialogPlus dialog) {
         View view = dialog.getHolderView();
         date = (Button) view.findViewById(R.id.date_input);
         time = (Button) view.findViewById(R.id.time_input);
@@ -190,6 +198,17 @@ public class AddTransactionDialog extends BaseDialog {
         View headerView = dialog.getHeaderView();
         TextView header_textView = (TextView) headerView.findViewById(R.id.header_text);
         header_textView.setText("Add Transaction");
+
+    }
+
+    public void viewElementEditor(TransactionItem item) {
+        purpose.setText(item.getItem_name());
+        itemcost.setText(Long.toString(item.getAmount()));
+        date.setText(getDate(item.getTimestamp()));
+        time.setText(getTime(item.getTimestamp()));
+        transactionType.setText(item.getTransactionType());
+        itemId = item.getId();
+        isEditing = true;
     }
 
     public boolean inputcheck() {
@@ -241,9 +260,35 @@ public class AddTransactionDialog extends BaseDialog {
                 filePath,
                 transactionType.getText().toString());
 
-        TransactionDAO transactionDAO = TransactionDAO.initialiser(context);
-        transactionDAO.insertTransaction(transactionItem);
-        hideKeyboard();
+        if (isEditing) {
+            transactionItem.setId(itemId);
+            TransactionDAO.initialiser(context).updateTransaction(transactionItem);
+        } else {
+            TransactionDAO transactionDAO = TransactionDAO.initialiser(context);
+            transactionDAO.insertTransaction(transactionItem);
+        }
+        EventBus.getDefault().post(new MessageEvent("transaction_update"));
         dialog.dismiss();
     }
+
+    private String getDate(long timestamp) {
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(timestamp);
+        String date = DateFormat.format("dd-MM-yyyy", cal).toString();
+        return date;
+    }
+
+    private String getTime(long timestamp) {
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(timestamp);
+        String time = DateFormat.format("HH:mm", cal).toString();
+        return time;
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        hideKeyboard();
+    }
+
 }

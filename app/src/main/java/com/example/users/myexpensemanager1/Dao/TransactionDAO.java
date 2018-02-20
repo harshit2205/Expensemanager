@@ -14,21 +14,12 @@ import java.util.Calendar;
 import java.util.List;
 
 public class TransactionDAO {
+    private static TransactionDAO transactionDAO;
     public String TRANSACTION_DAO = "transactionDAO";
-
     //initialising variables.....
     SQLiteDatabase database;
     DAOFactory daoFactory;
     Context context;
-
-    private static TransactionDAO transactionDAO;
-
-    public static TransactionDAO initialiser(Context context){
-        if(transactionDAO == null){
-            transactionDAO = new TransactionDAO(context);
-        }
-        return transactionDAO;
-    }
 
     private TransactionDAO(Context context){
         this.context = context;
@@ -39,6 +30,13 @@ public class TransactionDAO {
         }catch(SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public static TransactionDAO initialiser(Context context) {
+        if (transactionDAO == null) {
+            transactionDAO = new TransactionDAO(context);
+        }
+        return transactionDAO;
     }
 
     private void openDatabase() throws SQLException {
@@ -120,6 +118,21 @@ public class TransactionDAO {
         cursor.moveToFirst();
         long amount = cursor.getLong(0);
         return amount;
+    }
+
+    public void updateTransaction(TransactionItem transactionItem) {
+        ContentValues values = new ContentValues();
+        values.put(DAOFactory.COLUMN_USERNAME, transactionItem.getUserName());
+        values.put(DAOFactory.COLUMN_ITEM, transactionItem.getItem_name());
+        values.put(DAOFactory.COLUMN_AMOUNT, transactionItem.getAmount());
+        values.put(DAOFactory.COLUMN_DESCRIPTION, transactionItem.getDescription());
+        values.put(DAOFactory.COLUMN_TIMSTAMP, transactionItem.getTimestamp());
+        values.put(DAOFactory.COLUMN_FILEPATH, transactionItem.getFilePath());
+        values.put(DAOFactory.COLUMN_TYPE, transactionItem.getTransactionType());
+        database.update(DAOFactory.TRANSACTION_TABLE, values,
+                DAOFactory.COLUMN_ID + " = '" + transactionItem.getId() + "'",
+                null);
+        Log.d("EXPM", "transaction Inserted");
     }
 
 }

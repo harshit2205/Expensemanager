@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +17,19 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.users.myexpensemanager1.Activities.Main2Activity;
 import com.example.users.myexpensemanager1.Activities.OneFragmentActivity;
 import com.example.users.myexpensemanager1.Adapters.TransactionHistoryAdapter;
 import com.example.users.myexpensemanager1.Dao.TransactionDAO;
+import com.example.users.myexpensemanager1.Models.MessageEvent;
 import com.example.users.myexpensemanager1.Models.TransactionItem;
 import com.example.users.myexpensemanager1.R;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -37,12 +44,10 @@ public class TransactionHistoryFrag extends Fragment {
     RecyclerView historyView;
     ProgressBar progressBar;
     RelativeLayout emptyLayout;
-    Button addButton;
 
     public TransactionHistoryFrag() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,19 +58,8 @@ public class TransactionHistoryFrag extends Fragment {
         historyView = (RecyclerView)view.findViewById(R.id.history_recyclerview);
         emptyView = (TextView)view.findViewById(R.id.empty_view);
         progressBar = (ProgressBar)view.findViewById(R.id.fetch_progressbar);
-        addButton = (Button)view.findViewById(R.id.add);
         emptyLayout = (RelativeLayout) view.findViewById(R.id.empty_layout);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("Expm", "transaction add button pressed");
-                Intent i = new Intent(getActivity().getApplicationContext(), OneFragmentActivity.class);
-                i.putExtra("addition_type",OneFragmentActivity.ADD_TRANSACTION);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(i);
-            }
-        });
-        adapter = new TransactionHistoryAdapter(getActivity().getApplicationContext(), transactionlist,getFragmentManager());
+        adapter = new TransactionHistoryAdapter(getActivity(), transactionlist, getFragmentManager());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         historyView.setLayoutManager(layoutManager);
         historyView.setAdapter(adapter);
@@ -78,6 +72,30 @@ public class TransactionHistoryFrag extends Fragment {
 
     public void setEmptyView(String emptyViewText){
         emptyView.setText(emptyViewText);
+    }
+
+    // This method will be called when a MessageEvent is posted (in the UI thread for Toast)
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        if (event.getMessage().equals("transaction_update")) {
+            progressBar.setVisibility(View.VISIBLE);
+            emptyLayout.setVisibility(View.GONE);
+            historyView.setVisibility(View.GONE);
+            FetchTransaction fetch = new FetchTransaction();
+            fetch.execute("get details");
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     class FetchTransaction extends AsyncTask< String, String, List<TransactionItem>>{
@@ -100,7 +118,5 @@ public class TransactionHistoryFrag extends Fragment {
             }
         }
     }
-
-
 
 }

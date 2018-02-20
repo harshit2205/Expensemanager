@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class RemainderHistoryAdapter extends RecyclerView.Adapter<RemainderHistoryAdapter.RemainderHistoryViewHolder>{
-    Context context;
     public List<RemainderItem> items;
+    Context context;
     FragmentManager manager;
 
     public RemainderHistoryAdapter(Context context, List<RemainderItem> items, FragmentManager manager) {
@@ -79,8 +79,8 @@ public class RemainderHistoryAdapter extends RecyclerView.Adapter<RemainderHisto
         public TextView date;
         public TextView time;
         public TextView description;
-        ImageView deleteRemainder;
         public int id;
+        ImageView deleteRemainder;
 
         public RemainderHistoryViewHolder(View itemView, final int INTENT, final FragmentManager manager) {
             super(itemView);
@@ -93,8 +93,7 @@ public class RemainderHistoryAdapter extends RecyclerView.Adapter<RemainderHisto
                 @Override
                 public void onClick(View v) {
                     ConfirmationDailogFrag frag = ConfirmationDailogFrag.getConfirmationFrag(id,
-                            ConfirmationDailogFrag.REMAINDER_DELETION,
-                            RemainderHistoryAdapter.this);
+                            ConfirmationDailogFrag.REMAINDER_DELETION);
                     frag.show(manager,"deletion");
 
                 }

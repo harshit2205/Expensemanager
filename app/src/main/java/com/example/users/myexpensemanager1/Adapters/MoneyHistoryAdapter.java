@@ -22,8 +22,8 @@ import java.util.Locale;
 
 
 public class MoneyHistoryAdapter extends RecyclerView.Adapter<MoneyHistoryAdapter.MoneyHistoryViewHolder> {
-    Context context;
     public List<MoneyItem> items;
+    Context context;
     FragmentManager manager;
 
     public MoneyHistoryAdapter(Context context, List<MoneyItem> items, FragmentManager manager){
@@ -80,8 +80,8 @@ public class MoneyHistoryAdapter extends RecyclerView.Adapter<MoneyHistoryAdapte
         public TextView moneyAmount;
         public TextView date;
         public TextView time;
-        ImageView deleteEarning;
         public int id;
+        ImageView deleteEarning;
 
         public MoneyHistoryViewHolder(View itemView) {
             super(itemView);
@@ -94,8 +94,7 @@ public class MoneyHistoryAdapter extends RecyclerView.Adapter<MoneyHistoryAdapte
                 @Override
                 public void onClick(View v) {
                     ConfirmationDailogFrag frag = ConfirmationDailogFrag.getConfirmationFrag(id,
-                            ConfirmationDailogFrag.MONEY_DELETION,
-                            MoneyHistoryAdapter.this);
+                            ConfirmationDailogFrag.MONEY_DELETION);
                     frag.show(manager,"deletion");
                     notifyDataSetChanged();
                 }

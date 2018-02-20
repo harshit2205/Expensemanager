@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.example.users.myexpensemanager1.Activities.RecieptImageActivity;
 import com.example.users.myexpensemanager1.Charts.CombinedChartTransaction;
 import com.example.users.myexpensemanager1.Dao.TransactionDAO;
+import com.example.users.myexpensemanager1.Dialogs.AddTransactionDialog;
 import com.example.users.myexpensemanager1.Models.TransactionItem;
 import com.example.users.myexpensemanager1.R;
 import com.example.users.myexpensemanager1.Utils.ConfirmationDailogFrag;
@@ -24,7 +26,7 @@ import java.util.Locale;
 
 public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionHistoryAdapter.TransactionViewHolder> {
     public List<TransactionItem> items;
-    private Context context;
+    public Context context;
     private FragmentManager manager;
     private View view;
 
@@ -48,7 +50,7 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
         holder.transactionCost.setText(transactionCost);
         holder.itemName.setText(items.get(position).getItem_name());
         holder.transactionDate.setText(getDate(items.get(position).getTimestamp()));
-        holder.description.setText(items.get(position).getDescription());
+        holder.position = position;
 
         switch (items.get(position).getTransactionType()) {
             case "Food Expenses":
@@ -65,7 +67,6 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
                 break;
             default:
                 holder.avatarView.setImageDrawable(context.getResources().getDrawable(R.drawable.other_expenses));
-
         }
 
         holder.id = items.get(position).getId();
@@ -90,17 +91,14 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
     }
 
     public class TransactionViewHolder extends RecyclerView.ViewHolder {
-        ImageView recieptImage,deleteTransaction;
+        private ImageView recieptImage, deleteTransaction, editTransaction;
         private TextView itemName;
         private TextView transactionCost;
         private TextView transactionDate;
-        private TextView updateData;
         private ImageView avatarView;
-        private TextView transactionType;
-        private TextView description;
-        private int id, position = getAdapterPosition();
+        private int id, position;
 
-        public TransactionViewHolder(View itemView) {
+        public TransactionViewHolder(final View itemView) {
             super(itemView);
             itemName = (TextView) itemView.findViewById(R.id.item_name);
             avatarView = (ImageView) itemView.findViewById(R.id.avatarView);
@@ -108,9 +106,7 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
             transactionDate = (TextView)itemView.findViewById(R.id.transaction_date);
             recieptImage = (ImageView)itemView.findViewById(R.id.reciept_attachment);
             deleteTransaction =(ImageView)itemView.findViewById(R.id.delete_transaction);
-            updateData = (TextView)itemView.findViewById(R.id.modify);
-            transactionType = (TextView)itemView.findViewById(R.id.transaction_type);
-            description = (TextView)itemView.findViewById(R.id.item_description);
+            editTransaction = (ImageView) itemView.findViewById(R.id.edit_transaction);
 
             transactionCost.setTypeface(CombinedChartTransaction.mTfLight);
             transactionDate.setTypeface(CombinedChartTransaction.mTfLight);
@@ -130,9 +126,18 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
                 @Override
                 public void onClick(View v) {
                     ConfirmationDailogFrag frag = ConfirmationDailogFrag.getConfirmationFrag(id,
-                            ConfirmationDailogFrag.TRANSACTION_DELETION,
-                            TransactionHistoryAdapter.this);
+                            ConfirmationDailogFrag.TRANSACTION_DELETION);
                     frag.show(manager, "confirmation");
+                }
+            });
+
+            editTransaction.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    AddTransactionDialog dialog = new AddTransactionDialog(context, manager);
+                    Log.d("EXPM_temp_logs", "size of list = " + items.size() + " and item position = " + position);
+                    dialog.viewElementEditor(items.get(position));
                 }
             });
         }

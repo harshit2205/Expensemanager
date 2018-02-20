@@ -13,23 +13,22 @@ import com.example.users.myexpensemanager1.Adapters.TransactionHistoryAdapter;
 import com.example.users.myexpensemanager1.Dao.MoneyDAO;
 import com.example.users.myexpensemanager1.Dao.RemaindersDAO;
 import com.example.users.myexpensemanager1.Dao.TransactionDAO;
+import com.example.users.myexpensemanager1.Models.MessageEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class ConfirmationDailogFrag extends DialogFragment{
 
-    static String message;
-    static String description;
-    static int INTENT;
-    static RecyclerView.Adapter historyAdapter;
-    static int Id;
     public static int TRANSACTION_DELETION = 1;
     public static int MONEY_DELETION = 2;
     public static int REMAINDER_DELETION = 3;
+    static String message;
+    static String description;
+    static int INTENT;
+    static int Id;
 
-
-    public static ConfirmationDailogFrag getConfirmationFrag(int id, int INTENTION
-            , RecyclerView.Adapter adapter){
+    public static ConfirmationDailogFrag getConfirmationFrag(int id, int INTENTION) {
         INTENT = INTENTION;
-        historyAdapter = adapter;
         Id = id;
         if(INTENTION == TRANSACTION_DELETION){
             message = "Do you really want to delete this transaction?";
@@ -58,16 +57,14 @@ public class ConfirmationDailogFrag extends DialogFragment{
                     public void onClick(DialogInterface dialog, int which) {
                         if(INTENT == TRANSACTION_DELETION){
                         TransactionDAO.initialiser(getActivity().getApplicationContext()).deleteTransaction(Id);
-                        TransactionHistoryAdapter adapter = (TransactionHistoryAdapter)historyAdapter;
-                        adapter.itemSetChanged();}
+                            EventBus.getDefault().post(new MessageEvent("transaction_update"));
+                        }
                         if(INTENT == MONEY_DELETION) {
                             MoneyDAO.initialiser(getActivity().getApplicationContext()).deleteMoney(Id);
-                            MoneyHistoryAdapter adapter = (MoneyHistoryAdapter) historyAdapter;
-                            adapter.itemSetChanged();}
+                        }
                         if(INTENT == REMAINDER_DELETION){
                             RemaindersDAO.initialiser(getActivity().getApplicationContext()).deleteRemainder(Id);
-                            RemainderHistoryAdapter adapter = (RemainderHistoryAdapter)historyAdapter;
-                            adapter.itemSetChanged();}
+                        }
                         onDestroy();
                     }
                 })
