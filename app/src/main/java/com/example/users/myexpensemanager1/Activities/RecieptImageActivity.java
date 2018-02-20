@@ -39,11 +39,9 @@ public class RecieptImageActivity extends AppCompatActivity {
         });
 
         Intent i = getIntent();
-        if(i.hasExtra("imagePath")){
+        if (i.hasExtra("imagePath")) {
             str = i.getStringExtra("imagePath");
         }
-
-
 
         imageViewTouch.setImageBitmap(getImage());
 

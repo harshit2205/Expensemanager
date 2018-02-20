@@ -207,8 +207,16 @@ public class AddTransactionDialog extends BaseDialog {
         date.setText(getDate(item.getTimestamp()));
         time.setText(getTime(item.getTimestamp()));
         transactionType.setText(item.getTransactionType());
+        now.setTimeInMillis(item.getTimestamp());
         itemId = item.getId();
         isEditing = true;
+
+        CURRENT_YEAR = now.get(Calendar.YEAR);
+        CURRENT_MONTH = now.get(Calendar.MONTH);
+        CURRENT_DATE = now.get(Calendar.DATE);
+        CURREN_HRS = now.get(Calendar.HOUR_OF_DAY);
+        CURRENT_MINS = now.get(Calendar.MINUTE);
+        CURRENT_SEC = now.get(Calendar.SECOND);
     }
 
     public boolean inputcheck() {

@@ -135,4 +135,45 @@ public class TransactionDAO {
         Log.d("EXPM", "transaction Inserted");
     }
 
+//    public List<TransactionItem> thisMonthTransaction( Calendar now) {
+//        List<TransactionItem> transactionList =  new ArrayList<>();
+//        String query = "SELECT * FROM "+DAOFactory.TRANSACTION_TABLE+" WHERE "+ +" ORDER BY "+DAOFactory.COLUMN_TIMSTAMP+" ASC;";
+//        Cursor cursor = database.rawQuery(query, null);
+//        if(cursor.moveToFirst()) {
+//            do {
+//                TransactionItem item = new TransactionItem(cursor.getString(1)
+//                        , cursor.getString(2)
+//                        , Long.parseLong(cursor.getString(3))
+//                        , Long.parseLong(cursor.getString(5))
+//                        , cursor.getString(4)
+//                        , cursor.getString(6)
+//                        , cursor.getString(7));
+//                transactionList.add(item);
+//                item.setId(cursor.getInt(0));
+//            } while (cursor.moveToNext());
+//        }
+//        cursor.close();
+//        return transactionList;
+//    }
+//
+//    public List<TransactionItem> pastMonthTransaction( Calendar now) {
+//        List<TransactionItem> transactionList =  new ArrayList<>();
+//        String query = "SELECT * FROM "+DAOFactory.TRANSACTION_TABLE+" ORDER BY "+DAOFactory.COLUMN_TIMSTAMP+" ASC;";
+//        Cursor cursor = database.rawQuery(query, null);
+//        if(cursor.moveToFirst()) {
+//            do {
+//                TransactionItem item = new TransactionItem(cursor.getString(1)
+//                        , cursor.getString(2)
+//                        , Long.parseLong(cursor.getString(3))
+//                        , Long.parseLong(cursor.getString(5))
+//                        , cursor.getString(4)
+//                        , cursor.getString(6)
+//                        , cursor.getString(7));
+//                transactionList.add(item);
+//                item.setId(cursor.getInt(0));
+//            } while (cursor.moveToNext());
+//        }
+//        cursor.close();
+//        return transactionList;
+//    }
 }
