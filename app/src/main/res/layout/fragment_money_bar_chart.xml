@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.users.myexpensemanager1.Fragments.MoneyBarChartFrag">
+    tools:context="com.example.users.myexpensemanager1.fragments.MoneyBarChartFrag">
 
     <TextView
         android:layout_width="match_parent"

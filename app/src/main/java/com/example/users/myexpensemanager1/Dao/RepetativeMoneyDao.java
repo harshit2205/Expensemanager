@@ -1,4 +1,4 @@
-package com.example.users.myexpensemanager1.Dao;
+package com.example.users.myexpensemanager1.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.users.myexpensemanager1.Models.MoneyItem;
+import com.example.users.myexpensemanager1.models.MoneyItem;
 
 import java.util.ArrayList;
 import java.util.List;

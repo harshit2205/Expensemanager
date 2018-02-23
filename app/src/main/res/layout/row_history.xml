@@ -9,25 +9,27 @@
         android:id="@+id/avatarView"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:padding="5dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:contentDescription="@string/avatar"
+        android:padding="5dp"
         android:src="@drawable/nav_earnings" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/avatarView"
-        android:layout_toLeftOf="@+id/edit_earning"
-        android:padding="5dp"
-        android:orientation="vertical">
+        android:layout_toEndOf="@+id/avatarView"
+        android:orientation="vertical"
+        android:padding="5dp">
         <LinearLayout
+            android:id="@+id/line1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/line1"
             android:layout_alignParentTop="true"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:paddingEnd="10dp"
+            android:paddingStart="0dp">
             <TextView
                 android:id="@+id/money_amount"
                 android:layout_width="wrap_content"
@@ -41,58 +43,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_toRightOf="@+id/avatarView"
-                android:gravity="right"
                 android:maxLines="1"
                 android:text="@string/Date"
+                android:textAlignment="viewEnd"
                 android:textColor="?android:attr/textColorSecondary"
                 android:textSize="14sp" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/line2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/line2"
             android:layout_alignParentBottom="true"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:paddingEnd="10dp"
+            android:paddingStart="0dp">
             <TextView
                 android:id="@+id/item_description"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:maxLines="1"
                 android:ellipsize="end"
-                android:text="Description" />
-            <TextView
-                android:id="@+id/money_add_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="@string/time" />
+                android:maxLines="1"
+                android:text="@string/description" />
         </LinearLayout>
     </RelativeLayout>
-    <ImageView
-        android:id="@+id/delete_earning"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:padding="5dp"
-        android:src="@drawable/ic_delete_black_24dp" />
-    <ImageView
-        android:id="@+id/edit_earning"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_centerVertical="true"
-        android:padding="5dp"
-        android:layout_toLeftOf="@+id/delete_earning"
-        android:src="@drawable/ic_edit_black_24dp"/>
     <View
         android:id="@+id/bottom"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:background="@color/background" />
 </RelativeLayout>

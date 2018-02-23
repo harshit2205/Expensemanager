@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context="com.example.users.myexpensemanager1.Fragments.TransactionHistoryFrag">
+    tools:context="com.example.users.myexpensemanager1.fragments.TransactionHistoryFrag">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/history_recyclerview"

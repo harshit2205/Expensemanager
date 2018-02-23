@@ -14,7 +14,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp" />
@@ -24,8 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:layout_toLeftOf="@+id/options_layout"
-        android:layout_toRightOf="@+id/avatarView"
+        android:layout_toEndOf="@+id/avatarView"
         android:orientation="horizontal">
 
         <TextView
@@ -61,7 +60,7 @@
         android:text="@string/Date" />
 
 
-    <LinearLayout
+    <!--LinearLayout
             android:id="@+id/options_layout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -93,5 +92,5 @@
             android:background="@color/colorPrimary"
             android:padding="10dp"
             android:src="@drawable/ic_delete_black_24dp"/>
-        </LinearLayout>
+        </LinearLayout-->
 </RelativeLayout>

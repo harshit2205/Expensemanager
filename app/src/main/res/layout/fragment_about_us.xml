@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/develpers_profile_back"
     android:orientation="vertical"
-    tools:context="com.example.users.myexpensemanager1.Fragments.AboutUsFrag">
+    tools:context="com.example.users.myexpensemanager1.fragments.AboutUsFrag">
 
 
     <TextView

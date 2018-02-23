@@ -1,10 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#fff"
-    tools:context=".Fragments.AddTransactionFragment">
+    tools:context=".fragments.AddTransactionFragment">
         <View
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -14,89 +14,103 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <android.support.v7.widget.CardView
+                android:id="@+id/cardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                app:cardCornerRadius="10dp"
-                android:id="@+id/cardview">
+                app:cardCornerRadius="10dp">
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="10dp">
                     <EditText
                         android:id="@+id/item_name"
-                        android:hint="@string/item_name"
                         android:layout_width="match_parent"
-                        android:textSize="14sp"
                         android:layout_height="wrap_content"
+                        android:hint="@string/item_name"
                         android:maxLength="13"
-                        android:maxLines="1"/>
-                    <EditText
-                        android:id="@+id/item_cost"
-                        android:hint="@string/item_cost"
-                        android:inputType="number"
-                        android:textSize="14sp"
+                        android:maxLines="1"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:id="@+id/line1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/item_name"
-                        android:maxLines="1"/>
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/Rs"
+                            android:textColor="#000"
+                            android:textSize="25sp" />
+
+                        <EditText
+                            android:id="@+id/item_cost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/item_name"
+                            android:layout_weight="12"
+                            android:hint="@string/item_cost"
+                            android:inputType="number"
+                            android:maxLines="1"
+                            android:textSize="25sp" />
+                    </LinearLayout>
                     <LinearLayout
                         android:id="@+id/date_time_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/item_cost"
-                        android:padding="5dp"
-                        android:orientation="horizontal">
+                        android:layout_below="@+id/line1"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
                         <Button
-                            android:layout_margin="5dp"
                             android:id="@+id/date_input"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/shape"
-                            android:hint="@string/Date"/>
-                        <Button
                             android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:background="@color/mdtp_white"
+                            android:text="@string/Date"
+                            android:textColor="@color/colorPrimary" />
+                        <Button
                             android:id="@+id/time_input"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
                             android:layout_weight="1"
-                            android:background="@drawable/shape"
-                            android:hint="@string/time"/>
+                            android:background="@color/mdtp_white"
+                            android:text="@string/time"
+                            android:textColor="@color/colorPrimary" />
                     </LinearLayout>
-                    <EditText
-                        android:id="@+id/item_description"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:textSize="14sp"
-                        android:layout_below="@+id/date_time_layout"
-                        android:hint="@string/description"/>
                     <com.weiwangcn.betterspinner.library.BetterSpinner
                         android:id="@+id/type_chooser"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:layout_below="@id/item_description"
+                        android:layout_below="@id/date_time_layout"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:hint="@string/set_transaction_type"
-                        android:textColorHint="#9F9F9F"/>
+                        android:textColorHint="#9F9F9F"
+                        android:textSize="14sp" />
                     <Button
+                        android:id="@+id/take_snapshot"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/type_chooser"
-                        android:id="@+id/take_snapshot"
                         android:layout_marginBottom="10dp"
-                        android:background="@color/colorPrimary"
+                        android:background="@color/mdtp_white"
                         android:text="take reciept snapshot"
-                        android:textColor="#fff"/>
+                        android:textColor="@color/colorPrimary" />
                     <Button
                         android:id="@+id/add_transaction"
-                        android:text="@string/add"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/take_snapshot"
-                        android:textColor="@android:color/white"
-                        android:background="@drawable/button_background"/>
+                        android:background="@drawable/button_background"
+                        android:text="@string/add"
+                        android:textColor="@android:color/white" />
 
                 </RelativeLayout>
 

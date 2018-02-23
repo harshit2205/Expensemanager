@@ -4,10 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:orientation="horizontal"
-    android:paddingBottom="@dimen/margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/margin">
+    android:paddingLeft="@dimen/activity_horizontal_margin">
 
     <TextView
         android:layout_width="0dp"
@@ -23,8 +20,7 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:text="@string/cancel"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/button_text_size" />
+        android:textColor="@color/colorPrimary" />
 
     <Button
         android:id="@+id/footer_add_button"
@@ -32,8 +28,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:text="@string/add"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/button_text_size" />
+        android:textColor="@android:color/white" />
 
 </LinearLayout>
 

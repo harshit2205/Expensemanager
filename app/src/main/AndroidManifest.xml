@@ -7,35 +7,36 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name=".Activities.MyExpenseManagerApplication"
+        android:name=".activities.MyExpenseManagerApplication"
         android:allowBackup="true"
         android:icon="@drawable/logo_app1"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <receiver android:name=".Utils.MyBroadcastReciever">
+        <receiver android:name=".utils.MyBroadcastReciever">
             <intent-filter>
                 <action android:name="android.intent.action.TIME_TICK" />
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".Utils.MonthlyAddBroadcastReciever">
+        <receiver android:name=".utils.MonthlyAddBroadcastReciever">
             <intent-filter>
                 <action android:name="android.intent.action.TIME_TICK" />
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".Activities.BaseActivity" />
+        <activity android:name=".activities.BaseActivity" />
         <activity
-            android:name=".Activities.Main2Activity"
+            android:name=".activities.Main2Activity"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Activities.RecieptImageActivity"
+            android:name=".activities.RecieptImageActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
-        <activity android:name=".Activities.OneFragmentActivity" />
-        <activity android:name=".Activities.SplashScreenActivity">
+        <activity android:name=".activities.OneFragmentActivity" />
+        <activity android:name=".activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

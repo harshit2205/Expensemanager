@@ -44,8 +44,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:text="@string/Date"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/button_text_size" />
+            android:textColor="@color/colorPrimary" />
 
         <Button
             android:id="@+id/time_input"
@@ -54,8 +53,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:text="@string/time"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/button_text_size" />
+            android:textColor="@color/colorPrimary" />
 
         <ImageView
             android:id="@+id/take_snapshot"

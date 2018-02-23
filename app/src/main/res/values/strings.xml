@@ -2,6 +2,12 @@
     <string name="developers_name">Harshit Srivastava</string>
     <string name="app_name">MyExpenseManager1</string>
 
+    <string name="one_time_earning">One time earning</string>
+    <string name="monthly_earning">Monthly earning</string>
+    <string name="source">source of income</string>
+    <string name="repeatable">repeatable income</string>
+    <string name="delete">Delete</string>
+    <string name="avatar">avatarView</string>
     <string name="Rs">\u20B9</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="view_money_history">view money history</string>
@@ -57,5 +63,6 @@
     <string name="word_from_developer">Thanks you all of you for your support. Just keep using the app to its fullest. I am really glad to
         help you all with my application.</string>
     <string name="informer_text_screen1"></string>
+    <string name="saved_unique_id">uniqueId</string>
 
 </resources>
