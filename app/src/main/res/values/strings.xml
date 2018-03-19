@@ -41,7 +41,7 @@
     <string name="live_data">LIVE STATS</string>
     <string name="head">head</string>
     <string name="money_yet_to_add">Money is yet to be added.</string>
-    <string name="remainder_yet_to_add">Remainders are yet to be added.</string>
+    <string name="No_participants_yet">No_participants_yet.</string>
     <string name="transactions_yet_to_add">Transactions are yet to be added.</string>
     <string name="view_remainder_history">view all remainders</string>
     <string name="title_activity_main2">Main2Activity</string>
@@ -53,7 +53,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
 
-
     <string name="savingstab_data">You can save money buy telling us the amount u need to save and the min time time to save it in this tab and
         accordingly we will manipulate ur trends.</string>
     <string name="about_developer">I am a student. This is my first full android application which i have published on google playstore.
@@ -62,7 +61,13 @@
     problem with the application. i will reply for sure and will upgrade the app as soon as possible .</string>
     <string name="word_from_developer">Thanks you all of you for your support. Just keep using the app to its fullest. I am really glad to
         help you all with my application.</string>
-    <string name="informer_text_screen1"></string>
     <string name="saved_unique_id">uniqueId</string>
+    <string name="add_participant">add participant</string>
+    <string name="participants_name">participants name</string>
+    <string name="in_debt">in debt</string>
+    <string name="remainder_yet_to_add">remainder yet to add</string>
+    <string name="set_current_lend_borrow">set current lend/borrow</string>
+    <string name="_0_00">0.00</string>
+    <string name="set_type">Set type</string>
 
 </resources>

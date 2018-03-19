@@ -2,6 +2,7 @@ package com.example.users.myexpensemanager1.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,6 +22,7 @@ import com.example.users.myexpensemanager1.fragments.MoneyHistoryFrag;
 import com.example.users.myexpensemanager1.fragments.RemainderHistoryFrag;
 import com.example.users.myexpensemanager1.fragments.TransactionHistoryPager;
 import com.example.users.myexpensemanager1.R;
+import com.example.users.myexpensemanager1.recievers.MonthlyAddBroadcastReciever;
 
 import java.io.File;
 
@@ -39,6 +41,7 @@ public class Main2Activity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
 
         //for alarm managerunique ids .....
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
@@ -167,7 +170,9 @@ public class Main2Activity extends BaseActivity
             break;
         case R.id.nav_about_us:
             title = "About Us";
-            fragmentstarter(new AboutUsFrag());
+            Intent intent = new Intent(Main2Activity.this, AboutUsActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
             break;
         default:Log.d("EXPM_Nav_drawer","no item identified");
     }
@@ -180,6 +185,7 @@ public class Main2Activity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
+
         switch (id_drawer_list) {
             case R.id.nav_live_stats:
                 fragmentstarter(new LiveStatsFrag());
@@ -197,7 +203,7 @@ public class Main2Activity extends BaseActivity
                 fragmentstarter(new LendAndBorrowHistoryFrag());
                 break;
             case R.id.nav_about_us:
-                fragmentstarter(new AboutUsFrag());
+
             default:
 
         }

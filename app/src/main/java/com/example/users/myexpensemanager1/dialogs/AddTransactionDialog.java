@@ -40,9 +40,6 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.Locale;
 
-/**
- * Created by USER on 2/19/2018.
- */
 
 @SuppressLint("ValidFragment")
 public class AddTransactionDialog extends BaseDialog {

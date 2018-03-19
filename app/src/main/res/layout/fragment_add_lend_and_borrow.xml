@@ -83,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/shape"
+                        android:background="@drawable/shape1"
                         android:hint="@string/Date"/>
                     <Button
                         android:id="@+id/time_input"
@@ -91,7 +91,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/shape"
+                        android:background="@drawable/shape1"
                         android:hint="@string/time"/>
                 </LinearLayout>
 

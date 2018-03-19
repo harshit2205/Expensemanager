@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import com.example.users.myexpensemanager1.fragments.AddEarningFrag;
 import com.example.users.myexpensemanager1.fragments.AddLendAndBorrowFrag;
+import com.example.users.myexpensemanager1.fragments.AddParticipantFrag;
 import com.example.users.myexpensemanager1.fragments.AddRemainder;
 import com.example.users.myexpensemanager1.fragments.AddTransactionFragment;
 import com.example.users.myexpensemanager1.R;
@@ -18,6 +19,7 @@ public class OneFragmentActivity extends BaseActivity {
     public static int ADD_EARNING = 2;
     public static int ADD_REMAINDER = 3;
     public static int ADD_LEND_BORROW = 4;
+    public static int ADD_PARTICIPANT = 5;
     // activity to contain all back pressing activities.....
     ActionBar actionBar;
     int INTENT;
@@ -48,6 +50,9 @@ public class OneFragmentActivity extends BaseActivity {
         }else if(INTENT == ADD_LEND_BORROW){
             getSupportActionBar().setTitle("Add Lend/Borrow");
             fragmentstarter(new AddLendAndBorrowFrag(), "lend_Borrow_Frag");
+        } else if (INTENT == ADD_PARTICIPANT) {
+            getSupportActionBar().setTitle("Add Participant");
+            fragmentstarter(new AddParticipantFrag(), "add_Participant");
         }
 
     }

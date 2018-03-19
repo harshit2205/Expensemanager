@@ -40,22 +40,22 @@ public class AddLendAndBorrowFrag extends BaseFragment implements CompoundButton
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_lend_and_borrow, container, false);
 
-        date = (Button) view.findViewById(R.id.date_input);
+        date = view.findViewById(R.id.date_input);
         date.setOnClickListener(this);
-        time = (Button)view.findViewById(R.id.time_input);
+        time = view.findViewById(R.id.time_input);
         time.setOnClickListener(this);
-        name = (EditText)view.findViewById(R.id.lender_borrower_name);
-        moneyAmount = (EditText) view.findViewById(R.id.money_amount);
-        description = (EditText)view.findViewById(R.id.item_description);
-        addLendBorrow = (Button)view.findViewById(R.id.add_lendorborrow);
+        name = view.findViewById(R.id.lender_borrower_name);
+        moneyAmount = view.findViewById(R.id.money_amount);
+        description = view.findViewById(R.id.item_description);
+        addLendBorrow = view.findViewById(R.id.add_lendorborrow);
         addLendBorrow.setOnClickListener(this);
-        setEndDate = (CheckBox)view.findViewById(R.id.set_endate_checkbox);
+        setEndDate = view.findViewById(R.id.set_endate_checkbox);
         setEndDate.setOnCheckedChangeListener(this);
-        layout = (LinearLayout)view.findViewById(R.id.date_time_layout);
-        setRemainder = (CheckBox)view.findViewById(R.id.set_remainder_checkbox);
+        layout = view.findViewById(R.id.date_time_layout);
+        setRemainder = view.findViewById(R.id.set_remainder_checkbox);
         setRemainder.setChecked(false);
         setEndDate.setChecked(false);
-        lendBorrowType = (BetterSpinner)view.findViewById(R.id.type_chooser);
+        lendBorrowType = view.findViewById(R.id.type_chooser);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),
                 R.layout.dropdown_item_spinner, LENDBORROWTYPE);
         lendBorrowType.setAdapter(adapter);

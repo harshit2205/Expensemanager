@@ -14,6 +14,7 @@ public class DAOFactory extends SQLiteOpenHelper {
     public static final String ALARM_TABLE = "AlarmTable";
     public static final String REPETATIVE_MONEY_TABLE = "RepetativeMoneyTable";
     public static final String LEND_BORROW_TABLE = "LendBorrowTable";
+    public static final String PARTICIPANT_TABLE = "ParticipantsTable";
     //column names.....
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_ITEM = "itemname";
@@ -25,6 +26,7 @@ public class DAOFactory extends SQLiteOpenHelper {
     public static final String COLUMN_FILEPATH = "filePath";
     public static final String COLUMN_TYPE = "type";
     public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_ISINDEBT = "debt";
     public static final String COLUMN_REMAINDER_SET = "remainderSet";
     //database names.....
     private static final String DATABASE = "expense_Manager_db.db";
@@ -67,10 +69,14 @@ public class DAOFactory extends SQLiteOpenHelper {
             COLUMN_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT , " +
             COLUMN_NAME + " TEXT , " +
             COLUMN_AMOUNT+ " BIGINT(10) , " +
-            COLUMN_DESCRIPTION+ " TEXT , "+
-            COLUMN_REMAINDER_SET+ " BOOL , "+
+            COLUMN_DESCRIPTION + " TEXT , " +
+            COLUMN_REMAINDER_SET + " BOOL , " +
             COLUMN_TIMSTAMP+ " BIGINT(15) ); ";
 
+    String createParticipantTable = " CREATE TABLE " + PARTICIPANT_TABLE + "( " +
+            COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
+            COLUMN_NAME + " TEXT , " +
+            COLUMN_ISINDEBT + " INTEGER ); ";
 
 
     public DAOFactory(Context context, SQLiteDatabase.CursorFactory factory) {
@@ -84,16 +90,18 @@ public class DAOFactory extends SQLiteOpenHelper {
         db.execSQL(createAlarmTable);
         db.execSQL(createRepMoneyTable);
         db.execSQL(createLendBorrowTable);
+        db.execSQL(createParticipantTable);
         Log.d("EXPM", "all tables created");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " +MONEY_TABLE);
-        db.execSQL("DROP IF TABLE EXISTS " + TRANSACTION_TABLE);
-        db.execSQL("DROP IF TABLE EXISTS " + ALARM_TABLE);
-        db.execSQL("DROP IF TABLE EXISTS " + REPETATIVE_MONEY_TABLE);
-        db.execSQL("DROP IF TABLE EXISTS " + LEND_BORROW_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + MONEY_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + TRANSACTION_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + ALARM_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + REPETATIVE_MONEY_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + LEND_BORROW_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + PARTICIPANT_TABLE);
 
         //database recreated.....
         onCreate(db);

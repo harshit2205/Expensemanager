@@ -1,4 +1,4 @@
-package com.example.users.myexpensemanager1.utils;
+package com.example.users.myexpensemanager1.recievers;
 
 import android.app.Notification;
 import android.app.PendingIntent;

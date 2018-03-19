@@ -101,7 +101,7 @@ public class ShowTransactionDetailsDialog {
                                     OnBackPressListener backPressListener, boolean expanded) {
         dialog = DialogPlus.newDialog(context)
                 .setContentHolder(holder)
-                .setCancelable(false)
+                .setCancelable(true)
                 .setGravity(gravity)
                 .setOnClickListener(clickListener)
                 .setOnItemClickListener(new OnItemClickListener() {

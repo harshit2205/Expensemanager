@@ -34,9 +34,9 @@ public class LendBorrowHistoryAdapter extends RecyclerView.Adapter<LendBorrowHis
 
     @Override
     public LendBorrowHistoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
+        view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.lend_borrow_history_row, parent, false);
-        return new LendBorrowHistoryViewHolder(v);
+        return new LendBorrowHistoryViewHolder(view);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.users.myexpensemanager1.utils;
+package com.example.users.myexpensemanager1.recievers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.example.users.myexpensemanager1.dao.MoneyDAO;
 import com.example.users.myexpensemanager1.dao.RepetativeMoneyDAO;
 import com.example.users.myexpensemanager1.models.MoneyItem;
+import com.example.users.myexpensemanager1.utils.AlarmHandler;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -25,6 +26,7 @@ public class MonthlyAddBroadcastReciever extends BroadcastReceiver{
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.d("EXPM_miscellaniousLogs", "this class is initiated by the way even after bootup");
         timestamp = intent.getLongExtra("autoadd_TS", 0);
         pendingIntentUniqueId = intent.getIntExtra("pendingIntentUniqueId", 0);
         this.context = context;
