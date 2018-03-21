@@ -1,6 +1,7 @@
 package com.example.users.myexpensemanager1.adapters;
 
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,21 +11,19 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.users.myexpensemanager1.R;
-import com.example.users.myexpensemanager1.models.Participant;
+import com.example.users.myexpensemanager1.fragments.ParticipanthistoryFrag;
+import com.example.users.myexpensemanager1.models.ParticipantItem;
 
 import java.util.List;
 
-/**
- * Created by USER on 3/19/2018.
- */
 
 public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapter.ParticipantsViewHolder> {
-    public List<Participant> items;
+    public List<ParticipantItem> items;
     Context context;
     FragmentManager manager;
     View view;
 
-    public ParticipantsAdapter(Context context, List<Participant> items, FragmentManager manager) {
+    public ParticipantsAdapter(Context context, List<ParticipantItem> items, FragmentManager manager) {
         this.items = items;
         this.context = context;
         this.manager = manager;
@@ -39,17 +38,21 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
 
     @Override
     public void onBindViewHolder(ParticipantsViewHolder holder, int position) {
-        Participant participant = items.get(position);
-        holder.participant.setText(participant.getParticipantname());
-        if (participant.isInDebt() == Participant.IS_IN_DEBT) {
+        ParticipantItem participantItem = items.get(position);
+        holder.participant.setText(participantItem.getParticipantname());
+        holder.dues = participantItem.getDues();
+        if (participantItem.isInDebt() == ParticipantItem.IS_IN_DEBT) {
             holder.isInDebt.setBackground(context.getResources().getDrawable(R.drawable.shape2));
-            holder.isInDebt.setText("borrow");
-        } else if (participant.isInDebt() == Participant.NO_DEBT) {
+            holder.type = "borrowed";
+            holder.isInDebt.setText(holder.type);
+        } else if (participantItem.isInDebt() == ParticipantItem.NO_DEBT) {
             holder.isInDebt.setBackground(context.getResources().getDrawable(R.drawable.shape3));
-            holder.isInDebt.setText("settled");
-        } else if (participant.isInDebt() == Participant.HAS_LENDED) {
+            holder.type = "settled";
+            holder.isInDebt.setText(holder.type);
+        } else if (participantItem.isInDebt() == ParticipantItem.HAS_LENDED) {
             holder.isInDebt.setBackground(context.getResources().getDrawable(R.drawable.shape1));
-            holder.isInDebt.setText("lend");
+            holder.type = "lended";
+            holder.isInDebt.setText(holder.type);
         }
     }
 
@@ -59,14 +62,47 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
         return items.size();
     }
 
-    public class ParticipantsViewHolder extends RecyclerView.ViewHolder {
+    private void fragmentstarter(android.app.Fragment frag, FragmentManager manager) {
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.addToBackStack("All_participants");
+        transaction.replace(R.id.container_main, frag);
+        transaction.commit();
+    }
+
+    class ParticipantsViewHolder extends RecyclerView.ViewHolder {
         TextView participant;
         Button isInDebt;
+        boolean flag = false;
+        String type;
+        long dues = 0;
 
-        public ParticipantsViewHolder(View itemView) {
+        ParticipantsViewHolder(View itemView) {
             super(itemView);
             participant = itemView.findViewById(R.id.participant);
             isInDebt = itemView.findViewById(R.id.isInDebt);
+
+            isInDebt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!flag) {
+                        String data = context.getResources().getString(R.string.Rs) + " " + Long.toString(dues);
+                        isInDebt.setText(data);
+                        flag = true;
+                    } else {
+                        isInDebt.setText(type);
+                        flag = false;
+                    }
+                }
+            });
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ParticipanthistoryFrag frag = new ParticipanthistoryFrag();
+                    frag.setParticipantName(participant.getText().toString());
+                    fragmentstarter(frag, manager);
+                }
+            });
         }
     }
 }

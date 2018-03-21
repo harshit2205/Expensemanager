@@ -97,13 +97,10 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
 
         public TransactionViewHolder(final View itemView) {
             super(itemView);
-            itemName = (TextView) itemView.findViewById(R.id.item_name);
-            avatarView = (ImageView) itemView.findViewById(R.id.avatarView);
-            transactionCost = (TextView)itemView.findViewById(R.id.transaction_cost);
-            transactionDate = (TextView)itemView.findViewById(R.id.transaction_date);
-//            recieptImage = (ImageView)itemView.findViewById(R.id.reciept_attachment);
-//            deleteTransaction =(ImageView)itemView.findViewById(R.id.delete_transaction);
-//            editTransaction = (ImageView) itemView.findViewById(R.id.edit_transaction);
+            itemName = itemView.findViewById(R.id.item_name);
+            avatarView = itemView.findViewById(R.id.avatarView);
+            transactionCost = itemView.findViewById(R.id.transaction_cost);
+            transactionDate = itemView.findViewById(R.id.transaction_date);
 
 
             transactionCost.setTypeface(CombinedChartTransaction.mTfLight);

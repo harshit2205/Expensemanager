@@ -28,6 +28,7 @@ public class DAOFactory extends SQLiteOpenHelper {
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_ISINDEBT = "debt";
     public static final String COLUMN_REMAINDER_SET = "remainderSet";
+    public static final String COLUMN_DUES = "dues";
     //database names.....
     private static final String DATABASE = "expense_Manager_db.db";
     //queries for Table creation.....
@@ -76,6 +77,7 @@ public class DAOFactory extends SQLiteOpenHelper {
     String createParticipantTable = " CREATE TABLE " + PARTICIPANT_TABLE + "( " +
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
             COLUMN_NAME + " TEXT , " +
+            COLUMN_DUES + " BIGINT(15) , " +
             COLUMN_ISINDEBT + " INTEGER ); ";
 
 

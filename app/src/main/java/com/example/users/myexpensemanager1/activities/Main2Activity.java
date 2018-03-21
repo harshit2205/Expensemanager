@@ -14,15 +14,22 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.users.myexpensemanager1.fragments.AboutUsFrag;
 import com.example.users.myexpensemanager1.fragments.LendAndBorrowHistoryFrag;
 import com.example.users.myexpensemanager1.fragments.LiveStatsFrag;
 import com.example.users.myexpensemanager1.fragments.MoneyHistoryFrag;
 import com.example.users.myexpensemanager1.fragments.RemainderHistoryFrag;
+import com.example.users.myexpensemanager1.fragments.TransactionHistoryFrag;
 import com.example.users.myexpensemanager1.fragments.TransactionHistoryPager;
 import com.example.users.myexpensemanager1.R;
+import com.example.users.myexpensemanager1.models.MessageEvent;
 import com.example.users.myexpensemanager1.recievers.MonthlyAddBroadcastReciever;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 
@@ -72,14 +79,14 @@ public class Main2Activity extends BaseActivity
         startupfragmentloader();
     }
 
-    private void startupfragmentloader(){
+    private void startupfragmentloader() {
         navigationView.getMenu().getItem(0).setChecked(true);
         getSupportActionBar().setTitle("Live Stats");
         LiveStatsFrag liveStatsFrag = new LiveStatsFrag();
         fragmentstarter(liveStatsFrag);
     }
 
-    private void createStorageDirectory(){
+    private void createStorageDirectory() {
         String folder_main = "app.myexpensemanager1";
 
         File f = new File(Environment.getExternalStorageDirectory(), folder_main);
@@ -101,7 +108,7 @@ public class Main2Activity extends BaseActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-                getMenuInflater().inflate(R.menu.main2, menu);
+        getMenuInflater().inflate(R.menu.main2, menu);
 
         menuitem = menu.findItem(R.id.action_add);
         return true;
@@ -131,7 +138,7 @@ public class Main2Activity extends BaseActivity
                 INTENT = OneFragmentActivity.ADD_REMAINDER;
             } else if (id_drawer_list == R.id.nav_lend_and_borrow) {
                 intent.setClass(Main2Activity.this, OneFragmentActivity.class);
-                INTENT = OneFragmentActivity.ADD_LEND_BORROW;
+                INTENT = OneFragmentActivity.ADD_PARTICIPANT;
             }
             intent.putExtra("addition_type", INTENT);
             startActivity(intent);
@@ -147,35 +154,36 @@ public class Main2Activity extends BaseActivity
         // Handle navigation view item clicks here.
         id_drawer_list = item.getItemId();
         String title = "";
-       switch (id_drawer_list){
-        case R.id.nav_live_stats:
-            title = "Live Stats";
-            fragmentstarter(new LiveStatsFrag());
-            break;
-        case R.id.nav_transactions:
-            title = "Transactions";
-            fragmentstarter(new TransactionHistoryPager());
-            break;
-        case R.id.nav_earnings:
-            title = "Earnings";
-            fragmentstarter(new MoneyHistoryFrag());
-            break;
-        case R.id.nav_remainders:
-            title = "Remainders";
-            fragmentstarter(new RemainderHistoryFrag());
-            break;
-        case R.id.nav_lend_and_borrow:
-            title = "Lend and Borrows";
-            fragmentstarter(new LendAndBorrowHistoryFrag());
-            break;
-        case R.id.nav_about_us:
-            title = "About Us";
-            Intent intent = new Intent(Main2Activity.this, AboutUsActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            break;
-        default:Log.d("EXPM_Nav_drawer","no item identified");
-    }
+        switch (id_drawer_list) {
+            case R.id.nav_live_stats:
+                title = "Live Stats";
+                fragmentstarter(new LiveStatsFrag());
+                break;
+            case R.id.nav_transactions:
+                title = "Transactions";
+                fragmentstarter(new TransactionHistoryPager());
+                break;
+            case R.id.nav_earnings:
+                title = "Earnings";
+                fragmentstarter(new MoneyHistoryFrag());
+                break;
+            case R.id.nav_remainders:
+                title = "Remainders";
+                fragmentstarter(new RemainderHistoryFrag());
+                break;
+            case R.id.nav_lend_and_borrow:
+                title = "Lend and Borrows";
+                fragmentstarter(new LendAndBorrowHistoryFrag());
+                break;
+            case R.id.nav_about_us:
+                title = "About Us";
+                Intent intent = new Intent(Main2Activity.this, AboutUsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                break;
+            default:
+                Log.d("EXPM_Nav_drawer", "no item identified");
+        }
         getSupportActionBar().setTitle(title);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -203,11 +211,8 @@ public class Main2Activity extends BaseActivity
                 fragmentstarter(new LendAndBorrowHistoryFrag());
                 break;
             case R.id.nav_about_us:
-
             default:
-
         }
     }
-
 
 }

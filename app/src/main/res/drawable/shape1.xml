@@ -5,5 +5,4 @@
         android:endColor="@color/colorPrimaryDark"
         android:startColor="@color/colorPrimaryDark" />
     <corners android:radius="100dp" />
-
 </shape>

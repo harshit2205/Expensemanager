@@ -25,7 +25,6 @@ public class LendBorrowDAO {
     private DAOFactory daoFactory;
     private Context context;
     private String LEND_BORROW_DAO = "lendBorrowDAO";
-    private long lends, borrows;
     private long oldAmount = 0;
 
     private LendBorrowDAO(Context context) {
@@ -46,22 +45,6 @@ public class LendBorrowDAO {
         return lendBorrowDAO;
     }
 
-    public long getLends() {
-        return lends;
-    }
-
-    public void setLends(long lends) {
-        this.lends = lends;
-    }
-
-    public long getBorrows() {
-        return borrows;
-    }
-
-    public void setBorrows(long borrows) {
-        this.borrows = borrows;
-    }
-
     private void openDatabase() throws SQLException {
         database = daoFactory.getWritableDatabase();
     }
@@ -78,7 +61,7 @@ public class LendBorrowDAO {
         values.put(DAOFactory.COLUMN_REMAINDER_SET,lendBorrowItem.getReminderSet());
         values.put(DAOFactory.COLUMN_TIMSTAMP,lendBorrowItem.getTimeStamp());
         database.insert(DAOFactory.LEND_BORROW_TABLE,null,values);
-        Log.d("EXPM", "lend/borrow item inserted in "+DAOFactory.LEND_BORROW_TABLE);
+        Log.d("EXPM_Participant", "lend/borrow item inserted in " + DAOFactory.LEND_BORROW_TABLE);
     }
 
     public void deleteLendBorrowItem(int id){
@@ -101,16 +84,9 @@ public class LendBorrowDAO {
                         , cursor.getLong(5));
                 lendBorrowItemList.add(item);
                 item.setId(cursor.getInt(0));
-                if(cursor.getLong(2) < 0 ){
-                    totalBorrows = totalBorrows + cursor.getLong(2) * ( -1);
-                }else{
-                    totalLends = totalLends + cursor.getLong(2);
-                }
             } while (cursor.moveToNext());
         }
         cursor.close();
-        lends = totalLends;
-        borrows = totalBorrows;
         return lendBorrowItemList;
     }
 
@@ -150,4 +126,28 @@ public class LendBorrowDAO {
                 null );
     }
 
+    public List<LendBorrowItem> showTupplesByName(String participantName) {
+        List<LendBorrowItem> lendBorrowItemList = new ArrayList<>();
+        String query = "SELECT * FROM " + DAOFactory.LEND_BORROW_TABLE +
+                " WHERE " + DAOFactory.COLUMN_NAME + " = '" + participantName + "' ORDER BY " + DAOFactory.COLUMN_TIMSTAMP + " DESC ;";
+        Cursor cursor = database.rawQuery(query, null);
+        if (cursor.getCount() == 0) {
+            Log.d("EXPM_Participant", "cursor count is 0");
+            return lendBorrowItemList;
+        }
+        if (cursor.moveToFirst()) {
+            do {
+                // get the data into array, or class variable
+                LendBorrowItem item = new LendBorrowItem(cursor.getString(1)
+                        , cursor.getLong(2)
+                        , cursor.getString(3)
+                        , cursor.getInt(4)
+                        , cursor.getLong(5));
+                lendBorrowItemList.add(item);
+                item.setId(cursor.getInt(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return lendBorrowItemList;
+    }
 }

@@ -24,13 +24,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingLeft="3dp">
+                    android:paddingStart="3dp">
 
                     <TextView
                         android:id="@+id/nonrep_earnings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="ONE TIME EARNS"
+                        android:text="@string/one_time_earns"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp" />
 
@@ -55,13 +55,13 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="3dp">
+                    android:paddingStart="3dp">
 
                     <TextView
                         android:id="@+id/rep_earnings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="MONTHLY EARNS"
+                        android:text="@string/monthly_earns"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp" />
 

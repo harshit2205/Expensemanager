@@ -51,7 +51,7 @@ public class OneFragmentActivity extends BaseActivity {
             getSupportActionBar().setTitle("Add Lend/Borrow");
             fragmentstarter(new AddLendAndBorrowFrag(), "lend_Borrow_Frag");
         } else if (INTENT == ADD_PARTICIPANT) {
-            getSupportActionBar().setTitle("Add Participant");
+            getSupportActionBar().setTitle("Add ParticipantItem");
             fragmentstarter(new AddParticipantFrag(), "add_Participant");
         }
 

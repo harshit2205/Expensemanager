@@ -35,13 +35,14 @@
                     android:maxLines="1"
                     android:textSize="25sp" />
 
-                <TextView
+                <CheckBox
                     android:id="@+id/line0"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/participant_name"
+                    android:checked="true"
                     android:padding="10dp"
-                    android:text="@string/set_current_lend_borrow"
+                    android:text="@string/set_your_first_lend_borrow"
                     android:textSize="14sp" />
 
                 <LinearLayout
@@ -49,7 +50,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/line0"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -76,13 +78,23 @@
                     android:layout_below="@+id/line1"
                     android:hint="@string/set_type"
                     android:textColorHint="#9F9F9F"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/purpose"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/type_chooser"
+                    android:hint="@string/simple_lend_borrow"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/add_participant"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/type_chooser"
+                    android:layout_below="@id/purpose"
                     android:background="@drawable/button_background"
                     android:text="@string/add_participant"
                     android:textColor="@android:color/white" />

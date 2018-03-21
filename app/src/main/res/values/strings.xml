@@ -62,12 +62,21 @@
     <string name="word_from_developer">Thanks you all of you for your support. Just keep using the app to its fullest. I am really glad to
         help you all with my application.</string>
     <string name="saved_unique_id">uniqueId</string>
-    <string name="add_participant">add participant</string>
+    <string name="add_participant">add participantItem</string>
     <string name="participants_name">participants name</string>
     <string name="in_debt">in debt</string>
     <string name="remainder_yet_to_add">remainder yet to add</string>
-    <string name="set_current_lend_borrow">set current lend/borrow</string>
     <string name="_0_00">0.00</string>
     <string name="set_type">Set type</string>
+    <string name="load_history">load history</string>
+    <string name="history">History</string>
+    <string name="no_lends_borrows_still">no lends/borrows still.</string>
+    <string name="simple_lend_borrow">simple Lend/Borrow</string>
+    <string name="set_your_first_lend_borrow">set your first lend/borrow</string>
+    <string name="set_last_date_to_settle">set last date to settle?</string>
+    <string name="due_amount">due amount</string>
+    <string name="debt_type">debt type</string>
+    <string name="one_time_earns">ONE TIME EARNS</string>
+    <string name="monthly_earns">MONTHLY EARNS</string>
 
 </resources>

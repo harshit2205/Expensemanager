@@ -7,8 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.users.myexpensemanager1.models.MoneyItem;
-import com.example.users.myexpensemanager1.models.Participant;
+import com.example.users.myexpensemanager1.models.ParticipantItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,10 +53,11 @@ public class ParticipantsDAO {
     }
 
     //function to insert values in the money table.....
-    public void addparticipants(Participant participant) {
+    public void addparticipants(ParticipantItem participantItem) {
         ContentValues values = new ContentValues();
-        values.put(DAOFactory.COLUMN_NAME, participant.getParticipantname());
-        values.put(DAOFactory.COLUMN_ISINDEBT, participant.isInDebt());
+        values.put(DAOFactory.COLUMN_NAME, participantItem.getParticipantname());
+        values.put(DAOFactory.COLUMN_DUES, participantItem.getDues());
+        values.put(DAOFactory.COLUMN_ISINDEBT, participantItem.isInDebt());
         database.insert(DAOFactory.PARTICIPANT_TABLE, null, values);
         Log.d("EXPM", "Money Inserted");
     }
@@ -67,21 +67,62 @@ public class ParticipantsDAO {
         Log.d("EXPM", "money table item deleted");
     }
 
-    public List<Participant> showParticipants() {
-        List<Participant> participantList = new ArrayList<>();
+    public ParticipantItem getParticipant(String participantName) {
+        String query = "SELECT * FROM " + DAOFactory.PARTICIPANT_TABLE + " WHERE "
+                + DAOFactory.COLUMN_NAME + " = '" + participantName + "' ;";
+        Cursor cursor = database.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            // get the data into array, or class variable
+            Log.d("EXPM_lendborrow", "data = " + cursor.getString(1));
+            ParticipantItem item = new ParticipantItem(cursor.getString(1),
+                    Long.parseLong(cursor.getString(2)),
+                    Integer.parseInt(cursor.getString(3)));
+            item.setId(cursor.getInt(0));
+            cursor.close();
+            return item;
+        }
+        return null;
+    }
+
+    public List<ParticipantItem> showParticipants() {
+        List<ParticipantItem> participantItemList = new ArrayList<>();
         String query = "SELECT * FROM " + DAOFactory.PARTICIPANT_TABLE;
         Cursor cursor = database.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
                 // get the data into array, or class variable
                 Log.d("EXPM_lendborrow", "data = " + cursor.getString(1));
-                Participant item = new Participant(cursor.getString(1),
-                        cursor.getInt(2));
+                ParticipantItem item = new ParticipantItem(cursor.getString(1),
+                        Long.parseLong(cursor.getString(2)),
+                        Integer.parseInt(cursor.getString(3)));
                 item.setId(cursor.getInt(0));
-                participantList.add(item);
+                participantItemList.add(item);
             } while (cursor.moveToNext());
         }
         cursor.close();
-        return participantList;
+        return participantItemList;
+    }
+
+    public boolean ifParticipantExists(String participantName) {
+        String query = "SELECT * FROM " + DAOFactory.PARTICIPANT_TABLE + " WHERE '" + DAOFactory.COLUMN_NAME +
+                "' = '" + participantName + "' ;";
+        Cursor cursor = database.rawQuery(query, null);
+        if (cursor.getCount() != 0) {
+            cursor.close();
+            return true;
+        }
+        cursor.close();
+        return false;
+    }
+
+    public void updateParticipant(ParticipantItem participantItem) {
+        ContentValues values = new ContentValues();
+        values.put(DAOFactory.COLUMN_NAME, participantItem.getParticipantname());
+        values.put(DAOFactory.COLUMN_DUES, participantItem.getDues());
+        values.put(DAOFactory.COLUMN_ISINDEBT, participantItem.isInDebt());
+        database.update(DAOFactory.PARTICIPANT_TABLE, values,
+                DAOFactory.COLUMN_NAME + " = '" + participantItem.getParticipantname() + "'",
+                null);
+        Log.d("EXPM", "update done");
     }
 }

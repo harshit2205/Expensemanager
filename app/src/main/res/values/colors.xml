@@ -7,7 +7,12 @@
     <color name="all_grey">#777</color>
     <color name="saffron">#ff8000</color>
 
+    <color name="darkred">#ffcc0000</color>
+    <color name="darkgreen">#077</color>
+    <color name="grey">#777</color>
+
+
     <color name="red">#f16d7a</color>
-    <color name="green">#b7d28d</color>
-    <color name="blue">#b8f1ed</color>
+    <color name="green">#c6d27c</color>
+    <color name="blue">#afafaf</color>
 </resources>

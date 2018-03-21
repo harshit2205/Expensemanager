@@ -1,7 +1,6 @@
 package com.example.users.myexpensemanager1.fragments;
 
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,19 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.users.myexpensemanager1.activities.Main2Activity;
-import com.example.users.myexpensemanager1.activities.OneFragmentActivity;
-import com.example.users.myexpensemanager1.adapters.LendBorrowHistoryAdapter;
 import com.example.users.myexpensemanager1.adapters.ParticipantsAdapter;
-import com.example.users.myexpensemanager1.dao.LendBorrowDAO;
 import com.example.users.myexpensemanager1.dao.ParticipantsDAO;
-import com.example.users.myexpensemanager1.models.LendBorrowItem;
 import com.example.users.myexpensemanager1.R;
-import com.example.users.myexpensemanager1.models.Participant;
+import com.example.users.myexpensemanager1.models.ParticipantItem;
 
 import java.util.List;
 
@@ -35,9 +28,8 @@ public class LendAndBorrowHistoryFrag extends BaseFragment {
     ProgressBar progressBar;
     TextView emptyView;
     RecyclerView participantsView;
-    List<Participant> participantList;
+    List<ParticipantItem> participantItemList;
     ParticipantsAdapter adapter;
-    Button addParticipants;
     ParticipantsDAO participantsDAO;
 
 
@@ -56,42 +48,32 @@ public class LendAndBorrowHistoryFrag extends BaseFragment {
         participantsView = (RecyclerView) view.findViewById(R.id.participants_list);
         emptyView = view.findViewById(R.id.empty_view);
         progressBar = view.findViewById(R.id.lend_borrow_progressBar);
-        adapter = new ParticipantsAdapter(getActivity().getApplicationContext(), participantList, getFragmentManager());
+        adapter = new ParticipantsAdapter(getActivity(), participantItemList, getFragmentManager());
         participantsView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        addParticipants = view.findViewById(R.id.add_participant);
-        addParticipants.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), OneFragmentActivity.class);
-                int INTENT = OneFragmentActivity.ADD_PARTICIPANT;
-                intent.putExtra("addition_type", INTENT);
-                startActivity(intent);
-            }
-        });
         participantsView.setLayoutManager(layoutManager);
         FetchData fetchData = new FetchData();
         fetchData.execute();
         return view;
     }
 
-    class FetchData extends AsyncTask<String, String, List<Participant>> {
+    class FetchData extends AsyncTask<String, String, List<ParticipantItem>> {
 
         @Override
-        protected List<Participant> doInBackground(String... strings) {
+        protected List<ParticipantItem> doInBackground(String... strings) {
             participantsDAO = ParticipantsDAO.initialiser(getActivity().getApplicationContext());
-            participantList = participantsDAO.showParticipants();
-            return participantList;
+            participantItemList = participantsDAO.showParticipants();
+            return participantItemList;
         }
 
         @Override
-        protected void onPostExecute(List<Participant> participantList) {
-            super.onPostExecute(participantList);
+        protected void onPostExecute(List<ParticipantItem> participantItemList) {
+            super.onPostExecute(participantItemList);
             progressBar.setVisibility(View.GONE);
-            if (participantList.size() == 0) {
+            if (participantItemList.size() == 0) {
                 emptyView.setVisibility(View.VISIBLE);
             } else {
-                adapter.items = participantList;
+                adapter.items = participantItemList;
                 Log.d("EXPM_lendborrow", "list send to adapter");
                 adapter.notifyDataSetChanged();
                 participantsView.setVisibility(View.VISIBLE);
