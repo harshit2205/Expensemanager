@@ -78,5 +78,8 @@
     <string name="debt_type">debt type</string>
     <string name="one_time_earns">ONE TIME EARNS</string>
     <string name="monthly_earns">MONTHLY EARNS</string>
+    <string name="ok">ok</string>
+    <string name="done">done</string>
+    <string name="settle">settle</string>
 
 </resources>

@@ -150,4 +150,15 @@ public class LendBorrowDAO {
         cursor.close();
         return lendBorrowItemList;
     }
+
+    public void updateName(String previousName, String newName) {
+        ContentValues values = new ContentValues();
+        Log.d("EXPM_ProgressCheck", "the old value = " + previousName
+                + ", the new value = " + newName);
+        values.put(DAOFactory.COLUMN_NAME, newName);
+        database.update(DAOFactory.LEND_BORROW_TABLE, values,
+                DAOFactory.COLUMN_NAME + " = '" + previousName + "'",
+                null);
+        Log.d("EXPM_update", "update done in lendBorrowTable");
+    }
 }

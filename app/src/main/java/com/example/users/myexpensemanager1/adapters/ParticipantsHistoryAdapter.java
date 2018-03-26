@@ -42,19 +42,25 @@ public class ParticipantsHistoryAdapter extends RecyclerView.Adapter<Participant
     public void onBindViewHolder(ParticipantsHistoryViewHolder holder, int position) {
         LendBorrowItem lendBorrowItem = items.get(position);
         if (lendBorrowItem.getAmount() < 0) {
-            String toPay = "To Pay";
+            String toPay = "Borrowed";
             holder.debtType.setText(toPay);
             String amount = context.getResources().getString(R.string.Rs) + " " + (-lendBorrowItem.getAmount());
             holder.debtAmount.setText(amount);
             holder.debtPurpose.setText(lendBorrowItem.getDescription());
             holder.changeToRed();
         } else {
-            String toTake = "To Take";
+            String toTake = "Lended";
             holder.debtType.setText(toTake);
             String amount = context.getResources().getString(R.string.Rs) + " " + lendBorrowItem.getAmount();
             holder.debtAmount.setText(amount);
             holder.debtPurpose.setText(lendBorrowItem.getDescription());
             holder.changeToGreen();
+        }
+
+        if (lendBorrowItem.getReminderSet() == 1) {
+            String settle = "Settled";
+            holder.debtType.setText(settle);
+            holder.changetogrey();
         }
     }
 
@@ -88,6 +94,12 @@ public class ParticipantsHistoryAdapter extends RecyclerView.Adapter<Participant
             debtType.setTextColor(ContextCompat.getColor(context, R.color.darkgreen));
             debtPurpose.setTextColor(ContextCompat.getColor(context, R.color.darkgreen));
             debtAmount.setTextColor(ContextCompat.getColor(context, R.color.darkgreen));
+        }
+
+        void changetogrey() {
+            debtType.setTextColor(ContextCompat.getColor(context, R.color.grey));
+            debtPurpose.setTextColor(ContextCompat.getColor(context, R.color.grey));
+            debtAmount.setTextColor(ContextCompat.getColor(context, R.color.grey));
         }
     }
 }

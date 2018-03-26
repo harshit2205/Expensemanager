@@ -66,7 +66,7 @@ public class AddParticipantFrag extends BaseFragment implements CompoundButton.O
             public void onClick(View view) {
                 String participantString = participantsName.getText().toString();
                 String amountString = amount.getText().toString();
-                if (amountString.equals("")) amount.setText("0");
+                if (amountString.equals("")) amountString = "0";
 
                 if (inputchecker()) {
                     int isInDebt = ParticipantItem.NO_DEBT;

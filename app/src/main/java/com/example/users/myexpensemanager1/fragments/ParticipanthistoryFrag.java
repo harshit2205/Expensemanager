@@ -25,6 +25,7 @@ import com.example.users.myexpensemanager1.charts.CombinedChartTransaction;
 import com.example.users.myexpensemanager1.dao.LendBorrowDAO;
 import com.example.users.myexpensemanager1.dao.ParticipantsDAO;
 import com.example.users.myexpensemanager1.dao.TransactionDAO;
+import com.example.users.myexpensemanager1.dialogs.EditParticipantDialog;
 import com.example.users.myexpensemanager1.models.LendBorrowItem;
 import com.example.users.myexpensemanager1.models.MessageEvent;
 import com.example.users.myexpensemanager1.models.ParticipantItem;
@@ -93,6 +94,14 @@ public class ParticipanthistoryFrag extends BaseFragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),
                 R.layout.dropdown_item_spinner, LENDBORROWTYPE);
         typeSpinner.setAdapter(adapter);
+
+        topBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new EditParticipantDialog(getActivity(), getFragmentManager(), ParticipantsDAO.initialiser(getActivity()).getParticipant(participantName));
+            }
+        });
+
         add = view.findViewById(R.id.add_debt);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,8 +148,10 @@ public class ParticipanthistoryFrag extends BaseFragment {
                         isinDebt = ParticipantItem.NO_DEBT;
                     }
                     ParticipantItem participantItem1 = new ParticipantItem(participantName, totalamount, isinDebt);
-                    ParticipantsDAO.initialiser(getActivity()).updateParticipant(participantItem1);
-                    EventBus.getDefault().post(new MessageEvent("update_all_data"));
+                    ParticipantsDAO.initialiser(getActivity()).updateParticipant(participantItem1, participantName);
+                    MessageEvent event = new MessageEvent("update_all_data");
+                    event.setParticipantsName(participantName);
+                    EventBus.getDefault().post(event);
                 }
             }
         });
@@ -179,7 +190,9 @@ public class ParticipanthistoryFrag extends BaseFragment {
     public void onMessageEvent(MessageEvent event) {
         resetValues();
 
+        participantName = event.getParticipantsName();
 
+        participant.setText(participantName);
         emptyView.setVisibility(GONE);
         historyView.setVisibility(GONE);
         progressbar.setVisibility(View.VISIBLE);
@@ -194,6 +207,7 @@ public class ParticipanthistoryFrag extends BaseFragment {
                 topBar.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.grey));
             }
             total.setText(totalamount);
+            Log.d("EXPM_progresscheck", "the code is fine till here");
             lendBorrowItemList = LendBorrowDAO.initialiser(getActivity().getApplicationContext()).showTupplesByName(participantName);
             progressbar.setVisibility(GONE);
             if (lendBorrowItemList.size() == 0) {

@@ -115,13 +115,13 @@ public class ParticipantsDAO {
         return false;
     }
 
-    public void updateParticipant(ParticipantItem participantItem) {
+    public void updateParticipant(ParticipantItem participantItem, String previousName) {
         ContentValues values = new ContentValues();
         values.put(DAOFactory.COLUMN_NAME, participantItem.getParticipantname());
         values.put(DAOFactory.COLUMN_DUES, participantItem.getDues());
         values.put(DAOFactory.COLUMN_ISINDEBT, participantItem.isInDebt());
         database.update(DAOFactory.PARTICIPANT_TABLE, values,
-                DAOFactory.COLUMN_NAME + " = '" + participantItem.getParticipantname() + "'",
+                DAOFactory.COLUMN_NAME + " = '" + previousName + "'",
                 null);
         Log.d("EXPM", "update done");
     }
