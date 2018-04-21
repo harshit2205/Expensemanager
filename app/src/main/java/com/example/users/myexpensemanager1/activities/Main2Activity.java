@@ -63,7 +63,7 @@ public class Main2Activity extends BaseActivity
         }
 
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Live Stats");
         createStorageDirectory();

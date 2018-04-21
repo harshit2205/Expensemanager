@@ -85,15 +85,15 @@ public class ParticipantsHistoryAdapter extends RecyclerView.Adapter<Participant
         }
 
         void changeToRed() {
-            debtType.setTextColor(ContextCompat.getColor(context, R.color.darkred));
-            debtPurpose.setTextColor(ContextCompat.getColor(context, R.color.darkred));
-            debtAmount.setTextColor(ContextCompat.getColor(context, R.color.darkred));
+            debtType.setTextColor(ContextCompat.getColor(context, R.color.red));
+            debtPurpose.setTextColor(ContextCompat.getColor(context, R.color.red));
+            debtAmount.setTextColor(ContextCompat.getColor(context, R.color.red));
         }
 
         void changeToGreen() {
-            debtType.setTextColor(ContextCompat.getColor(context, R.color.darkgreen));
-            debtPurpose.setTextColor(ContextCompat.getColor(context, R.color.darkgreen));
-            debtAmount.setTextColor(ContextCompat.getColor(context, R.color.darkgreen));
+            debtType.setTextColor(ContextCompat.getColor(context, R.color.green));
+            debtPurpose.setTextColor(ContextCompat.getColor(context, R.color.green));
+            debtAmount.setTextColor(ContextCompat.getColor(context, R.color.green));
         }
 
         void changetogrey() {

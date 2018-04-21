@@ -56,7 +56,7 @@ public class EditParticipantDialog {
     private View view;
     private LendBorrowItem lendBorrowItem;
 
-    public EditParticipantDialog(Context context, FragmentManager manager, ParticipantItem item) {
+    public EditParticipantDialog(final Context context, FragmentManager manager, ParticipantItem item) {
         this.context = context;
         this.manager = manager;
         this.item = item;
@@ -90,7 +90,14 @@ public class EditParticipantDialog {
         OnBackPressListener backPressListener = new OnBackPressListener() {
             @Override
             public void onBackPressed(DialogPlus dialogPlus) {
-                dialogPlus.dismiss();
+                InputMethodManager imm = (InputMethodManager) context
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                if (imm.isAcceptingText()) {
+                    imm.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
+                } else {
+                    dialogPlus.dismiss();
+                }
             }
         };
 

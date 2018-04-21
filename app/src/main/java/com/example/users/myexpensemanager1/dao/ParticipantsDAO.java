@@ -19,6 +19,7 @@ import java.util.List;
 public class ParticipantsDAO {
     private static ParticipantsDAO participantsDAO;
     public String ADD_PARTIPANTS = "addParticipants";
+    public long totalLend, totalBorrow;
     //initialising variables.....
     SQLiteDatabase database;
     DAOFactory daoFactory;
@@ -88,6 +89,8 @@ public class ParticipantsDAO {
         List<ParticipantItem> participantItemList = new ArrayList<>();
         String query = "SELECT * FROM " + DAOFactory.PARTICIPANT_TABLE;
         Cursor cursor = database.rawQuery(query, null);
+        totalLend = 0;
+        totalBorrow = 0;
         if (cursor.moveToFirst()) {
             do {
                 // get the data into array, or class variable
@@ -97,6 +100,13 @@ public class ParticipantsDAO {
                         Integer.parseInt(cursor.getString(3)));
                 item.setId(cursor.getInt(0));
                 participantItemList.add(item);
+
+                int type = Integer.parseInt(cursor.getString(3));
+                if (type == 1) {
+                    totalBorrow = totalBorrow + Long.parseLong(cursor.getString(2));
+                } else if (type == 2) {
+                    totalLend = totalLend + Long.parseLong(cursor.getString(2));
+                }
             } while (cursor.moveToNext());
         }
         cursor.close();

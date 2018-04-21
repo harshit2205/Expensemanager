@@ -200,9 +200,9 @@ public class ParticipanthistoryFrag extends BaseFragment {
             participantItem = ParticipantsDAO.initialiser(getActivity().getApplicationContext()).getParticipant(participantName);
             String totalamount = getActivity().getResources().getString(R.string.Rs) + " " + Long.toString(participantItem.getDues());
             if (participantItem.isInDebt() == ParticipantItem.IS_IN_DEBT) {
-                topBar.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.darkred));
+                topBar.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red));
             } else if (participantItem.isInDebt() == ParticipantItem.HAS_LENDED) {
-                topBar.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
+                topBar.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
             } else if (participantItem.isInDebt() == ParticipantItem.NO_DEBT) {
                 topBar.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.grey));
             }
@@ -239,9 +239,9 @@ public class ParticipanthistoryFrag extends BaseFragment {
             participantItem = ParticipantsDAO.initialiser(getActivity().getApplicationContext()).getParticipant(participantName);
             String totalamount = getActivity().getResources().getString(R.string.Rs) + " " + Long.toString(participantItem.getDues());
             if (participantItem.isInDebt() == ParticipantItem.IS_IN_DEBT) {
-                topBar.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.darkred));
+                topBar.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red));
             } else if (participantItem.isInDebt() == ParticipantItem.HAS_LENDED) {
-                topBar.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
+                topBar.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green));
             } else if (participantItem.isInDebt() == ParticipantItem.NO_DEBT) {
                 topBar.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.grey));
             }
